@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import styles from './signup.module.scss';
 import Link from 'next/link';
 import { SubmitHandler } from 'react-hook-form';
@@ -15,10 +14,10 @@ export default function SignupPage() {
   };
 
   return (
-    <main className={styles.container}>
-      <h3 className={classNames('text-2xl')}>회원가입</h3>
+    <main className={'auth-container'}>
+      <h3 className={'text-2xl'}>회원가입</h3>
 
-      <form className={styles.form} onSubmit={handleSubmit(handleFormSubmit)}>
+      <form className={'form'} onSubmit={handleSubmit(handleFormSubmit)}>
         <ValidInput
           label={'이름'}
           htmlFor={'name'}
