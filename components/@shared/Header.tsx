@@ -22,7 +22,7 @@ export default function Header() {
         <button className={'button'}>내 위키 만들기</button>
       </section>
       <section className={style.navMobile}>
-        <Link className={`link ${style.link_search}`} href={'/'}>
+        <Link className={'link'} href={'/'}>
           <Image src={search} alt={'검색 아이콘'} />
         </Link>
         <button>

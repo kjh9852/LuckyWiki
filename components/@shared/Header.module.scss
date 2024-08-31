@@ -31,7 +31,7 @@
 .navMobile {
   display: none;
 
-  .link_search {
+  a {
     img {
       height: 24px;
       width: 24px;
@@ -39,10 +39,6 @@
   }
 
   button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-
     img {
       height: 32px;
       width: 32px;
