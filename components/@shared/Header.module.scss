@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: $header-height;
+  padding: 20px 80px;
+  box-shadow: 0px 4px 20px 0px #0000000d;
+  background-color: $gray50;
+
+  @include tablet {
+    padding: 20px 18px;
+  }
+}
+
+.nav {
+  @include flexCenter;
+  gap: 15px;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.navMobile {
+  display: none;
+
+  .link_search {
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    img {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  @include mobile {
+    @include flexCenter;
+    gap: 15px;
+  }
+}
