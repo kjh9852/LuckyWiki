@@ -1,0 +1,31 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended", "@typescript-eslint"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "warn",
+    "no-unused-vars": "warn",
+    "import/no-unresolved": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "consistent-return": "warn",
+    "curly": "warn",
+    "eqeqeq": "error",
+    "func-call-spacing": "warn",
+    "key-spacing": "warn",
+    "no-duplicate-imports": "warn",
+    "no-multi-assign": "warn",
+    "no-multi-spaces": "warn"
+  }
+}
