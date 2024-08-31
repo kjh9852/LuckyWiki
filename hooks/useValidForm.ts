@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-interface FormInputValues {
+export interface FormInputValues {
   name: string;
   email: string;
   password: string;
@@ -39,7 +39,7 @@ export const useValidForm = () => {
   });
 
   const verifyPasswordRegister = register('verifyPassword', {
-    required: true,
+    required: '비밀번호가 일치하지 않습니다.',
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       message: '영문, 숫자를 포함하여 8자 이상으로 작성해주세요',

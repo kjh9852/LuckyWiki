@@ -3,14 +3,8 @@ import styles from './signup.module.scss';
 import Link from 'next/link';
 import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
-import { useValidForm } from '@/hooks/useValidForm';
-
-interface FormInputValues {
-  name: string;
-  email: string;
-  password: string;
-  verifyPassword: string;
-}
+import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
+import ValidInput from '@/components/@shared/ValidInput';
 
 export default function SignupPage() {
   const { register, errors, handleSubmit } = useValidForm();
@@ -25,60 +19,37 @@ export default function SignupPage() {
       <h3 className={classNames('text-2xl')}>회원가입</h3>
 
       <form className={styles.form} onSubmit={handleSubmit(handleFormSubmit)}>
-        <div className={styles.inputWrapper}>
-          <label htmlFor={'name'} className={'text-md'}>
-            이름
-          </label>
-          <input
-            id={'name'}
-            className={classNames('input', errors.name && styles.error)}
-            placeholder={'이름을 입력해 주세요'}
-            {...register.name}
-          />
-          {errors.name && <p className={classNames('text-xs', styles.message)}>{errors.name.message}</p>}
-        </div>
+        <ValidInput
+          label={'이름'}
+          htmlFor={'name'}
+          error={errors.name}
+          message={errors.name?.message}
+          register={register.name}
+        />
 
-        <div className={styles.inputWrapper}>
-          <label htmlFor={'email'} className={'text-md'}>
-            이메일
-          </label>
-          <input
-            id={'email'}
-            type={'email'}
-            className={classNames('input', errors.email && styles.error)}
-            placeholder={'이메일을 입력해 주세요'}
-            {...register.email}
-          />
-          {errors.email && <p className={classNames('text-xs', styles.message)}>{errors.email.message}</p>}
-        </div>
+        <ValidInput
+          label={'이메일'}
+          htmlFor={'email'}
+          error={errors.email}
+          message={errors.email?.message}
+          register={register.email}
+        />
 
-        <div className={styles.inputWrapper}>
-          <label htmlFor={'password'} className={'text-md'}>
-            비밀번호
-          </label>
-          <input
-            id={'password'}
-            className={classNames('input', errors.password && styles.error)}
-            placeholder={'비밀번호를 입력해 주세요'}
-            {...register.password}
-          />
-          {errors.password && <p className={classNames('text-xs', styles.message)}>{errors.password.message}</p>}
-        </div>
+        <ValidInput
+          label={'비밀번호'}
+          htmlFor={'password'}
+          error={errors.password}
+          message={errors.password?.message}
+          register={register.password}
+        />
 
-        <div className={styles.inputWrapper}>
-          <label htmlFor={'verifyPassword'} className={'text-md'}>
-            비밀번호 확인
-          </label>
-          <input
-            id={'verifyPassword'}
-            className={classNames('input', errors.verifyPassword && styles.error)}
-            placeholder={'비밀번호를 입력해 주세요'}
-            {...register.verifyPassword}
-          />
-          {errors.verifyPassword && (
-            <p className={classNames('text-xs', styles.message)}>{errors.verifyPassword.message}</p>
-          )}
-        </div>
+        <ValidInput
+          label={'비밀번호 확인'}
+          htmlFor={'verifyPassword'}
+          error={errors.verifyPassword}
+          message={errors.verifyPassword?.message}
+          register={register.verifyPassword}
+        />
 
         <button className={'button'}>가입하기</button>
 

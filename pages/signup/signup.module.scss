@@ -33,23 +33,3 @@
     color: $primary-green200;
   }
 }
-
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: start;
-
-  & .error {
-    outline: 1px solid $secondary-red200;
-  }
-
-  p {
-    display: none;
-
-    &.message {
-      display: block;
-      color: $secondary-red200;
-    }
-  }
-}
