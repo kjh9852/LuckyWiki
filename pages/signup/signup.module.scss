@@ -8,12 +8,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.signupSection {
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
 
   h3 {
     margin-bottom: 64px;
@@ -24,6 +18,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  text-align: center;
+
+  width: 100%;
+  max-width: 400px;
 
   button {
     width: 100%;
