@@ -5,7 +5,12 @@ import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 
 export default function SignupPage() {
-  const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
+  const { register, errors, handleSubmit } = useValidForm({
+    email: true,
+    name: true,
+    password: true,
+    verifyPassword: true,
+  });
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = data => {
     // await fetch 회원가입

@@ -5,7 +5,10 @@ import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 
 export default function LoginPage() {
-  const { register, errors, handleSubmit } = useValidForm(['email', 'password']);
+  const { register, errors, handleSubmit } = useValidForm({
+    email: true,
+    password: true,
+  });
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = data => {
     // await fetch 로그인

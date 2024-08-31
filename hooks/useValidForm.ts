@@ -7,7 +7,19 @@ export interface FormInputValues {
   verifyPassword: string;
 }
 
-export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
+interface FieldConfig {
+  name?: boolean;
+  email?: boolean;
+  password?: boolean;
+  verifyPassword?: boolean;
+}
+
+export const useValidForm = ({
+  name = false,
+  email = false,
+  password = false,
+  verifyPassword = false,
+}: FieldConfig) => {
   const {
     register,
     trigger,
@@ -15,11 +27,13 @@ export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
     formState: { errors },
   } = useForm<FormInputValues>({ mode: 'onChange' });
 
+  //register옵션의 disabled 값이 true일 경우에만 입력이 가능하고, 유효성 검사에 반영된다.
+
   const nameRegister = register('name', {
     required: true,
     minLength: { value: 2, message: '2자 이상으로 작성해주세요.' },
     maxLength: { value: 10, message: '10자 이내로 작성해주세요.' },
-    disabled: !fieldList.includes('name'),
+    disabled: !name, // true일 경우에만 입력되고, 유효성 검사에 반영된다.
   });
 
   const emailRegister = register('email', {
@@ -28,7 +42,7 @@ export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       message: '이메일 형식으로 작성해주세요',
     },
-    disabled: !fieldList.includes('email'),
+    disabled: !email,
   });
 
   const passwordRegister = register('password', {
@@ -38,7 +52,7 @@ export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
       message: '영문, 숫자를 포함하여 8자 이상으로 작성해주세요',
     },
     onChange: () => trigger('verifyPassword'),
-    disabled: !fieldList.includes('password'),
+    disabled: !password,
   });
 
   const verifyPasswordRegister = register('verifyPassword', {
@@ -50,7 +64,7 @@ export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
     validate: {
       matched: (value, formValues) => value === formValues.password || '비밀번호가 일치하지 않습니다.',
     },
-    disabled: !fieldList.includes('verifyPassword'),
+    disabled: !verifyPassword,
   });
 
   return {
