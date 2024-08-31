@@ -7,7 +7,7 @@ export interface FormInputValues {
   verifyPassword: string;
 }
 
-export const useValidForm = () => {
+export const useValidForm = (fieldList: (keyof FormInputValues)[]) => {
   const {
     register,
     trigger,
@@ -19,6 +19,7 @@ export const useValidForm = () => {
     required: true,
     minLength: { value: 2, message: '2자 이상으로 작성해주세요.' },
     maxLength: { value: 10, message: '10자 이내로 작성해주세요.' },
+    disabled: !fieldList.includes('name'),
   });
 
   const emailRegister = register('email', {
@@ -27,6 +28,7 @@ export const useValidForm = () => {
       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       message: '이메일 형식으로 작성해주세요',
     },
+    disabled: !fieldList.includes('email'),
   });
 
   const passwordRegister = register('password', {
@@ -36,10 +38,11 @@ export const useValidForm = () => {
       message: '영문, 숫자를 포함하여 8자 이상으로 작성해주세요',
     },
     onChange: () => trigger('verifyPassword'),
+    disabled: !fieldList.includes('password'),
   });
 
   const verifyPasswordRegister = register('verifyPassword', {
-    required: '비밀번호가 일치하지 않습니다.',
+    required: true,
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       message: '영문, 숫자를 포함하여 8자 이상으로 작성해주세요',
@@ -47,6 +50,7 @@ export const useValidForm = () => {
     validate: {
       matched: (value, formValues) => value === formValues.password || '비밀번호가 일치하지 않습니다.',
     },
+    disabled: !fieldList.includes('verifyPassword'),
   });
 
   return {

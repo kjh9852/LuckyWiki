@@ -74,8 +74,10 @@ body {
     margin: 32px 0;
   }
 
+  span {
+    margin-right: 10px;
+  }
   a {
-    margin-left: 10px;
     color: $primary-green200;
   }
 }

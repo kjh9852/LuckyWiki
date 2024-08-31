@@ -4,27 +4,19 @@ import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 
-export default function SignupPage() {
-  const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
+export default function LoginPage() {
+  const { register, errors, handleSubmit } = useValidForm(['email', 'password']);
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = data => {
-    // await fetch 회원가입
+    // await fetch 로그인
     console.log(data);
   };
 
   return (
     <main className={'auth-container'}>
-      <h3 className={'text-2xl'}>회원가입</h3>
+      <h3 className={'text-2xl'}>로그인</h3>
 
       <form className={'form'} onSubmit={handleSubmit(handleFormSubmit)}>
-        <ValidInput
-          label={'이름'}
-          htmlFor={'name'}
-          error={errors.name}
-          message={errors.name?.message}
-          register={register.name}
-        />
-
         <ValidInput
           label={'이메일'}
           htmlFor={'email'}
@@ -41,20 +33,11 @@ export default function SignupPage() {
           register={register.password}
         />
 
-        <ValidInput
-          label={'비밀번호 확인'}
-          htmlFor={'verifyPassword'}
-          error={errors.verifyPassword}
-          message={errors.verifyPassword?.message}
-          register={register.verifyPassword}
-        />
+        <button className={'button'}>로그인</button>
 
-        <button className={'button'}>가입하기</button>
-
-        <div className={'text-xs'}>
-          <span>이미 회원이신 가요?</span>
-          <Link href={'/login'}>로그인하기</Link>
-        </div>
+        <Link className={'text-xs'} href={'/signup'}>
+          회원가입
+        </Link>
       </form>
     </main>
   );
