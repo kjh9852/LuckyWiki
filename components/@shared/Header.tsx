@@ -3,15 +3,15 @@ import logo from '@/public/logo/logo_main.png';
 import search from '@/public/icon/icon-search.png';
 import menu from '@/public/icon/icon-menu.png';
 import Link from 'next/link';
-import style from '@/components/@shared/Header.module.scss';
+import styles from '@/components/@shared/Header.module.scss';
 
 export default function Header() {
   return (
-    <header className={`${style.header}`}>
+    <header className={styles.header}>
       <Link href={'/'}>
         <Image src={logo} alt={'메인 로고 이미지'} height={30} width={107} />
       </Link>
-      <section className={style.nav}>
+      <section className={styles.nav}>
         <input className={'input input-search'} />
         <Link className={'link'} href={'/'}>
           모든 위키
@@ -21,7 +21,7 @@ export default function Header() {
         </Link>
         <button className={'button'}>내 위키 만들기</button>
       </section>
-      <section className={style.navMobile}>
+      <section className={styles.navMobile}>
         <Link className={'link'} href={'/'}>
           <Image src={search} alt={'검색 아이콘'} />
         </Link>

@@ -2,6 +2,7 @@
 @import './variables';
 @import './font';
 @import './mixins';
+@import './typography';
 
 body {
   padding-top: $header-height;
@@ -23,7 +24,11 @@ body {
   padding: 14px 20px;
   border-radius: 10px;
   background-color: $gray100;
-  outline: 1px solid $primary-green200;
+  border: none;
+
+  &:focus {
+    outline: 1px solid $primary-green200;
+  }
 }
 
 .input-search {
@@ -41,4 +46,8 @@ body {
   text-align: center;
   color: $gray400;
   text-decoration: none;
+}
+
+.error {
+  color: $secondary-red200;
 }
