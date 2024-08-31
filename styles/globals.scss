@@ -2,3 +2,43 @@
 @import './variables';
 @import './font';
 @import './mixins';
+
+body {
+  padding-top: $header-height;
+}
+
+.button {
+  height: 40px;
+  padding: 0 11px;
+  border-radius: 10px;
+  background-color: $primary-green200;
+  color: $gray100;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.input {
+  height: 45px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  background-color: $gray100;
+  outline: 1px solid $primary-green200;
+}
+
+.input-search {
+  padding-left: 35px;
+  background-image: url('../public/icon/icon-search.png');
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  background-position: 10px;
+}
+
+.link {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  color: $gray400;
+  text-decoration: none;
+}
