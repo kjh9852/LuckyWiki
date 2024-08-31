@@ -1,0 +1,52 @@
+@import '../../styles/variables';
+
+@mixin text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.wikiTitle {
+  width: 860px;
+  height: 112px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    h1 {
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 46px;
+      color: $gray500;
+    }
+
+    button {
+      @include text;
+      width: 160px;
+      height: 45px;
+      padding: 11px 40px;
+      border-radius: 10px;
+      background-color: $primary-green200;
+      color: $gray50;
+      text-align: center;
+    }
+  }
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: $primary-green100;
+
+  p {
+    @include text;
+    color: $primary-green200;
+    margin: 0;
+  }
+}
