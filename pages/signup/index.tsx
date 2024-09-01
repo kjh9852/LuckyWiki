@@ -4,9 +4,11 @@ import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 import { authenticateSignUp } from '@/apis/auth/authenticateSignup';
+import { useRouter } from 'next/router';
 
 export default function SignUpPage() {
   const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
+  const router = useRouter();
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
     if (formData.email && formData.name && formData.password && formData.verifyPassword) {
@@ -18,6 +20,7 @@ export default function SignUpPage() {
       });
       console.log(response);
     }
+    router.push('/');
   };
 
   return (
