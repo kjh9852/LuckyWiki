@@ -1,20 +1,74 @@
 @import '../../styles/mixins';
+@import '../../styles/variables';
 
 .wikiContent {
   width: 860px;
   margin-top: 56px;
 }
 
+.emptyContent {
+  width: 859px;
+  height: 192px;
+  padding: 40px 345px;
+  border-radius: 10px;
+  background-color: $gray100;
+  margin-top: 56px;
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    color: $gray400;
+  }
+
+  button {
+    width: 89px;
+    height: 40px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    background-color: $primary-green200;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+    color: $gray50;
+    margin: 20px 40px;
+    display: flex;
+    align-items: center;
+  }
+}
+
 @include tablet {
   .wikiContent {
     width: 624px;
-    margin-top: 205px;
+  }
+
+  .emptyContent {
+    width: 624px;
+    padding: 40px 227px;
+    margin-top: 60px;
   }
 }
 
 @include mobile {
   .wikiContent {
     width: 335px;
-    margin-top: 178px;
+  }
+
+  .emptyContent {
+    width: 334px;
+    height: 184px;
+    padding: 40px 93px;
+    margin-top: 40px;
+
+    p {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    button {
+      margin: 16px 29px;
+    }
   }
 }
