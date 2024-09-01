@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 @mixin text {
   font-size: 14px;
@@ -48,5 +49,38 @@
     @include text;
     color: $primary-green200;
     margin: 0;
+  }
+}
+
+@include tablet {
+  .wikiTitle {
+    width: 640px;
+  }
+}
+
+@include mobile {
+  .wikiTitle {
+    width: 335px;
+
+    header {
+      margin-bottom: 24px;
+
+      h1 {
+        font-size: 32px;
+        line-height: 42px;
+      }
+
+      button {
+        @include text;
+        width: 120px;
+        height: 43px;
+        padding: 10px 22px;
+      }
+    }
+  }
+
+  .p {
+    @include text;
+    font-weight: 400;
   }
 }

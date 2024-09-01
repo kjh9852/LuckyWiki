@@ -40,7 +40,7 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
         <WikiTitle profile={profile} />
         <WikiContent profile={profile} />
       </section>
-      <section>
+      <section className={styles.profile}>
         <ProfileDetails profile={profile} />
       </section>
     </div>

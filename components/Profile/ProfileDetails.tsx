@@ -19,23 +19,23 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
           <p>거주 도시</p>
           <p>MBTI</p>
           <p>직업</p>
-          <p>SNS 계정</p>
-          <p>생일</p>
-          <p>별명</p>
-          <p>혈액형</p>
-          <p>국적</p>
+          <p className={styles.hide}>SNS 계정</p>
+          <p className={styles.hide}>생일</p>
+          <p className={styles.hide}>별명</p>
+          <p className={styles.hide}>혈액형</p>
+          <p className={styles.hide}>국적</p>
         </section>
         <section className={styles.profileValue}>
           <p>{profile.city}</p>
           <p>{profile.mbti}</p>
           <p>{profile.job}</p>
-          <Link href={profile.sns}>
+          <Link className={styles.hide} href={profile.sns}>
             <Image src="/icon/icon-instagram.png" alt="sns 아이콘" width={24} height={24} />
           </Link>
-          <p>{profile.birthday}</p>
-          <p>{profile.nickname}</p>
-          <p>{profile.bloodType}</p>
-          <p>{profile.nationality}</p>
+          <p className={styles.hide}>{profile.birthday}</p>
+          <p className={styles.hide}>{profile.nickname}</p>
+          <p className={styles.hide}>{profile.bloodType}</p>
+          <p className={styles.hide}>{profile.nationality}</p>
         </section>
       </div>
     </div>

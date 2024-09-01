@@ -1,4 +1,20 @@
+@import '../../styles/mixins';
+
 .wikiContent {
   width: 860px;
   margin-top: 56px;
+}
+
+@include tablet {
+  .wikiContent {
+    width: 624px;
+    margin-top: 205px;
+  }
+}
+
+@include mobile {
+  .wikiContent {
+    width: 335px;
+    margin-top: 178px;
+  }
 }
