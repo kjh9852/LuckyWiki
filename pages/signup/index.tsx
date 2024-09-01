@@ -3,13 +3,21 @@ import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
+import { authenticateSignUp } from '@/apis/auth/authenticateSignup';
 
-export default function SignupPage() {
+export default function SignUpPage() {
   const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = data => {
-    // await fetch 회원가입
-    console.log(data);
+  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
+    if (formData.email && formData.name && formData.password && formData.verifyPassword) {
+      const response = await authenticateSignUp({
+        email: formData.email,
+        name: formData.name,
+        password: formData.password,
+        passwordConfirmation: formData.verifyPassword,
+      });
+      console.log(response);
+    }
   };
 
   return (
