@@ -3,9 +3,31 @@ import logo from '@/public/logo/logo_main.png';
 import search from '@/public/icon/icon-search.png';
 import menu from '@/public/icon/icon-menu.png';
 import Link from 'next/link';
+import instance from '@/lib/api';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import UserType from '@/types/types';
 import styles from '@/components/@shared/Header.module.scss';
 
 export default function Header() {
+  const router = useRouter();
+  const { code } = router.query;
+  const [user, setUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userRes = await instance.get('/users/me');
+        setUser(userRes.data);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  const showAlarmIcon = user && user.profile.code === code;
+
   return (
     <header className={styles.header}>
       <Link href={'/'}>
@@ -13,9 +35,13 @@ export default function Header() {
       </Link>
       <section className={styles.nav}>
         <input className={'input input-search'} />
-        <Link className={'link'} href={'/'}>
-          모든 위키
-        </Link>
+        {showAlarmIcon ? (
+          <Image src="/icon/icon-alarm.png" width={32} height={32} alt="알람 아이콘" />
+        ) : (
+          <Link className={'link'} href={'/'}>
+            모든 위키
+          </Link>
+        )}
         <Link className={'link'} href={'/login'}>
           로그인
         </Link>

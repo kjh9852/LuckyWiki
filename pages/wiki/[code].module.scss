@@ -1,0 +1,33 @@
+@import '../../styles/mixins';
+
+.pcProfile {
+  display: flex;
+  gap: 80px;
+  margin: 78px auto;
+  width: 1260px;
+  position: relative;
+  left: 140px;
+  z-index: -1;
+  height: auto;
+
+  .profileDetails {
+    position: sticky;
+    top: 0;
+  }
+}
+
+@include tablet {
+  .wikiProfile {
+    display: block;
+    margin: 60px auto;
+    width: 624px;
+  }
+}
+
+@include mobile {
+  .wikiProfile {
+    display: block;
+    margin: 40px auto;
+    width: 335px;
+  }
+}
