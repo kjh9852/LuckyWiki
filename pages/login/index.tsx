@@ -3,8 +3,8 @@ import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
-import { authenticateLogIn } from '@/apis/auth/authenticateLogIn';
 import { useRouter } from 'next/router';
+import { authenticateLogIn } from '@/apis/auth/authenticateLogIn';
 
 export default function LogInPage() {
   const { register, errors, handleSubmit } = useValidForm(['email', 'password']);
@@ -14,8 +14,11 @@ export default function LogInPage() {
     if (formData.email && formData.password) {
       const response = await authenticateLogIn({ email: formData.email, password: formData.password });
       console.log(response);
+
+      if (response) {
+        router.push('/');
+      }
     }
-    router.push('/');
   };
 
   return (
