@@ -38,7 +38,7 @@ export default function Header() {
         {showAlarmIcon ? (
           <Image src="/icon/icon-alarm.png" width={32} height={32} alt="알람 아이콘" />
         ) : (
-          <Link className={'link'} href={'/'}>
+          <Link className={'link'} href={'/wikilist'}>
             모든 위키
           </Link>
         )}

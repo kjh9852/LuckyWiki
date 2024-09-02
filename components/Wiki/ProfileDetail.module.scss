@@ -50,6 +50,10 @@
   @include info;
   p {
     @include info-p($gray500);
+    &:empty {
+      height: 24px;
+      margin: 0;
+    }
   }
 }
 
