@@ -24,12 +24,17 @@ export const authenticateSignUp = async ({
   name,
   password,
   passwordConfirmation,
-}: AuthenticateSignUpProps): Promise<AuthenticateSignUpReturn> => {
+}: AuthenticateSignUpProps): Promise<AuthenticateSignUpReturn | undefined> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signUp`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, name, password, passwordConfirmation }),
   });
+
+  if (!response.ok) {
+    alert('회원가입이 불가능한 정보입니다.');
+    return undefined;
+  }
 
   const result = await response.json();
 

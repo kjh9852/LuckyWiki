@@ -23,12 +23,17 @@ interface AuthenticateLogInReturn {
 export const authenticateLogIn = async ({
   email,
   password,
-}: AuthenticateLogInProps): Promise<AuthenticateLogInReturn> => {
+}: AuthenticateLogInProps): Promise<AuthenticateLogInReturn | undefined> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signIn`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
+
+  if (!response.ok) {
+    alert('일치하는 회원 정보가 없습니다.');
+    return undefined;
+  }
 
   const result = await response.json();
 

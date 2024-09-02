@@ -5,22 +5,17 @@ import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/contexts/AuthProvider';
 
 export default function SignUpPage() {
+  const { signUp } = useAuth();
   const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
-  const router = useRouter();
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
     if (formData.email && formData.name && formData.password && formData.verifyPassword) {
-      const response = await authenticateSignUp({
-        email: formData.email,
-        name: formData.name,
-        password: formData.password,
-        passwordConfirmation: formData.verifyPassword,
-      });
-      console.log(response);
+      const { email, name, password, verifyPassword } = formData;
+      await signUp({ email, name, password, verifyPassword });
     }
-    router.push('/');
   };
 
   return (
