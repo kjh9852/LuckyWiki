@@ -89,6 +89,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     console.log('userInfoResponse:', userInfoResponse);
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
+
       setUser({ id, name, profile });
     }
   };
@@ -105,6 +106,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const { accessToken } = getTokens();
     if (accessToken) {
       updateUser();
+      setIsLoggedIn(true);
     }
   }, [isLoggedIn]);
 
