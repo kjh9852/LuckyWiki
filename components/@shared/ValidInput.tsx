@@ -20,7 +20,7 @@ export default function ValidInput({ label, htmlFor, error, message, register }:
       )}
       <input
         id={htmlFor}
-        className={classNames('input', { error: error })}
+        className={classNames('input', { [styles.error]: error })}
         placeholder={'이름을 입력해 주세요'}
         {...register}
       />
