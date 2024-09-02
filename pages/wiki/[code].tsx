@@ -6,6 +6,7 @@ import ProfileDetails from '@/components/Wiki/ProfileDetails';
 import instance from '../../lib/api';
 import styles from './[code].module.scss';
 import { useMediaQuery } from 'react-responsive';
+import { useEffect, useState } from 'react';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.params as { code: string };
@@ -32,16 +33,31 @@ interface WikiProfileProps {
 }
 
 export default function WikiProfile({ profile }: WikiProfileProps) {
-  const isTabletMobile = useMediaQuery({
+  const [isTabletMobile, setIsTabletMobile] = useState<boolean>(false);
+  const tabletMobile = useMediaQuery({
     query: '(max-width: 1200px)',
   });
+
+  useEffect(() => {
+    if (tabletMobile) {
+      setIsTabletMobile(true);
+    } else {
+      setIsTabletMobile(false);
+    }
+  }, [tabletMobile]);
 
   if (!profile) {
     return <div>No profile available</div>;
   }
   return (
     <>
-      {!isTabletMobile ? (
+      {isTabletMobile ? (
+        <div className={styles.wikiProfile}>
+          <WikiTitle profile={profile} />
+          <ProfileDetails profile={profile} />
+          <WikiContent profile={profile} />
+        </div>
+      ) : (
         <div className={styles.pcProfile}>
           <section>
             <WikiTitle profile={profile} />
@@ -50,12 +66,6 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
           <section className={styles.profileDetails}>
             <ProfileDetails profile={profile} />
           </section>
-        </div>
-      ) : (
-        <div className={styles.wikiProfile}>
-          <WikiTitle profile={profile} />
-          <ProfileDetails profile={profile} />
-          <WikiContent profile={profile} />
         </div>
       )}
     </>

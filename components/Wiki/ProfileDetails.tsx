@@ -29,9 +29,9 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
           <p>{profile.city}</p>
           <p>{profile.mbti}</p>
           <p>{profile.job}</p>
-          <Link className={styles.hide} href={profile.sns}>
+          <a className={styles.hide} href={profile.sns} target="_blank" rel="noopener noreferrer">
             <Image src="/icon/icon-instagram.png" alt="sns 아이콘" width={24} height={24} />
-          </Link>
+          </a>
           <p className={styles.hide}>{profile.birthday}</p>
           <p className={styles.hide}>{profile.nickname}</p>
           <p className={styles.hide}>{profile.bloodType}</p>
