@@ -4,10 +4,10 @@ import styles from './WikiTitle.module.scss';
 
 interface WikiTitleProps {
   profile: ProfileType;
-  showModal: () => void;
+  onOpenModalButtonClick: () => void;
 }
 
-export default function WikiTitle({ profile, showModal }: WikiTitleProps) {
+export default function WikiTitle({ profile, onOpenModalButtonClick }: WikiTitleProps) {
   const linkURL = `https://www.wikied.kr/wiki/${profile.code}`;
 
   const handleCopyButtonClick = async () => {
@@ -22,7 +22,7 @@ export default function WikiTitle({ profile, showModal }: WikiTitleProps) {
     <div className={styles.wikiTitle}>
       <header>
         <h1>{profile.name}</h1>
-        <button onClick={showModal}>위키 참여하기</button>
+        <button onClick={onOpenModalButtonClick}>위키 참여하기</button>
       </header>
       <button className={styles.linkButton} onClick={handleCopyButtonClick}>
         <Image src="/icon/icon-link.png" alt="링크 아이콘" width={20} height={20} />

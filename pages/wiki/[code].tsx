@@ -46,11 +46,11 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
     }
   }, [tabletMobile]);
 
-  const showModal = () => {
+  const handleOpenModalButtonClick = () => {
     setIsModalVisible(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModalButtonClick = () => {
     setIsModalVisible(false);
   };
 
@@ -61,14 +61,14 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
     <>
       {isTabletMobile ? (
         <div className={styles.wikiProfile}>
-          <WikiTitle profile={profile} showModal={showModal} />
+          <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
           <ProfileDetails profile={profile} />
           <WikiContent profile={profile} />
         </div>
       ) : (
         <div className={styles.pcProfile}>
           <section>
-            <WikiTitle profile={profile} showModal={showModal} />
+            <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
             <WikiContent profile={profile} />
           </section>
           <section className={styles.profileDetails}>
@@ -76,7 +76,7 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
           </section>
         </div>
       )}
-      {/* {isModalVisible && <Modal closeModal={closeModal}/>} */}
+      {/* {isModalVisible && <Modal onCloseModalButtonClick={handleCloseModalButtonClick}/>} */}
     </>
   );
 }
