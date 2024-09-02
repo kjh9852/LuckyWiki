@@ -3,6 +3,10 @@ import logo from '@/public/logo/logo_main.png';
 import search from '@/public/icon/icon-search.png';
 import menu from '@/public/icon/icon-menu.png';
 import Link from 'next/link';
+import instance from '@/lib/api';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import UserType from '@/types/types';
 import styles from '@/components/@shared/Header.module.scss';
 import { useAuth } from '@/contexts/AuthProvider';
 
@@ -37,7 +41,6 @@ export default function Header() {
           <button className={'button'}>내 위키 만들기</button>
         </section>
       )}
-
       <section className={styles.navMobile}>
         <Link className={'link'} href={'/wikilist'}>
           <Image src={search} alt={'검색 아이콘'} />
