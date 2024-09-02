@@ -10,8 +10,6 @@ import { useAuth } from '@/contexts/AuthProvider';
 export default function Header() {
   const { user, isLoggedIn } = useAuth();
 
-  console.log('isLoggedIn:', isLoggedIn);
-
   return (
     <header className={styles.header}>
       <Link href={'/'}>

@@ -3,12 +3,15 @@ import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
-import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
-import { useRouter } from 'next/router';
 import { useAuth } from '@/contexts/AuthProvider';
+import { useRouter } from 'next/router';
 
 export default function SignUpPage() {
-  const { signUp } = useAuth();
+  const { isLoggedIn, signUp } = useAuth();
+  const router = useRouter();
+  if (isLoggedIn) {
+    router.push('/');
+  }
   const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
