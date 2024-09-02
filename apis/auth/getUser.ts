@@ -35,7 +35,7 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
     }
 
     const refreshedResponse: { accessToken: string } = await refreshTokenResponse.json();
-    sessionStorage.setItem('refreshToken', refreshedResponse.accessToken);
+    sessionStorage.setItem('accessToken', refreshedResponse.accessToken);
 
     const retryResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${refreshedResponse.accessToken}` },
