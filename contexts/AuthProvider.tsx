@@ -14,6 +14,7 @@ interface User {
   profile: {
     code: string;
     id: number;
+    image?: string | null;
   } | null;
   name: string;
   id: number;
@@ -84,8 +85,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const updateUser = async () => {
-    console.log('getTokens:', getTokens());
     const userInfoResponse = await getUser();
+    console.log('userInfoResponse:', userInfoResponse);
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
       setUser({ id, name, profile });
@@ -101,7 +102,10 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   };
 
   useEffect(() => {
-    updateUser();
+    const { accessToken } = getTokens();
+    if (accessToken) {
+      updateUser();
+    }
   }, [isLoggedIn]);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

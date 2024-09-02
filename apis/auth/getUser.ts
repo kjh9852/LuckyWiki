@@ -1,9 +1,11 @@
 import { getTokens } from '@/utils/getTokens';
+import { getProfile } from './getProfile';
 
 interface getUserReturn {
   profile: {
     code: string;
     id: number;
+    image: string;
   };
   updatedAt: string;
   createdAt: string;
@@ -20,6 +22,7 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
 
   if (!response.ok) {
     const refreshTokenResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         refreshToken: refreshToken,
@@ -41,6 +44,14 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
     return retryResult;
   }
 
-  const result = await response.json();
-  return result;
+  const resultUser = await response.json();
+  const profile = await getProfile(resultUser.profile.code);
+
+  return {
+    ...resultUser,
+    profile: {
+      ...resultUser.profile,
+      image: profile?.image,
+    },
+  };
 };
