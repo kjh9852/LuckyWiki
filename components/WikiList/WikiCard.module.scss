@@ -72,7 +72,7 @@
   .profileCard {
     width: 334px;
     height: 150px;
-    padding: 17px 20px;
+    padding: 21px 25px;
 
     .image {
       width: 60px;
@@ -99,12 +99,13 @@
       width: 204px;
       padding: 4px 10px;
       position: absolute;
-      bottom: 15px;
-      left: 100px;
+      bottom: 25px;
+      left: 105px;
 
       p {
         font-size: 12px;
         line-height: 18px;
+        @include ellipsis;
       }
     }
   }

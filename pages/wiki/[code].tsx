@@ -33,6 +33,7 @@ interface WikiProfileProps {
 
 export default function WikiProfile({ profile }: WikiProfileProps) {
   const [isTabletMobile, setIsTabletMobile] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const tabletMobile = useMediaQuery({
     query: '(max-width: 1200px)',
   });
@@ -45,6 +46,14 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
     }
   }, [tabletMobile]);
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   if (!profile) {
     return <div>No profile available</div>;
   }
@@ -52,14 +61,14 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
     <>
       {isTabletMobile ? (
         <div className={styles.wikiProfile}>
-          <WikiTitle profile={profile} />
+          <WikiTitle profile={profile} showModal={showModal} />
           <ProfileDetails profile={profile} />
           <WikiContent profile={profile} />
         </div>
       ) : (
         <div className={styles.pcProfile}>
           <section>
-            <WikiTitle profile={profile} />
+            <WikiTitle profile={profile} showModal={showModal} />
             <WikiContent profile={profile} />
           </section>
           <section className={styles.profileDetails}>
@@ -67,6 +76,7 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
           </section>
         </div>
       )}
+      {/* {isModalVisible && <Modal closeModal={closeModal}/>} */}
     </>
   );
 }
