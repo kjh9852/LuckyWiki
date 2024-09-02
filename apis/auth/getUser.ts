@@ -16,6 +16,7 @@ interface getUserReturn {
 
 export const getUser = async (): Promise<getUserReturn | undefined> => {
   const { accessToken, refreshToken } = getTokens();
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
   });
