@@ -21,13 +21,23 @@ export const getUser = async ({ accessToken, refreshToken }: getUserProps): Prom
   });
 
   if (!response.ok) {
-    const retryResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${refreshToken}` },
+    const refreshTokenResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        refreshToken: refreshToken,
+      }),
     });
 
-    if (!retryResponse.ok) {
+    if (!refreshTokenResponse.ok) {
       return undefined;
     }
+
+    const refreshedResponse: { accessToken: string } = await refreshTokenResponse.json();
+    sessionStorage.setItem('refreshToken', refreshedResponse.accessToken);
+
+    const retryResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${refreshedResponse.accessToken}` },
+    });
 
     const retryResult = await retryResponse.json();
     return retryResult;
