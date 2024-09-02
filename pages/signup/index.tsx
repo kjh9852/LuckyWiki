@@ -19,8 +19,11 @@ export default function SignUpPage() {
         passwordConfirmation: formData.verifyPassword,
       });
       console.log(response);
+
+      if (response) {
+        router.push('/');
+      }
     }
-    router.push('/');
   };
 
   return (
