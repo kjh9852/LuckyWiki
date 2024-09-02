@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
 import ProfileType from '@/types/types';
-import WikiTitle from '../../components/Profile/WikiTitle';
-import WikiContent from '@/components/Profile/WikiContent';
-import ProfileDetails from '@/components/Profile/ProfileDetails';
+import WikiTitle from '../../components/Wiki/WikiTitle';
+import WikiContent from '@/components/Wiki/WikiContent';
+import ProfileDetails from '@/components/Wiki/ProfileDetails';
 import instance from '../../lib/api';
 import styles from './[code].module.scss';
 import { useMediaQuery } from 'react-responsive';
