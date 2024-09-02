@@ -4,8 +4,11 @@ import search from '@/public/icon/icon-search.png';
 import menu from '@/public/icon/icon-menu.png';
 import Link from 'next/link';
 import styles from '@/components/@shared/Header.module.scss';
+import { useAuth } from '@/contexts/AuthProvider';
 
 export default function Header() {
+  const { user, isLoggedIn } = useAuth();
+
   return (
     <header className={styles.header}>
       <Link href={'/'}>
