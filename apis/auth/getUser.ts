@@ -1,7 +1,4 @@
-interface getUserProps {
-  accessToken: string;
-  refreshToken: string;
-}
+import { getTokens } from '@/utils/getTokens';
 
 interface getUserReturn {
   profile: {
@@ -15,7 +12,8 @@ interface getUserReturn {
   id: number;
 }
 
-export const getUser = async ({ accessToken, refreshToken }: getUserProps): Promise<getUserReturn | undefined> => {
+export const getUser = async (): Promise<getUserReturn | undefined> => {
+  const { accessToken, refreshToken } = getTokens();
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
   });

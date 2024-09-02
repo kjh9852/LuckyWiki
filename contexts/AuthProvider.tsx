@@ -84,14 +84,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const updateUser = async () => {
-    const { accessToken, refreshToken } = getTokens();
-    if (accessToken && refreshToken) {
-      console.log('getTokens:', getTokens());
-      const userInfoResponse = await getUser({ accessToken, refreshToken });
-      if (userInfoResponse) {
-        const { id, name, profile } = userInfoResponse;
-        setUser({ id, name, profile });
-      }
+    console.log('getTokens:', getTokens());
+    const userInfoResponse = await getUser();
+    if (userInfoResponse) {
+      const { id, name, profile } = userInfoResponse;
+      setUser({ id, name, profile });
     }
   };
 
