@@ -8,7 +8,6 @@ import { useAuth } from '@/contexts/AuthProvider';
 
 export default function Header() {
   const { user, isLoggedIn } = useAuth();
-  console.log('user:', user);
 
   return (
     <header className={styles.header}>
