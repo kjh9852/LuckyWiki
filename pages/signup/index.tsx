@@ -39,6 +39,7 @@ export default function SignUpPage() {
         <ValidInput
           label={'이메일'}
           htmlFor={'email'}
+          type={'email'}
           error={errors.email}
           message={errors.email?.message}
           register={register.email}
@@ -46,6 +47,7 @@ export default function SignUpPage() {
 
         <ValidInput
           label={'비밀번호'}
+          type={'password'}
           htmlFor={'password'}
           error={errors.password}
           message={errors.password?.message}
@@ -54,6 +56,7 @@ export default function SignUpPage() {
 
         <ValidInput
           label={'비밀번호 확인'}
+          type={'password'}
           htmlFor={'verifyPassword'}
           error={errors.verifyPassword}
           message={errors.verifyPassword?.message}

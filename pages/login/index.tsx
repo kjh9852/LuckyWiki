@@ -25,6 +25,7 @@ export default function LogInPage() {
       <form className={'form'} onSubmit={handleSubmit(handleFormSubmit)}>
         <ValidInput
           label={'이메일'}
+          type={'email'}
           htmlFor={'email'}
           error={errors.email}
           message={errors.email?.message}
@@ -33,6 +34,7 @@ export default function LogInPage() {
 
         <ValidInput
           label={'비밀번호'}
+          type={'password'}
           htmlFor={'password'}
           error={errors.password}
           message={errors.password?.message}
