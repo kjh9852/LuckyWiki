@@ -3,19 +3,18 @@ import ProfileType from '@/types/types';
 import WikiTitle from '../../components/Wiki/WikiTitle';
 import WikiContent from '@/components/Wiki/WikiContent';
 import ProfileDetails from '@/components/Wiki/ProfileDetails';
-import instance from '../../lib/api';
 import styles from './[code].module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect, useState } from 'react';
+import { getProfile } from '@/apis/auth/getProfile';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.params as { code: string };
 
   let profile = null;
   try {
-    const res = await instance.get(`/profiles/${code}`);
-    profile = res.data;
-    console.log('API Response:', res.data);
+    profile = await getProfile(code);
+    console.log('API Response:', profile);
   } catch (error) {
     console.error('Failed to fetch profile', error);
     return {
