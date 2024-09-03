@@ -29,6 +29,7 @@ export default function LogInPage() {
           error={errors.email}
           message={errors.email?.message}
           register={register.email}
+          placeholder={'이메일을 입력해주세요'}
         />
 
         <ValidInput
@@ -38,6 +39,7 @@ export default function LogInPage() {
           error={errors.password}
           message={errors.password?.message}
           register={register.password}
+          placeholder={'비밀번호를 입력해주세요'}
         />
 
         <button className={'button'}>로그인</button>

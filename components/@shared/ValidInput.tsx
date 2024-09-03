@@ -4,15 +4,24 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { HTMLInputTypeAttribute } from 'react';
 
 interface ValidInputProps {
-  label: string;
+  label?: string;
   htmlFor: string;
   error: FieldError | undefined;
   message: string | undefined;
   register: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
+  placeholder?: string;
 }
 
-export default function ValidInput({ label, htmlFor, error, message, register, type = 'text' }: ValidInputProps) {
+export default function ValidInput({
+  label,
+  htmlFor,
+  error,
+  message,
+  register,
+  type = 'text',
+  placeholder = '',
+}: ValidInputProps) {
   return (
     <div className={styles.inputWrapper}>
       {label && (
@@ -24,7 +33,7 @@ export default function ValidInput({ label, htmlFor, error, message, register, t
         id={htmlFor}
         type={type}
         className={classNames('input', { [styles.error]: error })}
-        placeholder={'이름을 입력해 주세요'}
+        placeholder={placeholder}
         {...register}
       />
       {error && <p className={classNames('text-xs', styles.message)}>{message}</p>}
