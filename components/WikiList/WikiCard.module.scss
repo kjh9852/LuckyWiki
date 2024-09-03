@@ -60,6 +60,11 @@
       margin: 0;
     }
   }
+
+  .noProfileFound {
+    margin: 204px auto;
+    width: 303px;
+  }
 }
 
 @include tablet {
