@@ -13,11 +13,11 @@ export default function Header() {
       </Link>
 
       <section className={styles.nav}>
-        <UserMenu styles={styles} />
+        <UserMenu />
       </section>
 
       <section className={styles.navMobile}>
-        <MobileUserMenu styles={styles} />
+        <MobileUserMenu />
       </section>
     </header>
   );

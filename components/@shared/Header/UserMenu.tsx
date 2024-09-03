@@ -1,30 +1,12 @@
 import { useAuth } from '@/contexts/AuthProvider';
-import { Dropdown, MenuProps } from 'antd';
-import Image from 'next/image';
 import Link from 'next/link';
 import noProfileImage from '@/public/icon/icon-no-profile.png';
+import Image from 'next/image';
+import LoggedInUserDropdown from './LoggedInUserDropdown';
+import styles from '@/components/@shared/Header/Header.module.scss';
 
-interface UserMenuProps {
-  styles: Record<string, string>;
-}
-
-export default function UserMenu({ styles }: UserMenuProps) {
-  const { user, isLoggedIn, logOut } = useAuth();
-
-  const loginItems: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <Link href={'/'}>계정 설정</Link>,
-    },
-    {
-      key: '2',
-      label: <Link href={`/wiki/${user?.profile?.code}`}>내 위키</Link>,
-    },
-    {
-      key: '3',
-      label: <div onClick={() => logOut()}>로그아웃</div>,
-    },
-  ];
+export default function UserMenu() {
+  const { user, isLoggedIn } = useAuth();
 
   return (
     <>
@@ -33,7 +15,7 @@ export default function UserMenu({ styles }: UserMenuProps) {
         모든 위키
       </Link>
       {isLoggedIn ? (
-        <Dropdown menu={{ items: loginItems }} trigger={['click']} placement="bottom">
+        <LoggedInUserDropdown>
           <Image
             className={styles.profileImg}
             src={user?.profile?.image || noProfileImage}
@@ -41,7 +23,7 @@ export default function UserMenu({ styles }: UserMenuProps) {
             height={32}
             width={32}
           />
-        </Dropdown>
+        </LoggedInUserDropdown>
       ) : (
         <Link className={'link'} href={'/login'}>
           로그인

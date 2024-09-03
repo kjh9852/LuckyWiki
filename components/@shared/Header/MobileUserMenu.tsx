@@ -4,28 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import menu from '@/public/icon/icon-menu.png';
 import search from '@/public/icon/icon-search.png';
+import LoggedInUserDropdown from './LoggedInUserDropdown';
 
-interface MobileUserMenuProps {
-  styles: Record<string, string>;
-}
-
-export default function MobileUserMenu({ styles }: MobileUserMenuProps) {
-  const { user, isLoggedIn, logOut } = useAuth();
-
-  const loginItems: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <Link href={'/'}>계정 설정</Link>,
-    },
-    {
-      key: '2',
-      label: <Link href={`/wiki/${user?.profile?.code}`}>내 위키</Link>,
-    },
-    {
-      key: '3',
-      label: <div onClick={() => logOut()}>로그아웃</div>,
-    },
-  ];
+export default function MobileUserMenu() {
+  const { isLoggedIn } = useAuth();
 
   const notLogInItems: MenuProps['items'] = [
     {
@@ -41,6 +23,7 @@ export default function MobileUserMenu({ styles }: MobileUserMenuProps) {
       label: <Link href={`/login`}>회원가입</Link>,
     },
   ];
+
   return (
     <>
       <Link className={'link'} href={'/wikilist'}>
@@ -48,9 +31,9 @@ export default function MobileUserMenu({ styles }: MobileUserMenuProps) {
       </Link>
       <button>
         {isLoggedIn ? (
-          <Dropdown menu={{ items: loginItems }} trigger={['click']} placement="bottomRight">
+          <LoggedInUserDropdown mobileDropdown>
             <Image src={menu} alt={'메뉴 아이콘'} />
-          </Dropdown>
+          </LoggedInUserDropdown>
         ) : (
           <Dropdown menu={{ items: notLogInItems }} trigger={['click']} placement="bottomRight">
             <Image src={menu} alt={'메뉴 아이콘'} />
