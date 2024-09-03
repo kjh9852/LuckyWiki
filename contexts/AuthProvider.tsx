@@ -84,11 +84,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     setUser(null);
   };
 
-  const updateUser = async () => {
+  const initUser = async () => {
     const userInfoResponse = await getUser();
-    console.log('userInfoResponse:', userInfoResponse);
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
+
       setUser({ id, name, profile });
     }
   };
@@ -104,7 +104,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const { accessToken } = getTokens();
     if (accessToken) {
-      updateUser();
+      initUser();
+      setIsLoggedIn(true);
     }
   }, [isLoggedIn]);
 
