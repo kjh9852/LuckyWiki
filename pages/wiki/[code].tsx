@@ -4,8 +4,7 @@ import WikiTitle from '../../components/Wiki/WikiTitle';
 import WikiContent from '@/components/Wiki/WikiContent';
 import ProfileDetails from '@/components/Wiki/ProfileDetails';
 import styles from './[code].module.scss';
-import { useMediaQuery } from 'react-responsive';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getProfile } from '@/apis/auth/getProfile';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -32,19 +31,7 @@ interface WikiProfileProps {
 }
 
 export default function WikiProfile({ profile }: WikiProfileProps) {
-  const [isTabletMobile, setIsTabletMobile] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const tabletMobile = useMediaQuery({
-    query: '(max-width: 1200px)',
-  });
-
-  useEffect(() => {
-    if (tabletMobile) {
-      setIsTabletMobile(true);
-    } else {
-      setIsTabletMobile(false);
-    }
-  }, [tabletMobile]);
 
   const handleOpenModalButtonClick = () => {
     setIsModalVisible(true);
@@ -55,27 +42,24 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
   };
 
   if (!profile) {
-    return <div>No profile available</div>;
+    return <div>profile이 없습니다.</div>;
   }
   return (
     <>
-      {isTabletMobile ? (
-        <div className={styles.wikiProfile}>
+      <div className={styles.wikiProfile}>
+        <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
+        <ProfileDetails profile={profile} />
+        <WikiContent profile={profile} />
+      </div>
+      <div className={styles.pcProfile}>
+        <section>
           <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
-          <ProfileDetails profile={profile} />
           <WikiContent profile={profile} />
-        </div>
-      ) : (
-        <div className={styles.pcProfile}>
-          <section>
-            <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
-            <WikiContent profile={profile} />
-          </section>
-          <section className={styles.profileDetails}>
-            <ProfileDetails profile={profile} />
-          </section>
-        </div>
-      )}
+        </section>
+        <section className={styles.profileDetails}>
+          <ProfileDetails profile={profile} />
+        </section>
+      </div>
       {/* {isModalVisible && <Modal onCloseModalButtonClick={handleCloseModalButtonClick}/>} */}
     </>
   );
