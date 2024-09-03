@@ -20,10 +20,10 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
     onSearch(value);
 
     if (!value) {
-      router.push('/wikilist');
+      router.push('/wikilist', undefined, { shallow: true });
       return;
     }
-    router.push(`/wikilist?q=${value}`);
+    router.push(`/wikilist?q=${value}`, undefined, { shallow: true });
   };
 
   return (
