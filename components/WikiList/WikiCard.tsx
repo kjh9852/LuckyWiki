@@ -2,6 +2,7 @@ import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiCard.module.scss';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface WikiCardProps {
   profileCard: ProfileType;
@@ -21,7 +22,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   };
 
   const handleMoveCardClick = () => {
-    router.push(`/wiki/${profileCard.code}`);
+    router.push(`/wiki/${profileCard.code}`, undefined, { shallow: true });
   };
 
   const profileImage = profileCard.image || '/icon/icon-profile.png';
