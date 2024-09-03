@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .header {
   position: fixed;
@@ -21,6 +21,10 @@
 }
 
 .nav {
+  .profileImg {
+    border-radius: 50%;
+    cursor: pointer;
+  }
   @include flexCenter;
   gap: 15px;
 
