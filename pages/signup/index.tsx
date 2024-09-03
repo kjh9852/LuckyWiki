@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
-import ValidInput from '@/components/@shared/ValidInput';
+import ValidInput from '@/components/@shared/Input/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
 import { useRouter } from 'next/router';
 
@@ -10,12 +10,12 @@ export default function SignUpPage() {
   const { signUp } = useAuth();
   const router = useRouter();
 
-  const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
+  const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'passwordConfirmation']);
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
-    if (formData.email && formData.name && formData.password && formData.verifyPassword) {
-      const { email, name, password, verifyPassword } = formData;
-      await signUp({ email, name, password, verifyPassword });
+    if (formData.email && formData.name && formData.password && formData.passwordConfirmation) {
+      const { email, name, password, passwordConfirmation } = formData;
+      await signUp({ email, name, password, passwordConfirmation });
       router.push('/');
     }
   };
@@ -31,6 +31,7 @@ export default function SignUpPage() {
           error={errors.name}
           message={errors.name?.message}
           register={register.name}
+          placeholder={'이름을 입력해주세요'}
         />
 
         <ValidInput
@@ -40,6 +41,7 @@ export default function SignUpPage() {
           error={errors.email}
           message={errors.email?.message}
           register={register.email}
+          placeholder={'이메일을 입력해주세요'}
         />
 
         <ValidInput
@@ -49,15 +51,17 @@ export default function SignUpPage() {
           error={errors.password}
           message={errors.password?.message}
           register={register.password}
+          placeholder={'비밀번호를 입력해주세요'}
         />
 
         <ValidInput
           label={'비밀번호 확인'}
           type={'password'}
-          htmlFor={'verifyPassword'}
-          error={errors.verifyPassword}
-          message={errors.verifyPassword?.message}
-          register={register.verifyPassword}
+          htmlFor={'passwordConfirmation'}
+          error={errors.passwordConfirmation}
+          message={errors.passwordConfirmation?.message}
+          register={register.passwordConfirmation}
+          placeholder={'비밀번호를 한 번 더 입력해주세요'}
         />
 
         <button className={'button'}>가입하기</button>

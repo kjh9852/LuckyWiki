@@ -29,7 +29,7 @@ interface User {
   id: number;
 }
 
-type signUpParams = Record<keyof FormInputValues, string>;
+type signUpParams = Record<keyof Omit<FormInputValues, 'currentPassword'>, string>;
 type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, string>;
 
 interface AuthContextValue {
@@ -60,12 +60,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     router.push('/');
   };
 
-  const signUp = async ({ email, name, password, verifyPassword }: signUpParams) => {
+  const signUp = async ({ email, name, password, passwordConfirmation }: signUpParams) => {
     const response = await authenticateSignUp({
       email,
       name,
       password,
-      passwordConfirmation: verifyPassword,
+      passwordConfirmation,
     });
 
     if (response) {

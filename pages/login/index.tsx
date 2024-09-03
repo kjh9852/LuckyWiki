@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
-import ValidInput from '@/components/@shared/ValidInput';
+import ValidInput from '@/components/@shared/Input/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
 
 export default function LogInPage() {
