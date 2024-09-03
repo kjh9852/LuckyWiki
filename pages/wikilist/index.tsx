@@ -31,6 +31,7 @@ interface WikiListProps {
 export default function WikiList({ profileList }: WikiListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
+
   const onSearch = (term: string) => {
     setSearchTerm(term);
   };

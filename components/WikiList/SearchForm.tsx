@@ -10,13 +10,15 @@ interface SearchFormProps {
 export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
   const router = useRouter();
   const [value, setValue] = useState(searchTerm);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSearch(value);
+
     if (!value) {
       router.push('/wikilist');
       return;
@@ -26,7 +28,7 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <input
           className={`${styles.inputWidth} input input-search`}
           type="text"
