@@ -12,15 +12,15 @@ export default function MobileUserMenu() {
   const notLogInItems: MenuProps['items'] = [
     {
       key: '1',
-      label: <Link href={`/login`}>모든 위키</Link>,
+      label: <Link href={`/`}>모든 위키</Link>,
     },
     {
       key: '2',
-      label: <Link href={'/signup'}>로그인</Link>,
+      label: <Link href={'/login'}>로그인</Link>,
     },
     {
       key: '3',
-      label: <Link href={`/login`}>회원가입</Link>,
+      label: <Link href={`/signup`}>회원가입</Link>,
     },
   ];
 
