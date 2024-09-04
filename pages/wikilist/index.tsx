@@ -6,6 +6,7 @@ import SearchForm from '@/components/WikiList/SearchForm';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Spinner from '@/components/WikiList/SPinner';
 
 export default function WikiList() {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -54,7 +55,7 @@ export default function WikiList() {
   );
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   return (
