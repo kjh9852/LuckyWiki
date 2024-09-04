@@ -5,7 +5,7 @@ import { HTMLInputTypeAttribute } from 'react';
 
 interface ValidInputProps {
   label?: string;
-  htmlFor: string;
+  htmlFor?: string;
   error: FieldError | undefined;
   message: string | undefined;
   register: UseFormRegisterReturn;
