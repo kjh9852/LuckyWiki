@@ -7,17 +7,16 @@ import { useAuth } from '@/contexts/AuthProvider';
 import { useRouter } from 'next/router';
 
 export default function SignUpPage() {
-  const { isLoggedIn, signUp } = useAuth();
+  const { signUp } = useAuth();
   const router = useRouter();
-  if (isLoggedIn) {
-    router.push('/');
-  }
+
   const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'verifyPassword']);
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
     if (formData.email && formData.name && formData.password && formData.verifyPassword) {
       const { email, name, password, verifyPassword } = formData;
       await signUp({ email, name, password, verifyPassword });
+      router.push('/');
     }
   };
 

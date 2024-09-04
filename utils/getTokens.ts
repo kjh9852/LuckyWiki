@@ -1,6 +1,9 @@
-export const getTokens = (): { accessToken: string | null; refreshToken: string | null } => {
-  const accessToken = sessionStorage.getItem('accessToken');
-  const refreshToken = sessionStorage.getItem('refreshToken');
+import { CookieValueTypes, getCookie } from 'cookies-next';
+
+export const getTokens = (): { accessToken: CookieValueTypes; refreshToken: CookieValueTypes } => {
+  const accessToken = getCookie('accessToken');
+  const refreshToken = getCookie('refreshToken');
+
   return {
     accessToken,
     refreshToken,

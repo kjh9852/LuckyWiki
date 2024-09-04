@@ -4,14 +4,10 @@ import React from 'react';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
-import { useRouter } from 'next/router';
 
 export default function LogInPage() {
-  const { isLoggedIn, logIn } = useAuth();
-  const router = useRouter();
-  if (isLoggedIn) {
-    router.push('/');
-  }
+  const { logIn } = useAuth();
+
   const { register, errors, handleSubmit } = useValidForm(['email', 'password']);
 
   const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
