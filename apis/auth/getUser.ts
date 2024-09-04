@@ -1,6 +1,7 @@
 import { getTokens } from '@/utils/getTokens';
 import { getProfile } from './getProfile';
-import { setCookie } from 'cookies-next';
+import { getNewAccessToken } from './getNewAccessToken';
+import { CookieValueTypes } from 'cookies-next';
 
 interface getUserReturn {
   profile: {
@@ -15,35 +16,34 @@ interface getUserReturn {
   id: number;
 }
 
-export const getUser = async (): Promise<getUserReturn | undefined> => {
-  const { accessToken, refreshToken } = getTokens();
-
+const fetchUser = async (accessToken: CookieValueTypes) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
   });
 
-  if (!response.ok) {
-    const refreshTokenResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        refreshToken: refreshToken,
-      }),
-    });
+  return response;
+};
 
-    if (!refreshTokenResponse.ok) {
+export const getUser = async (): Promise<getUserReturn | undefined> => {
+  const { accessToken, refreshToken } = getTokens();
+
+  let response;
+  response = await fetchUser(accessToken);
+
+  if (!response.ok && refreshToken) {
+    // accessToken이 만료된 경우라면 refreshToken으로 재발급
+    const newAccessToken = await getNewAccessToken(refreshToken);
+
+    if (!newAccessToken) {
       return undefined;
     }
 
-    const refreshedResponse: { accessToken: string } = await refreshTokenResponse.json();
-    setCookie('accessToken', refreshedResponse.accessToken);
+    // 재발급한 accessToken으로 다시 유저 정보 요청
+    response = await fetchUser(newAccessToken);
 
-    const retryResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${refreshedResponse.accessToken}` },
-    });
-
-    const retryResult = await retryResponse.json();
-    return retryResult;
+    if (!response) {
+      return undefined;
+    }
   }
 
   const resultUser = await response.json();
