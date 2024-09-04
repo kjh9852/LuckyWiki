@@ -1,4 +1,3 @@
-import { useAuth } from '@/contexts/AuthProvider';
 import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import { SubmitHandler } from 'react-hook-form';
 import ValidInput from '../@shared/Input/ValidInput';
@@ -9,13 +8,8 @@ import styles from './MyPageForm.module.scss';
 import classNames from 'classnames';
 
 export default function UpdatePasswordForm() {
-  const { isLoggedIn } = useAuth();
   const { openSnackBar } = useSnackBar();
   const router = useRouter();
-
-  if (!isLoggedIn) {
-    router.push('/');
-  }
 
   const { register, errors, handleSubmit } = useValidForm(['currentPassword', 'password', 'passwordConfirmation']);
 
