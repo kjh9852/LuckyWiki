@@ -1,5 +1,6 @@
 import { getTokens } from '@/utils/getTokens';
 import { getProfile } from './getProfile';
+import { setCookie } from 'cookies-next';
 
 interface getUserReturn {
   profile: {
@@ -35,7 +36,7 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
     }
 
     const refreshedResponse: { accessToken: string } = await refreshTokenResponse.json();
-    sessionStorage.setItem('accessToken', refreshedResponse.accessToken);
+    setCookie('accessToken', refreshedResponse.accessToken);
 
     const retryResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${refreshedResponse.accessToken}` },

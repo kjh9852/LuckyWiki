@@ -13,6 +13,7 @@
     "antd": "^5.20.3",
     "axios": "^1.7.6",
     "classnames": "^2.5.1",
+    "cookies-next": "^4.2.1",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18",
