@@ -2,13 +2,12 @@ import Image from 'next/image';
 import logo from '@/public/logo/logo_main.png';
 import Link from 'next/link';
 import styles from '@/components/@shared/Header/Header.module.scss';
-import UserMenu from './UserMenu';
 import MobileUserMenu from './MobileUserMenu';
-import { useSnackBar } from '@/contexts/SnackbarProvider';
+import dynamic from 'next/dynamic';
+
+const UserMenu = dynamic(() => import('./UserMenu'), { ssr: false });
 
 export default function Header() {
-  const { openSnackBar } = useSnackBar();
-
   return (
     <header className={styles.header}>
       <Link href={'/'}>

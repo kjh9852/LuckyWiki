@@ -3,15 +3,28 @@ import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
 import { getUser } from '@/apis/auth/getUser';
 import { FormInputValues } from '@/hooks/useValidForm';
 import { getTokens } from '@/utils/getTokens';
+import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-interface User {
-  profile: {
-    code: string;
+interface Profile {
+  code: string;
+  id: number;
+  image?: string | null;
+}
+
+interface AuthResponse {
+  user: {
     id: number;
-    image?: string | null;
-  } | null;
+    name: string;
+    profile: Profile | null;
+  };
+  accessToken: string;
+  refreshToken: string;
+}
+
+interface User {
+  profile: Profile | null;
   name: string;
   id: number;
 }
@@ -34,6 +47,19 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
+  const initAuthenticatedUser = (response: AuthResponse) => {
+    const { id, name, profile } = response.user;
+    setCookie('accessToken', response.accessToken);
+    setCookie('refreshToken', response.refreshToken);
+    setIsLoggedIn(true);
+    setUser({
+      id,
+      name,
+      profile,
+    });
+    router.push('/');
+  };
+
   const signUp = async ({ email, name, password, verifyPassword }: signUpParams) => {
     const response = await authenticateSignUp({
       email,
@@ -43,16 +69,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (response) {
-      const { id, name, profile } = response.user;
-      sessionStorage.setItem('accessToken', response.accessToken);
-      sessionStorage.setItem('refreshToken', response.refreshToken);
-      setIsLoggedIn(true);
-      setUser({
-        id,
-        name,
-        profile,
-      });
-      router.push('/');
+      initAuthenticatedUser(response);
     }
   };
 
@@ -60,31 +77,22 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const response = await authenticateLogIn({ email, password });
 
     if (response) {
-      const { id, name, profile } = response.user;
-      sessionStorage.setItem('accessToken', response.accessToken);
-      sessionStorage.setItem('refreshToken', response.refreshToken);
-      setIsLoggedIn(true);
-      setUser({
-        id,
-        name,
-        profile,
-      });
-      router.push('/');
+      initAuthenticatedUser(response);
     }
   };
 
   const logOut = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('refreshToken');
+    deleteCookie('accessToken');
+    deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
+    router.push('/');
   };
 
   const initUser = async () => {
     const userInfoResponse = await getUser();
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
-
       setUser({ id, name, profile });
     }
   };
