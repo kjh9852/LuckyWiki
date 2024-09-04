@@ -32,7 +32,6 @@ export const authenticateSignUp = async ({
   });
 
   if (!response.ok) {
-    alert('회원가입이 불가능한 정보입니다.');
     return undefined;
   }
 
