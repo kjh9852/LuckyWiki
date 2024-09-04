@@ -1,7 +1,8 @@
 import ProfileType from '@/types/types';
 
-export const getProfileList = async (): Promise<ProfileType[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles`);
+export const getProfileList = async (params: { name?: string } = {}): Promise<ProfileType[]> => {
+  const query = new URLSearchParams(params as string).toString();
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`);
   if (!response.ok) {
     return [];
   }

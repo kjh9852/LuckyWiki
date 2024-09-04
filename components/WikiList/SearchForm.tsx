@@ -1,6 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './SearchForm.module.scss';
 import { useRouter } from 'next/router';
+import useDebounce from '@/hooks/useDebounce';
 
 interface SearchFormProps {
   searchTerm: string;
@@ -11,31 +12,29 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
   const router = useRouter();
   const [value, setValue] = useState(searchTerm);
 
+  const debouncedValue = useDebounce(value, 1000);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      onSearch(debouncedValue);
+      router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
+    } else {
+      router.push('/wikilist', undefined, { shallow: true });
+    }
+  }, [debouncedValue, onSearch, router]);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSearch(value);
-
-    if (!value) {
-      router.push('/wikilist', undefined, { shallow: true });
-      return;
-    }
-    router.push(`/wikilist?q=${value}`, undefined, { shallow: true });
-  };
-
   return (
     <>
-      <form onSubmit={handleFormSubmit}>
-        <input
-          className={`${styles.inputWidth} input input-search`}
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-        />
-      </form>
+      <input
+        className={`${styles.inputWidth} input input-search`}
+        type="text"
+        value={value}
+        onChange={handleInputChange}
+      />
     </>
   );
 }
