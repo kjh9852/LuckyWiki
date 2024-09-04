@@ -1,0 +1,10 @@
+POST https://wikied-api.vercel.app/8-7/auth/signUp
+Content-Type: application/json
+
+
+{
+  "email": "sprint111@codeit.com",
+  "name": "스프린터",
+  "password": "sprint111",
+  "passwordConfirmation": "sprint111"
+}

@@ -18,6 +18,7 @@
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
+  cursor: pointer;
 
   .image {
     border-radius: 50%;
@@ -50,15 +51,18 @@
     padding: 5px 10px;
     border-radius: 10px;
     background-color: $primary-green100;
-    position: absolute;
-    bottom: 24px;
-    right: 36px;
+    align-self: flex-end;
 
     p {
       @include text;
       color: $primary-green200;
       margin: 0;
     }
+  }
+
+  .noProfileFound {
+    margin: 204px auto;
+    width: 303px;
   }
 }
 
@@ -72,7 +76,8 @@
   .profileCard {
     width: 334px;
     height: 150px;
-    padding: 17px 20px;
+    padding: 21px 25px;
+    align-items: flex-start;
 
     .image {
       width: 60px;
@@ -99,12 +104,13 @@
       width: 204px;
       padding: 4px 10px;
       position: absolute;
-      bottom: 15px;
-      left: 100px;
+      bottom: 25px;
+      left: 105px;
 
       p {
         font-size: 12px;
         line-height: 18px;
+        @include ellipsis;
       }
     }
   }
