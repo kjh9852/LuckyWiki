@@ -6,6 +6,7 @@ import { getTokens } from '@/utils/getTokens';
 import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useSnackBar } from './SnackbarProvider';
 
 interface Profile {
   code: string;
@@ -43,6 +44,7 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
+  const { openSnackBar } = useSnackBar();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
@@ -70,6 +72,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     if (response) {
       initAuthenticatedUser(response);
+    } else {
+      openSnackBar({ type: 'error', content: '회원가입에 실패했습니다.' });
     }
   };
 
@@ -78,6 +82,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     if (response) {
       initAuthenticatedUser(response);
+    } else {
+      openSnackBar({ type: 'error', content: '일치하는 회원 정보가 없습니다.' });
     }
   };
 

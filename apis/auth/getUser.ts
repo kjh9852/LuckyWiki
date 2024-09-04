@@ -47,13 +47,18 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
   }
 
   const resultUser = await response.json();
-  const profile = await getProfile(resultUser.profile.code);
 
-  return {
-    ...resultUser,
-    profile: {
-      ...resultUser.profile,
-      image: profile?.image,
-    },
-  };
+  if (resultUser.profile) {
+    // 생성된 프로필 정보가 있다면
+    const profile = await getProfile(resultUser.profile.code);
+    return {
+      ...resultUser,
+      profile: {
+        ...resultUser.profile,
+        image: profile?.image,
+      },
+    };
+  }
+
+  return resultUser;
 };

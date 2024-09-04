@@ -31,7 +31,6 @@ export const authenticateLogIn = async ({
   });
 
   if (!response.ok) {
-    alert('일치하는 회원 정보가 없습니다.');
     return undefined;
   }
 
