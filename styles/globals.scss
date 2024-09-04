@@ -81,3 +81,31 @@ body {
     color: $primary-green200;
   }
 }
+
+.custom-snackbar {
+  .ant-message-notice-content {
+    height: 50px !important;
+    padding: 13px 20px 15px 20px !important;
+    border-radius: 10px !important;
+    font-family: Pretendard !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    gap: 20px !important;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  &-success .ant-message-notice-content {
+    background-color: $primary-green100 !important;
+    border: 1px solid $primary-green200 !important;
+    color: $primary-green200 !important;
+  }
+
+  &-error .ant-message-notice-content {
+    background-color: $secondary-red100 !important;
+    border: 1px solid $secondary-red200 !important;
+    color: $secondary-red200 !important;
+  }
+}

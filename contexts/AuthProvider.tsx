@@ -6,10 +6,6 @@ import { getTokens } from '@/utils/getTokens';
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 interface User {
   profile: {
     code: string;
@@ -33,7 +29,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export default function AuthProvider({ children }: AuthProviderProps) {
+export default function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
