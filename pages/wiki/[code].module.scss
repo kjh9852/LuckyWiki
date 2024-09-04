@@ -16,7 +16,15 @@
   }
 }
 
+.wikiProfile {
+  display: none;
+}
+
 @include tablet {
+  .pcProfile {
+    display: none;
+  }
+
   .wikiProfile {
     display: block;
     margin: 60px auto;

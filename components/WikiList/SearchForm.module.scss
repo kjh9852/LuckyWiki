@@ -1,0 +1,18 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.inputWidth {
+  width: 860px;
+}
+
+@include tablet {
+  .inputWidth {
+    width: 704px;
+  }
+}
+
+@include mobile {
+  .inputWidth {
+    width: 335px;
+  }
+}

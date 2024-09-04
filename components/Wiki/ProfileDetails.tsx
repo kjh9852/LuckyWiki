@@ -1,7 +1,6 @@
 import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './ProfileDetail.module.scss';
-import Link from 'next/link';
 
 interface ProfileDetailProps {
   profile: ProfileType;
