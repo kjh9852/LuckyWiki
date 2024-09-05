@@ -17,11 +17,11 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
   useEffect(() => {
     if (debouncedValue) {
       onSearch(debouncedValue);
-      router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
+      router.push(`/wikilist?name=${value}`, undefined, { shallow: true });
     } else {
       router.push('/wikilist', undefined, { shallow: true });
     }
-  }, [debouncedValue, onSearch, router]);
+  }, [debouncedValue]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
