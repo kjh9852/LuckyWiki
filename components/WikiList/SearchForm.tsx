@@ -18,8 +18,6 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
     if (debouncedValue) {
       onSearch(debouncedValue);
       router.push(`/wikilist?name=${value}`, undefined, { shallow: true });
-    } else {
-      router.push('/wikilist', undefined, { shallow: true });
     }
   }, [debouncedValue]);
 

@@ -37,36 +37,40 @@ export default function WikiList() {
         setLoading(false);
       }
     },
-    [page],
+    [page], //page 바뀌면 함수 재생성
   );
 
   const onSearch = (term: string) => {
     setSearchTerm(term);
   };
 
+  //주소창에 검색어 쿼리치면 데이터 요청
   useEffect(() => {
-    const initialName = router.query.name || '';
+    const initialName = router.query.name;
     if (typeof initialName === 'string') {
-      setSearchTerm(initialName);
+      setSearchTerm(() => initialName);
     }
   }, [router.query.name]);
 
-  // useEffect(() => {
-  //   if (searchTerm) {
-  //     console.log(page);
-  //     console.log(hasMore);
-  //     setPage(() => 1);
-  //     setProfileCards(() => []);
-  //     setHasMore(true);
-  //     handleLoadProfileCards(page, 4, searchTerm);
-  //   }
-  // }, [searchTerm]);
+  //searchTerm 바뀌면 page=1로 하고 리스트 초기화
+  useEffect(() => {
+    if (searchTerm) {
+      console.log(page);
+      console.log(hasMore);
+      setPage(() => 1);
+      setProfileCards(() => []);
+      setHasMore(true);
+      handleLoadProfileCards(page, 4, searchTerm);
+    }
+  }, [searchTerm]);
 
+  // 데이터 불러오고 page 바뀌면 데이터 또 불러오기
   useEffect(() => {
     console.log(page);
     handleLoadProfileCards(page, 4, searchTerm);
   }, [page]);
 
+  //ref가 보이고 더 불러올게 있으면 page + 1
   useEffect(() => {
     if (inView && hasMore) {
       setPage(prevPage => prevPage + 1);
