@@ -1,4 +1,4 @@
-import { getTokens } from '@/utils/getTokens';
+import { fetchWithTokenRefresh } from './fetchWithTokenRefresh';
 
 interface CreateProfileParams {
   quizQuestion: string;
@@ -6,17 +6,11 @@ interface CreateProfileParams {
 }
 
 export const createProfile = async ({ quizQuestion, quizAnswer }: CreateProfileParams) => {
-  const { accessToken } = getTokens();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles`, {
+  const result = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ securityQuestion: quizQuestion, securityAnswer: quizAnswer }),
   });
-
-  if (!response.ok) {
-    return undefined;
-  }
-  const result = await response.json();
 
   return result;
 };
