@@ -1,5 +1,3 @@
-import { getTokens } from '@/utils/getTokens';
-
 interface AuthenticateLogInProps {
   email: string;
   password: string;
