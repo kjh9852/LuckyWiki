@@ -30,7 +30,6 @@ export default function WikiList() {
         if (nextProfileCards.length < pageSize) {
           setHasMore(false);
         }
-        console.log('filterAPI Response:', nextProfileCards);
       } catch (error) {
         console.error('Failed to fetch profileCards', error);
       } finally {
@@ -52,11 +51,9 @@ export default function WikiList() {
     }
   }, [router.query.name]);
 
-  //searchTerm 바뀌면 page=1로 하고 리스트 초기화
+  //searchTerm 바뀌면 page = 1로 하고 리스트 초기화
   useEffect(() => {
     if (searchTerm) {
-      console.log(page);
-      console.log(hasMore);
       setPage(() => 1);
       setProfileCards(() => []);
       setHasMore(true);
@@ -64,20 +61,16 @@ export default function WikiList() {
     }
   }, [searchTerm]);
 
-  // 데이터 불러오고 page 바뀌면 데이터 또 불러오기
+  // 데이터 요청하고 page 바뀌면 다음 데이터 요청
   useEffect(() => {
-    console.log(page);
     handleLoadProfileCards(page, 4, searchTerm);
   }, [page]);
 
-  //ref가 보이고 더 불러올게 있으면 page + 1
+  //ref가 보이고 불러올 데이터가 더 있으면 page + 1
   useEffect(() => {
     if (inView && hasMore) {
       setPage(prevPage => prevPage + 1);
     }
-    console.log('filterAPI Response:', profileCards);
-    console.log(page);
-    console.log(hasMore);
   }, [inView]);
 
   const hasSearchedProfile = profileCards.some(
