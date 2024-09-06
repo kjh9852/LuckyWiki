@@ -15,9 +15,11 @@ export default function SearchForm({ searchTerm, onSearch }: SearchFormProps) {
   const debouncedValue = useDebounce(value, 1000);
 
   useEffect(() => {
+    onSearch(debouncedValue);
     if (debouncedValue) {
-      onSearch(debouncedValue);
-      router.push(`/wikilist?name=${value}`, undefined, { shallow: true });
+      router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
+    } else {
+      router.push(`/wikilist`, undefined, { shallow: true });
     }
   }, [debouncedValue]);
 

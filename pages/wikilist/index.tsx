@@ -17,27 +17,27 @@ export default function WikiList() {
   const [ref, inView] = useInView({ threshold: 0 });
   const [hasMore, setHasMore] = useState<boolean>(true);
   const router = useRouter();
+  const { name } = router.query;
 
-  const handleLoadProfileCards = useCallback(
-    async (page: number, pageSize: number, name: string) => {
-      if (!hasMore) {
-        return;
+  const handleLoadProfileCards = useCallback(async (page: number, pageSize: number, name: string) => {
+    if (!hasMore) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const nextProfileCards = await getProfileList(page, pageSize, name);
+      setProfileCards(prevCards => [...prevCards, ...nextProfileCards]);
+      setPage(prevPage => prevPage + 1);
+      if (nextProfileCards.length < pageSize) {
+        setHasMore(false);
+        setPage(1);
       }
-      setLoading(true);
-      try {
-        const nextProfileCards = await getProfileList(page, pageSize, name);
-        setProfileCards(prevCards => [...prevCards, ...nextProfileCards]);
-        if (nextProfileCards.length < pageSize) {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error('Failed to fetch profileCards', error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [page], //page 바뀌면 함수 재생성
-  );
+    } catch (error) {
+      console.error('Failed to fetch profileCards', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const onSearch = (term: string) => {
     setSearchTerm(term);
@@ -45,31 +45,24 @@ export default function WikiList() {
 
   //주소창에 검색어 쿼리치면 데이터 요청
   useEffect(() => {
-    const initialName = router.query.name;
-    if (typeof initialName === 'string') {
-      setSearchTerm(() => initialName);
+    if (typeof name === 'string') {
+      setSearchTerm(name);
     }
-  }, [router.query.name]);
+  }, [name]);
 
-  //searchTerm 바뀌면 page = 1로 하고 리스트 초기화
+  //searchTerm 바뀌면 리스트 초기화
   useEffect(() => {
-    if (searchTerm) {
-      setPage(() => 1);
-      setProfileCards(() => []);
+    if (searchTerm !== undefined) {
+      setProfileCards([]);
       setHasMore(true);
-      handleLoadProfileCards(page, 4, searchTerm);
+      handleLoadProfileCards(1, 4, searchTerm);
     }
   }, [searchTerm]);
 
-  // 데이터 요청하고 page 바뀌면 다음 데이터 요청
+  //데이터 더 불러오기
   useEffect(() => {
-    handleLoadProfileCards(page, 4, searchTerm);
-  }, [page]);
-
-  //ref가 보이고 불러올 데이터가 더 있으면 page + 1
-  useEffect(() => {
-    if (inView && hasMore) {
-      setPage(prevPage => prevPage + 1);
+    if (inView && hasMore && page > 1) {
+      handleLoadProfileCards(page, 4, searchTerm);
     }
   }, [inView]);
 
@@ -87,21 +80,25 @@ export default function WikiList() {
           </p>
         )}
       </section>
-      {profileCards.length > 0 || loading ? (
+      {profileCards.length > 0 ? (
         <>
-          {loading && <Spinner />}
           <section className={styles.profileList}>
             {profileCards.map(profileCard => (
               <WikiCard profileCard={profileCard} key={profileCard.id} />
             ))}
-            <div ref={ref}>무한스크롤</div>
+            <div ref={ref} className={styles.infiniteScrollText}>
+              무한스크롤
+            </div>
+            {loading && <Spinner />}
           </section>
         </>
       ) : (
-        <section className={styles.noProfileFound}>
-          <p>{searchTerm}과(와) 일치하는 검색 결과가 없어요.</p>
-          <Image src={'/icon/icon-no-search.png'} alt="검색 결과 없음 아이콘" width={144} height={144} />
-        </section>
+        !loading && (
+          <section className={styles.noProfileFound}>
+            <p>{searchTerm}과(와) 일치하는 검색 결과가 없어요.</p>
+            <Image src={'/icon/icon-no-search.png'} alt="검색 결과 없음 아이콘" width={144} height={144} />
+          </section>
+        )
       )}
     </>
   );
