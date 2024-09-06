@@ -35,6 +35,7 @@ type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, str
 interface AuthContextValue {
   isLoggedIn: boolean;
   user: User | null;
+  syncUserAuthState: () => Promise<void>;
   signUp: (formData: signUpParams) => Promise<void>;
   logIn: (formData: logInParams) => Promise<void>;
   logOut: () => void;
@@ -94,7 +95,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     router.push('/');
   }, []);
 
-  const initUser = async () => {
+  const syncUserAuthState = async () => {
     const userInfoResponse = await getUser();
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
@@ -110,15 +111,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       isLoggedIn,
       user,
+      syncUserAuthState,
       signUp,
       logIn,
       logOut,
     }),
-    [isLoggedIn, user, signUp, logIn, logOut],
+    [isLoggedIn, user, syncUserAuthState, signUp, logIn, logOut],
   );
 
   useEffect(() => {
-    initUser();
+    syncUserAuthState();
   }, []);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
