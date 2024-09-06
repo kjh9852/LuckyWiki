@@ -1,8 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getServerTokens } from './utils/getServerTokens';
 
 export async function middleware(request: NextRequest) {
-  const { accessToken } = getServerTokens(request);
+  const accessToken = request.cookies.get('accessToken');
   const { pathname } = request.nextUrl;
   const loggedInUserPages = ['/mypage', '/wiki/:path'];
   const notLoggedInUserPages = ['/login', '/signup', '/landing'];

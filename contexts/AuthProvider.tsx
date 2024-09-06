@@ -1,11 +1,10 @@
-import { authenticateLogIn } from '@/apis/auth/authenticateLogIn';
+import { authenticateLogIn } from '@/apis/auth/authenticateLogin';
 import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
 import { getUser } from '@/apis/auth/getUser';
 import { FormInputValues } from '@/hooks/useValidForm';
-import { getTokens } from '@/utils/getTokens';
 import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useSnackBar } from './SnackbarProvider';
 
 interface Profile {
@@ -36,6 +35,7 @@ type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, str
 interface AuthContextValue {
   isLoggedIn: boolean;
   user: User | null;
+  syncUserAuthState: () => Promise<void>;
   signUp: (formData: signUpParams) => Promise<void>;
   logIn: (formData: logInParams) => Promise<void>;
   logOut: () => void;
@@ -62,7 +62,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     router.push('/');
   };
 
-  const signUp = async ({ email, name, password, passwordConfirmation }: signUpParams) => {
+  const signUp = useCallback(async ({ email, name, password, passwordConfirmation }: signUpParams) => {
     const response = await authenticateSignUp({
       email,
       name,
@@ -75,9 +75,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     } else {
       openSnackBar({ type: 'error', content: '회원가입에 실패했습니다.' });
     }
-  };
+  }, []);
 
-  const logIn = async ({ email, password }: logInParams) => {
+  const logIn = useCallback(async ({ email, password }: logInParams) => {
     const response = await authenticateLogIn({ email, password });
 
     if (response) {
@@ -85,39 +85,43 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     } else {
       openSnackBar({ type: 'error', content: '일치하는 회원 정보가 없습니다.' });
     }
-  };
+  }, []);
 
-  const logOut = () => {
+  const logOut = useCallback(() => {
     deleteCookie('accessToken');
     deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
     router.push('/');
-  };
+  }, []);
 
-  const initUser = async () => {
+  const syncUserAuthState = async () => {
     const userInfoResponse = await getUser();
     if (userInfoResponse) {
       const { id, name, profile } = userInfoResponse;
       setUser({ id, name, profile });
+      setIsLoggedIn(true);
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
     }
   };
 
-  const authContextValue = {
-    isLoggedIn,
-    user,
-    signUp,
-    logIn,
-    logOut,
-  };
+  const authContextValue = useMemo(
+    () => ({
+      isLoggedIn,
+      user,
+      syncUserAuthState,
+      signUp,
+      logIn,
+      logOut,
+    }),
+    [isLoggedIn, user, syncUserAuthState, signUp, logIn, logOut],
+  );
 
   useEffect(() => {
-    const { accessToken } = getTokens();
-    if (accessToken) {
-      initUser();
-      setIsLoggedIn(true);
-    }
-  }, [isLoggedIn]);
+    syncUserAuthState();
+  }, []);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }
