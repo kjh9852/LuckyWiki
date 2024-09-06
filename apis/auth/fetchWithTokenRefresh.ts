@@ -1,6 +1,6 @@
 import { getTokens } from '@/utils/getTokens';
 import { getNewAccessToken } from './getNewAccessToken';
-import { CookieValueTypes, setCookie } from 'cookies-next';
+import { CookieValueTypes, deleteCookie, setCookie } from 'cookies-next';
 
 interface FetchOptions {
   method: 'GET' | 'POST' | 'PATCH';
@@ -19,7 +19,13 @@ const insertAuthorization = (options: FetchOptions, accessToken: string | Cookie
 };
 
 export const fetchWithTokenRefresh = async (fetchUrl: string, options: FetchOptions) => {
-  const { refreshToken, accessToken } = getTokens();
+  const { accessToken, refreshToken } = getTokens();
+
+  if (!accessToken) {
+    // accessToken이 없는 경우 fetch 요청 없이 undefined 반환
+    return undefined;
+  }
+
   const authorizationOptions = insertAuthorization(options, accessToken);
 
   // accessToken 넣은 options로 fetch 요청
@@ -30,7 +36,9 @@ export const fetchWithTokenRefresh = async (fetchUrl: string, options: FetchOpti
     const newAccessToken = await getNewAccessToken(refreshToken);
 
     if (!newAccessToken) {
-      // refreshToken도 만료되었다면 undefined 반환
+      // refreshToken도 만료되었다면, 쿠키 전체 삭제하고 undefined 반환
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
       return undefined;
     }
 
