@@ -18,26 +18,27 @@ export default function WikiList() {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const router = useRouter();
 
-  const handleLoadProfileCards = useCallback(async (page: number, pageSize: number, name: string) => {
-    setLoading(true);
-
-    try {
-      const nextProfileCards = await getProfileList(page, 3, name);
-      setProfileCards(prevCards => {
-        return page === 1 ? nextProfileCards : [...prevCards, ...nextProfileCards];
-      });
-      setPage(prevPage => prevPage + 1);
-      if (nextProfileCards.length < pageSize) {
-        setHasMore(false);
-        setPage(1);
+  const handleLoadProfileCards = useCallback(
+    async (page: number, pageSize: number, name: string) => {
+      if (!hasMore) {
+        return;
       }
-      console.log('filterAPI Response:', nextProfileCards);
-    } catch (error) {
-      console.error('Failed to fetch profileCards', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      setLoading(true);
+      try {
+        const nextProfileCards = await getProfileList(page, pageSize, name);
+        setProfileCards(prevCards => [...prevCards, ...nextProfileCards]);
+        if (nextProfileCards.length < pageSize) {
+          setHasMore(false);
+        }
+        console.log('filterAPI Response:', nextProfileCards);
+      } catch (error) {
+        console.error('Failed to fetch profileCards', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [page],
+  );
 
   const onSearch = (term: string) => {
     setSearchTerm(term);
@@ -50,32 +51,34 @@ export default function WikiList() {
     }
   }, [router.query.name]);
 
+  // useEffect(() => {
+  //   if (searchTerm) {
+  //     console.log(page);
+  //     console.log(hasMore);
+  //     setPage(() => 1);
+  //     setProfileCards(() => []);
+  //     setHasMore(true);
+  //     handleLoadProfileCards(page, 4, searchTerm);
+  //   }
+  // }, [searchTerm]);
+
   useEffect(() => {
-    if (searchTerm || searchTerm === '') {
-      console.log(page);
-      console.log(hasMore);
-      setPage(1);
-      setProfileCards([]);
-      setHasMore(true);
-    }
     console.log(page);
-    handleLoadProfileCards(page, 3, searchTerm);
-  }, [searchTerm]);
+    handleLoadProfileCards(page, 4, searchTerm);
+  }, [page]);
 
   useEffect(() => {
     if (inView && hasMore) {
-      handleLoadProfileCards(page, 3, searchTerm);
-      console.log(inView, '무한 스크롤 요청');
+      setPage(prevPage => prevPage + 1);
     }
+    console.log('filterAPI Response:', profileCards);
+    console.log(page);
+    console.log(hasMore);
   }, [inView]);
 
   const hasSearchedProfile = profileCards.some(
     profileCard => profileCard.name.toLowerCase() === searchTerm.toLowerCase(),
   );
-
-  if (loading) {
-    return <Spinner />;
-  }
 
   return (
     <>
@@ -87,8 +90,9 @@ export default function WikiList() {
           </p>
         )}
       </section>
-      {profileCards.length > 0 ? (
+      {profileCards.length > 0 || loading ? (
         <>
+          {loading && <Spinner />}
           <section className={styles.profileList}>
             {profileCards.map(profileCard => (
               <WikiCard profileCard={profileCard} key={profileCard.id} />
