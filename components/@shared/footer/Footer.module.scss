@@ -1,0 +1,38 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.footerContainer {
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+  background-color: $gray600;
+  color: $gray50;
+  height: 200px;
+
+  .footerCopyLight {
+    @include fontStyle700($font-size: 14px, $color: $gray50);
+    padding-bottom: 10px;
+    @include mobile {
+      font-size: 10px;
+    }
+  }
+
+  .footerInfo,
+  .footerPolishContainer {
+    @include fontStyle400($font-size: 12px, $color: $gray50);
+
+    @include mobile {
+      font-size: 8px;
+    }
+  }
+
+  .footerPolishContainer {
+    padding-top: 20px;
+    display: flex;
+    gap: 30px;
+  }
+}

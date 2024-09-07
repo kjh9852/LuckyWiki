@@ -13,6 +13,7 @@ import chatLightImg from '@/public/landing/landing-chat-light.png';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { Bounce, JackInTheBox, Slide, Fade, Flip, AttentionSeeker } from 'react-awesome-reveal';
+import Footer from '@/components/@shared/footer/Footer';
 
 export default function Landing() {
   return (
@@ -117,19 +118,7 @@ export default function Landing() {
           </Link>
         </AttentionSeeker>
       </section>
-      <footer className={styles.footerContainer}>
-        <p className={styles.footerCopyLight}>Copyright ⓒ Wikied. All Rights Reserved</p>
-        <p className={styles.footerInfo}>
-          사업자등록번호 000-00-00000 | 통신판매신고 제2020-서울-00000호 | 대표 : 이지은
-          <br />
-          서울특별시 중구 청계천로 123, 위키드빌딩
-        </p>
-        <div className={styles.footerPolishContainer}>
-          <span>서비스 이용약관</span>
-          <span>개인정보 취급방침</span>
-          <span>전자금융거래 기본약관</span>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
