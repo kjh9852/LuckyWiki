@@ -1,16 +1,16 @@
 import { fetchWithTokenRefresh } from './fetchWithTokenRefresh';
 
 interface CreateProfileParams {
-  quizQuestion: string;
-  quizAnswer: string;
+  securityQuestion: string;
+  securityAnswer: string;
 }
 
-export const createProfile = async ({ quizQuestion, quizAnswer }: CreateProfileParams) => {
-  const result = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles`, {
+export const createProfile = async ({ securityQuestion, securityAnswer }: CreateProfileParams) => {
+  const response = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ securityQuestion: quizQuestion, securityAnswer: quizAnswer }),
+    body: JSON.stringify({ securityQuestion, securityAnswer }),
   });
 
-  return result;
+  return response;
 };
