@@ -1,40 +1,26 @@
-import { authenticateLogIn } from '@/apis/auth/authenticateLogIn';
+import { authenticateLogIn } from '@/apis/auth/authenticateLogin';
 import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
 import { getUser } from '@/apis/auth/getUser';
 import { FormInputValues } from '@/hooks/useValidForm';
-import { getTokens } from '@/utils/getTokens';
 import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-
-interface Profile {
-  code: string;
-  id: number;
-  image?: string | null;
-}
-
-interface AuthResponse {
-  user: {
-    id: number;
-    name: string;
-    profile: Profile | null;
-  };
-  accessToken: string;
-  refreshToken: string;
-}
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useSnackBar } from './SnackbarProvider';
+import { UserProfile } from '@/types/types';
 
 interface User {
-  profile: Profile | null;
+  profile: UserProfile | null;
   name: string;
   id: number;
 }
 
-type signUpParams = Record<keyof FormInputValues, string>;
+type signUpParams = Record<keyof Omit<FormInputValues, 'currentPassword'>, string>;
 type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, string>;
 
 interface AuthContextValue {
   isLoggedIn: boolean;
   user: User | null;
+  syncUserAuthState: () => Promise<void>;
   signUp: (formData: signUpParams) => Promise<void>;
   logIn: (formData: logInParams) => Promise<void>;
   logOut: () => void;
@@ -43,74 +29,79 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
+  const { openSnackBar } = useSnackBar();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
-  const initAuthenticatedUser = (response: AuthResponse) => {
-    const { id, name, profile } = response.user;
-    setCookie('accessToken', response.accessToken);
-    setCookie('refreshToken', response.refreshToken);
+  const initAuthenticatedUser = ({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) => {
+    setCookie('accessToken', accessToken);
+    setCookie('refreshToken', refreshToken);
     setIsLoggedIn(true);
-    setUser({
-      id,
-      name,
-      profile,
-    });
     router.push('/');
   };
 
-  const signUp = async ({ email, name, password, verifyPassword }: signUpParams) => {
+  const signUp = useCallback(async ({ email, name, password, passwordConfirmation }: signUpParams) => {
     const response = await authenticateSignUp({
       email,
       name,
       password,
-      passwordConfirmation: verifyPassword,
+      passwordConfirmation,
     });
 
     if (response) {
-      initAuthenticatedUser(response);
+      const { accessToken, refreshToken } = response;
+      initAuthenticatedUser({ accessToken, refreshToken });
+    } else {
+      openSnackBar({ type: 'error', content: '회원가입에 실패했습니다.' });
     }
-  };
+  }, []);
 
-  const logIn = async ({ email, password }: logInParams) => {
+  const logIn = useCallback(async ({ email, password }: logInParams) => {
     const response = await authenticateLogIn({ email, password });
 
     if (response) {
-      initAuthenticatedUser(response);
+      const { accessToken, refreshToken } = response;
+      initAuthenticatedUser({ accessToken, refreshToken });
+    } else {
+      openSnackBar({ type: 'error', content: '일치하는 회원 정보가 없습니다.' });
     }
-  };
+  }, []);
 
-  const logOut = () => {
+  const logOut = useCallback(() => {
     deleteCookie('accessToken');
     deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
     router.push('/');
-  };
+  }, []);
 
-  const initUser = async () => {
+  const syncUserAuthState = useCallback(async () => {
     const userInfoResponse = await getUser();
-    if (userInfoResponse) {
-      const { id, name, profile } = userInfoResponse;
-      setUser({ id, name, profile });
-    }
-  };
 
-  const authContextValue = {
-    isLoggedIn,
-    user,
-    signUp,
-    logIn,
-    logOut,
-  };
+    if (userInfoResponse) {
+      setUser(userInfoResponse);
+      setIsLoggedIn(true);
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const authContextValue = useMemo(
+    () => ({
+      isLoggedIn,
+      user,
+      syncUserAuthState,
+      signUp,
+      logIn,
+      logOut,
+    }),
+    [user],
+  );
 
   useEffect(() => {
-    const { accessToken } = getTokens();
-    if (accessToken) {
-      initUser();
-      setIsLoggedIn(true);
-    }
+    syncUserAuthState();
   }, [isLoggedIn]);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

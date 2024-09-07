@@ -1,0 +1,12 @@
+.myPageForm {
+  text-align: start;
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      width: 89px;
+      height: 40px;
+    }
+  }
+}
