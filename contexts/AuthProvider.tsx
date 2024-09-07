@@ -14,7 +14,7 @@ interface User {
   id: number;
 }
 
-type signUpParams = Record<keyof Omit<FormInputValues, 'currentPassword'>, string>;
+type signUpParams = Record<keyof Pick<FormInputValues, 'email' | 'name' | 'password' | 'passwordConfirmation'>, string>;
 type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, string>;
 
 interface AuthContextValue {

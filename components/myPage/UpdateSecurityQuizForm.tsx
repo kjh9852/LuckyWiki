@@ -6,7 +6,6 @@ import ValidInput from '../@shared/Input/ValidInput';
 import { updateSecurityQuiz } from '@/apis/auth/updateSecurityQuiz';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';
-import { message } from 'antd';
 import { useAuth } from '@/contexts/AuthProvider';
 
 interface UpdateSecurityQuizFormProps {
