@@ -36,7 +36,7 @@ export default function ValidInput({
         placeholder={placeholder}
         {...register}
       />
-      {error && <p className={classNames('text-xs', styles.message)}>{message}</p>}
+      {message && <p className={classNames('text-xs', styles.message)}>{message}</p>}
     </div>
   );
 }

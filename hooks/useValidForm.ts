@@ -6,8 +6,9 @@ export interface FormInputValues {
   password?: string;
   passwordConfirmation?: string;
   currentPassword?: string;
-  quizQuestion?: string;
-  quizAnswer?: string;
+  currentSecurityAnswer?: string;
+  securityQuestion?: string;
+  securityAnswer?: string;
 }
 
 type FormField = keyof FormInputValues;
@@ -18,6 +19,7 @@ export const useValidForm = (fieldList: FormField[]) => {
     register,
     trigger,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormInputValues>({ mode: 'onChange' });
 
@@ -66,12 +68,18 @@ export const useValidForm = (fieldList: FormField[]) => {
             matched: (value, formValues) => value === formValues.password || '비밀번호가 일치하지 않습니다.',
           },
         });
-      case 'quizQuestion':
-      case 'quizAnswer':
+      case 'currentSecurityAnswer':
+      case 'securityQuestion':
+      case 'securityAnswer':
         return register(field, {
           required: true,
           minLength: { value: 2, message: '2자 이상으로 작성해주세요.' },
           maxLength: { value: 20, message: '20자 이내로 작성해주세요.' },
+          onChange: event => {
+            const { value } = event.target;
+            // 첫 문자로 공백이 오는 것을 방지
+            return setValue(field, value === ' ' ? value.trim() : value);
+          },
         });
       default: // 지정된 케이스가 없다면 undefined를 반환하여 커스텀 훅의 register 반환값에 추가되지 않도록 함
         return undefined;
@@ -97,5 +105,6 @@ export const useValidForm = (fieldList: FormField[]) => {
     handleSubmit,
     register: selectedRegisters,
     errors,
+    setValue,
   };
 };
