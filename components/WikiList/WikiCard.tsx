@@ -2,7 +2,6 @@ import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiCard.module.scss';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 interface WikiCardProps {
   profileCard: ProfileType;
