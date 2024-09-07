@@ -4,20 +4,19 @@ import styles from './WikiList.module.scss';
 import { getProfileList } from '@/apis/auth/getProfileList';
 import SearchForm from '@/components/WikiList/SearchForm';
 import { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Spinner from '@/components/WikiList/SPinner';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/router';
 
 export default function WikiList() {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
   const [profileCards, setProfileCards] = useState<ProfileType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView({ threshold: 0 });
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const router = useRouter();
-  const { name } = router.query;
 
   const handleLoadProfileCards = useCallback(async (page: number, pageSize: number, name: string) => {
     if (!hasMore) {
@@ -28,6 +27,7 @@ export default function WikiList() {
       const nextProfileCards = await getProfileList(page, pageSize, name);
       setProfileCards(prevCards => [...prevCards, ...nextProfileCards]);
       setPage(prevPage => prevPage + 1);
+
       if (nextProfileCards.length < pageSize) {
         setHasMore(false);
         setPage(1);
@@ -39,20 +39,14 @@ export default function WikiList() {
     }
   }, []);
 
+  //searchTerm을 input의 value값에 따라 변경
   const onSearch = (term: string) => {
     setSearchTerm(term);
   };
 
-  //주소창에 검색어 쿼리치면 데이터 요청
+  //searchTerm에 값이 할당되어 있고 router가 준비되었을 때 리스트 초기화
   useEffect(() => {
-    if (typeof name === 'string') {
-      setSearchTerm(name);
-    }
-  }, [name]);
-
-  //searchTerm 바뀌면 리스트 초기화
-  useEffect(() => {
-    if (searchTerm !== undefined) {
+    if (searchTerm !== undefined && router.isReady) {
       setProfileCards([]);
       setHasMore(true);
       handleLoadProfileCards(1, 4, searchTerm);
@@ -73,7 +67,7 @@ export default function WikiList() {
   return (
     <>
       <section className={styles.searchForm}>
-        <SearchForm searchTerm={searchTerm} onSearch={onSearch} />
+        <SearchForm searchTerm={searchTerm} onSearch={onSearch} inputClassName={styles.listInputWidth} />
         {hasSearchedProfile && (
           <p>
             {searchTerm}님을 총 <span>{profileCards.length}</span>명 찾았습니다.
