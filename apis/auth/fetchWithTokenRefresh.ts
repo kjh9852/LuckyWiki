@@ -53,6 +53,12 @@ export const fetchWithTokenRefresh = async (fetchUrl: string, options: FetchOpti
 
     // 재발급한 accessToken으로 다시 유저 정보 요청
     const newResponse = await fetch(fetchUrl, newOptions);
+
+    if (!newResponse.ok) {
+      // 재발급 후에도 실패한다면 undefined 반환
+      return undefined;
+    }
+
     return await newResponse.json();
   }
 
