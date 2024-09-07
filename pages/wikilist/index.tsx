@@ -80,9 +80,7 @@ export default function WikiList() {
             {profileCards.map(profileCard => (
               <WikiCard profileCard={profileCard} key={profileCard.id} />
             ))}
-            <div ref={ref} className={styles.infiniteScrollText}>
-              무한스크롤
-            </div>
+            <div ref={ref} className={styles.infiniteScrollText}></div>
             {loading && <Spinner />}
           </section>
         </>
