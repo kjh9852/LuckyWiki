@@ -1,12 +1,9 @@
 import { getProfile } from './getProfile';
 import { fetchWithTokenRefresh } from './fetchWithTokenRefresh';
+import { UserProfile } from '@/types/types';
 
 interface getUserReturn {
-  profile: {
-    code: string;
-    id: number;
-    image: string;
-  };
+  profile: UserProfile;
   updatedAt: string;
   createdAt: string;
   teamId: string;
@@ -32,6 +29,7 @@ export const getUser = async (): Promise<getUserReturn | undefined> => {
       profile: {
         ...resultUser.profile,
         image: profile?.image,
+        securityQuestion: profile?.securityQuestion,
       },
     };
   }

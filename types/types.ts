@@ -17,3 +17,10 @@ export default interface ProfileType {
   name: string;
   id: number;
 }
+
+export interface UserProfile {
+  code: string;
+  id: number;
+  image: string;
+  securityQuestion: string;
+}
