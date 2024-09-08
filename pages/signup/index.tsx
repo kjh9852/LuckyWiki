@@ -16,7 +16,7 @@ export default function SignUpPage() {
     if (formData.email && formData.name && formData.password && formData.passwordConfirmation) {
       const { email, name, password, passwordConfirmation } = formData;
       await signUp({ email, name, password, passwordConfirmation });
-      router.push('/');
+      router.push('/home');
     }
   };
 

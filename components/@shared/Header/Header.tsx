@@ -10,7 +10,7 @@ const UserMenu = dynamic(() => import('./UserMenu'), { ssr: false });
 export default function Header() {
   return (
     <header className={styles.header}>
-      <Link href={'/'}>
+      <Link href={'/home'}>
         <Image src={logo} alt={'메인 로고 이미지'} height={30} width={107} priority />
       </Link>
 

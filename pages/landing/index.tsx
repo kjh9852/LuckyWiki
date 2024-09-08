@@ -31,7 +31,7 @@ export default function Landing() {
             </Bounce>
           </div>
           <Fade delay={1500}>
-            <Link href={'/'} className={classNames(styles.landingLink, styles.dark)}>
+            <Link href={'/home'} className={classNames(styles.landingLink, styles.dark)}>
               위키 만들기
             </Link>
           </Fade>
@@ -113,7 +113,7 @@ export default function Landing() {
           <p>나만의 위키 만들어보기</p>
         </Fade>
         <AttentionSeeker effect={'bounce'} delay={400}>
-          <Link href={'/'} className={classNames(styles.landingLink)}>
+          <Link href={'/home'} className={classNames(styles.landingLink)}>
             지금 시작하기
           </Link>
         </AttentionSeeker>

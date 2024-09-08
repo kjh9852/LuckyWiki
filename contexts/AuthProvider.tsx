@@ -38,7 +38,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     setCookie('accessToken', accessToken);
     setCookie('refreshToken', refreshToken);
     setIsLoggedIn(true);
-    router.push('/');
+    router.push('/home');
   };
 
   const signUp = useCallback(async ({ email, name, password, passwordConfirmation }: signUpParams) => {
@@ -73,7 +73,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
-    router.push('/');
+    router.push('/home');
   }, []);
 
   const syncUserAuthState = useCallback(async () => {

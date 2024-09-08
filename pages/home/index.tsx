@@ -1,6 +1,6 @@
 import ProfileCard from '@/components/home/ProfileCard';
 import ProfileType from '@/types/types';
-import styles from './index.module.scss';
+import styles from './Home.module.scss';
 import classNames from 'classnames';
 import { GetServerSideProps } from 'next';
 
