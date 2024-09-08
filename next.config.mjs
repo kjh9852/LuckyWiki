@@ -10,6 +10,17 @@ const nextConfig = {
       },
     ];
   },
+  reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/Wikied/**',
+      },
+    ],
+  },
   transpilePackages: [
     'antd',
     'rc-util',
@@ -21,16 +32,6 @@ const nextConfig = {
     'rc-tree',
     'rc-table',
   ],
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
-        port: '',
-        pathname: '/Wikied/user/**',
-      },
-    ],
-  },
 };
 
 export default nextConfig;

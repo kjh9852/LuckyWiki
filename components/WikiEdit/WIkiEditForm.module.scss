@@ -1,0 +1,71 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.editContiner {
+  min-height: calc(100vh - 100px);
+}
+
+.formContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+  gap: 40px;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  margin-right: 80px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  button {
+    width: 65px;
+  }
+  a {
+    width: 65px;
+  }
+}
+
+.secondaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary-green200;
+  border: 1px solid $primary-green200;
+  background: #fff;
+}
+
+@include tablet {
+  .editContiner {
+    padding: 0 50px;
+  }
+  .formContainer {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .profileContainer {
+    margin-right: 0px;
+    flex-direction: column-reverse;
+  }
+  .buttonContainer {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@include mobile {
+  .editContiner {
+    padding: 0 20px;
+  }
+  .formContainer {
+    padding-top: 15px;
+  }
+  .buttonContainer {
+    margin-bottom: 15px;
+  }
+}
