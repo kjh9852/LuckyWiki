@@ -2,21 +2,22 @@ import ProfileCard from '@/components/home/ProfileCard';
 import ProfileType from '@/types/types';
 import styles from './Home.module.scss';
 import classNames from 'classnames';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { Bounce, Fade, JackInTheBox } from 'react-awesome-reveal';
 
 interface HomeProps {
   profileList: ProfileType[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   let profileList;
   try {
     const query = new URLSearchParams({
-      page: '1',
       pageSize: '8',
     });
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`, {
+      next: { revalidate: 60 * 60 * 24 },
+    });
     const result = await response.json();
 
     profileList = result.list;
