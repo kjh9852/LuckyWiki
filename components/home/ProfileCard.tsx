@@ -11,7 +11,10 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ profile }: ProfileCardProps) {
-  const { code, updatedAt, image, ...profileTextValues } = profile;
+  // 타입 안정성을 위해 delete가 아닌 구조분해할당을 사용
+  // id는 구조분해할당으로 profileTextValues 제외 후에 사용되지 않기에 lint 에러 제거
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id, code, updatedAt, image, ...profileTextValues } = profile;
   const date = new Date(updatedAt);
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
