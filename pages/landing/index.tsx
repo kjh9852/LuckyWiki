@@ -22,7 +22,7 @@ export default function Landing() {
         <section className={classNames(styles.introSection, styles.common)}>
           <div className={styles.introParagraph}>
             <Fade delay={300}>
-              <p className={styles.introLightText}>남들이 만드는</p>
+              <p className={styles.introLightText}>친구들이 만드는</p>
             </Fade>
             <Bounce delay={900}>
               <p className={styles.introBoldText}>
