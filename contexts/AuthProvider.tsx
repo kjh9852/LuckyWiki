@@ -73,7 +73,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
-    router.push('/home');
+    router.push('/landing');
   }, []);
 
   const syncUserAuthState = useCallback(async () => {
