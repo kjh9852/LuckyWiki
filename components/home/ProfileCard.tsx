@@ -3,15 +3,14 @@ import noProfileImage from '@/public/icon/icon-no-profile.png';
 import quotesImage from '@/public/icon/icon-quotes.png';
 import Image from 'next/image';
 import React, { useId } from 'react';
-import { useRouter } from 'next/router';
 import styles from './ProfileCard.module.scss';
+import Link from 'next/link';
 interface ProfileCardProps {
   profile: ProfileType;
   index: number;
 }
 
 export default function ProfileCard({ profile }: ProfileCardProps) {
-  const router = useRouter();
   const { code, updatedAt, image, ...profileTextValues } = profile;
   const date = new Date(updatedAt);
   const year = date.getFullYear();
@@ -21,17 +20,12 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
 
   const profileImageSrc = image || noProfileImage;
 
-  const handleCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const clickedProfileCode = (event.currentTarget as HTMLDivElement).dataset.code;
-    router.push(`/wiki/${clickedProfileCode}`);
-  };
-
   return (
     <div className={styles.cardContainer}>
-      <section className={styles.imageCard} onClick={handleCardClick} data-code={code}>
+      <Link href={`/wiki/${code}`} className={styles.imageCard} data-code={code}>
         <Image src={profileImageSrc} alt={'프로필 이미지'} width={300} height={500} priority />
-      </section>
-      <section className={styles.textCard} onClick={handleCardClick} data-code={code}>
+      </Link>
+      <Link href={`/wiki/${code}`} className={styles.textCard} data-code={code}>
         <article className={styles.quote}>
           <Image src={quotesImage} alt={'따옴표 이미지'} width={30} height={30} priority />
           <p>한 줄 소개 프로필 작성할 때 추가 되나요?</p>
@@ -48,7 +42,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
             </div>
           </article>
         </div>
-      </section>
+      </Link>
     </div>
   );
 }
