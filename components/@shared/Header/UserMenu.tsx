@@ -11,7 +11,8 @@ export default function UserMenu() {
   return (
     <>
       <input className={'input input-search'} />
-      <Link className={'link'} href={'/'}>
+      {/* TODO: 모든 위키 페이지 완성되면 해당 페이지로 연결 */}
+      <Link className={'link'} href={'/home'}>
         모든 위키
       </Link>
       {isLoggedIn ? (
