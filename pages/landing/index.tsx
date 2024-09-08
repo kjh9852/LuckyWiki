@@ -26,7 +26,7 @@ export default function Landing() {
             </Fade>
             <Bounce delay={900}>
               <p className={styles.introBoldText}>
-                나만의 <span>위키</span>
+                나만의 <span className={styles.cloverText}>위키</span>
               </p>
             </Bounce>
           </div>
@@ -45,7 +45,9 @@ export default function Landing() {
           <div className={styles.writeGridContainer}>
             <div className={styles.writeParagraph}>
               <p className={styles.upperSubText}>Write</p>
-              <p className={styles.mainLightText}>친구의 위키,</p>
+              <p className={styles.mainLightText}>
+                친구의 <span className={styles.cloverText}>위키</span>,
+              </p>
               <p className={styles.mainBoldText}>직접 작성해봐요</p>
             </div>
             <Slide className={styles.keyboard}>
@@ -61,7 +63,9 @@ export default function Landing() {
         <Slide className={styles.common} delay={200}>
           <div className={styles.shareParagraph}>
             <p className={styles.upperSubText}>Share</p>
-            <p className={styles.mainLightText}>내 위키 만들고</p>
+            <p className={styles.mainLightText}>
+              내 <span className={styles.cloverText}>위키</span> 만들고
+            </p>
             <p className={styles.mainBoldText}>친구에게 공유해요</p>
           </div>
         </Slide>
@@ -110,7 +114,9 @@ export default function Landing() {
       </section>
       <section className={styles.startSection}>
         <Fade>
-          <p>나만의 위키 만들어보기</p>
+          <p>
+            나만의 <span className={styles.cloverText}>위키</span> 만들어보기
+          </p>
         </Fade>
         <AttentionSeeker effect={'bounce'} delay={400}>
           <Link href={'/home'} className={classNames(styles.landingLink)}>

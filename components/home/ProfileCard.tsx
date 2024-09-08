@@ -5,8 +5,6 @@ import Image from 'next/image';
 import React, { useId } from 'react';
 import { useRouter } from 'next/router';
 import styles from './ProfileCard.module.scss';
-import classNames from 'classnames';
-
 interface ProfileCardProps {
   profile: ProfileType;
   index: number;
@@ -14,7 +12,7 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ profile }: ProfileCardProps) {
   const router = useRouter();
-  const { id, code, updatedAt, image, ...profileTextValues } = profile;
+  const { code, updatedAt, image, ...profileTextValues } = profile;
   const date = new Date(updatedAt);
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);

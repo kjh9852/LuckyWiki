@@ -1,13 +1,6 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-@font-face {
-  font-family: 'HakgyoansimDunggeunmisoTTF-R';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
 $HakgyoFont: HakgyoansimDunggeunmisoTTF-R;
 
 .cardContainer {

@@ -1,24 +1,10 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-@font-face {
-  font-family: 'NEXON Lv1 Gothic';
-  src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Nexon/NEXON Lv1 Gothic OTF Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'NEXON Lv1 Gothic';
-  src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Nexon/NEXON Lv1 Gothic OTF Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-}
-
 @mixin commonParagraph($mainTextColor: $gray500) {
   .upperSubText {
     @include fontStyle700(
-      $font-family: NEXON Lv1 Gothic OTF,
+      $font-family: HakgyoansimDunggeunmisoTTF-R,
       $font-size: 30px,
       $line-height: 34.5px,
       $color: $primary-green200
@@ -27,7 +13,7 @@
   }
   .mainLightText {
     @include fontStyle400(
-      $font-family: NEXON Lv1 Gothic OTF,
+      $font-family: HakgyoansimDunggeunmisoTTF-R,
       $font-size: 50px,
       $line-height: 57.5px,
       $color: $mainTextColor
@@ -35,7 +21,7 @@
   }
   .mainBoldText {
     @include fontStyle700(
-      $font-family: NEXON Lv1 Gothic OTF,
+      $font-family: HakgyoansimDunggeunmisoTTF-B,
       $font-size: 50px,
       $line-height: 57.5px,
       $color: $mainTextColor
@@ -53,6 +39,11 @@
       line-height: 36.8px;
     }
   }
+}
+
+.cloverText {
+  font-family: YClover-Bold;
+  color: $primary-green200;
 }
 
 .LandingContainer {
@@ -88,13 +79,10 @@
     padding-bottom: 40px;
 
     .introLightText {
-      @include fontStyle300($font-family: 'NEXON Lv1 Gothic', $font-size: 60px);
+      @include fontStyle400($font-family: HakgyoansimDunggeunmisoTTF-R, $font-size: 60px);
     }
     .introBoldText {
-      @include fontStyle700($font-family: 'NEXON Lv1 Gothic', $font-size: 90px);
-      span {
-        color: $primary-green200;
-      }
+      @include fontStyle700($font-family: HakgyoansimDunggeunmisoTTF-B, $font-size: 90px);
     }
 
     @include mobile {
@@ -207,8 +195,8 @@
   text-align: center;
   background-color: $gray500;
   p {
-    @include fontStyle700($font-family: 'NEXON Lv1 Gothic', $font-size: 60px, $color: $gray50);
-    padding-bottom: 40px;
+    @include fontStyle700($font-family: HakgyoansimDunggeunmisoTTF-B, $font-size: 60px, $color: $gray50);
+    padding-bottom: 50px;
 
     @include mobile {
       padding-bottom: 40px;
@@ -222,10 +210,15 @@
   padding: 15px 30px;
   border-radius: 15px;
   background-color: $gray50;
-  @include fontStyle600($font-size: 24px);
+  @include fontStyle400($font-family: HakgyoansimDunggeunmisoTTF-R, $font-size: 24px);
 
   &.dark {
     background-color: $gray500;
     color: $gray50;
+  }
+
+  @include mobile {
+    padding: 10px 20px;
+    font-size: 20px;
   }
 }
