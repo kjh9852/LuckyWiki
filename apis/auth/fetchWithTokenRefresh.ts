@@ -3,7 +3,7 @@ import { getNewAccessToken } from './getNewAccessToken';
 import { CookieValueTypes, deleteCookie, setCookie } from 'cookies-next';
 
 interface FetchOptions {
-  method: 'GET' | 'POST' | 'PATCH';
+  method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
   headers: Record<string, string>;
   body?: string;
 }
