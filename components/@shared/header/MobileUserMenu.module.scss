@@ -1,0 +1,25 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.navMobile {
+  display: none;
+
+  a {
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  button {
+    img {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  @include mobile {
+    @include flexCenter;
+    gap: 15px;
+  }
+}

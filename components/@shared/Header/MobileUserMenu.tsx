@@ -5,6 +5,7 @@ import Link from 'next/link';
 import menu from '@/public/icon/icon-menu.png';
 import search from '@/public/icon/icon-search.png';
 import LoggedInUserDropdown from './LoggedInUserDropdown';
+import styles from './MobileUserMenu.module.scss';
 
 export default function MobileUserMenu() {
   const { isLoggedIn } = useAuth();
@@ -25,7 +26,7 @@ export default function MobileUserMenu() {
   ];
 
   return (
-    <>
+    <section className={styles.navMobile}>
       <Link className={'link'} href={'/wikilist'}>
         <Image src={search} alt={'검색 아이콘'} />
       </Link>
@@ -40,6 +41,6 @@ export default function MobileUserMenu() {
           </Dropdown>
         )}
       </button>
-    </>
+    </section>
   );
 }

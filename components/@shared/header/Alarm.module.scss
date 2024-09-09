@@ -1,0 +1,19 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.alarmContainer {
+  position: relative;
+
+  .notificationCircle {
+    background-color: red;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    right: 0;
+    border-radius: 50%;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
