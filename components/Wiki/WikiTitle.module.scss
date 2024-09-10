@@ -1,36 +1,25 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-@mixin text {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 24px;
-}
-
 .wikiTitle {
   width: 860px;
 
   header {
-    display: flex;
-    align-items: center;
+    @include flexCenter;
     justify-content: space-between;
     margin-bottom: 32px;
 
     h1 {
-      font-size: 48px;
-      font-weight: 600;
-      line-height: 46px;
-      color: $gray500;
+      @include fontStyle600($font-size: 48px, $line-height: 46px);
     }
 
     button {
-      @include text;
+      @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $gray50);
       width: 160px;
       height: 45px;
       padding: 11px 40px;
       border-radius: 10px;
       background-color: $primary-green200;
-      color: $gray50;
       text-align: center;
     }
   }
@@ -45,8 +34,7 @@
   background-color: $primary-green100;
 
   p {
-    @include text;
-    color: $primary-green200;
+    @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $primary-green200);
     margin: 0;
   }
 }
@@ -65,12 +53,10 @@
       margin-bottom: 24px;
 
       h1 {
-        font-size: 32px;
-        line-height: 42px;
+        @include fontStyle600($font-size: 32px, $line-height: 42px);
       }
 
       button {
-        @include text;
         width: 120px;
         height: 43px;
         padding: 10px 22px;
@@ -79,7 +65,6 @@
   }
 
   .p {
-    @include text;
-    font-weight: 400;
+    @include fontStyle400($font-size: 14px, $line-height: 24px);
   }
 }
