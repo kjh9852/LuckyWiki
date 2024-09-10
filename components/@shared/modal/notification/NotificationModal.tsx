@@ -3,33 +3,14 @@ import { Notification } from '@/types/types';
 import NotificationCard from './NotificationCard';
 import closeImg from '../../../../public/icon/icon-close.png';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { getNotifications } from '@/apis/auth/getNotifications';
-import { deleteNotifications } from '@/apis/auth/deleteNotification';
 
 interface NotificationModalProps {
   onClose: () => void;
+  notificationList: Notification[];
+  onDelete: (id: number) => Promise<void>;
 }
 
-export default function NotificationModal({ onClose }: NotificationModalProps) {
-  const [notificationList, setNotificationList] = useState<Notification[]>([]);
-
-  const handleNotificationDelete = async (id: number) => {
-    await deleteNotifications(id);
-    setNotificationList(prevState => prevState.filter(v => v.id !== id));
-  };
-
-  const fetchNotification = async () => {
-    const response = await getNotifications();
-    if (response) {
-      setNotificationList(response);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotification();
-  }, []);
-
+export default function NotificationModal({ notificationList, onClose, onDelete }: NotificationModalProps) {
   return (
     <div className={styles.notificationModalContainer}>
       <div className={styles.modalTitle}>
@@ -47,7 +28,7 @@ export default function NotificationModal({ onClose }: NotificationModalProps) {
                 id={notification.id}
                 createdAt={notification.createdAt}
                 message={notification.content}
-                onNotificationDelete={handleNotificationDelete}
+                onNotificationDelete={() => onDelete(notification.id)}
               />
             ))}
           </div>

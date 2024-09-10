@@ -4,19 +4,34 @@ import styles from './Alarm.module.scss';
 import classNames from 'classnames';
 import { getNotifications } from '@/apis/auth/getNotifications';
 import { useEffect, useState } from 'react';
-import { useModal } from '@/contexts/ModalProvider';
 import NotificationModal from '../modal/notification/NotificationModal';
+import Portal from '../modal/Portal';
+import { Notification } from '@/types/types';
+import { deleteNotifications } from '@/apis/auth/deleteNotification';
+import { useModal } from '@/hooks/useModal';
 
 export default function Alarm() {
   const [isRestNotification, setIsRestNotification] = useState(false);
   const { isModalOpen, onOpen, onClose } = useModal();
+  const [notificationList, setNotificationList] = useState<Notification[]>([]);
 
   const handleModalOpen = () => {
     if (isModalOpen) {
       onClose();
     } else {
-      onOpen(<NotificationModal onClose={onClose} />);
+      onOpen();
     }
+  };
+
+  const handleNotificationDelete = async (id: number) => {
+    await deleteNotifications(id);
+    setNotificationList(prevState => {
+      const resultList = prevState.filter(v => v.id !== id);
+      if (resultList.length === 0) {
+        setIsRestNotification(false);
+      }
+      return resultList;
+    });
   };
 
   useEffect(() => {
@@ -26,13 +41,16 @@ export default function Alarm() {
 
     // 남은 Notification 유무 확인을 위한 함수
     const fetchNotification = async () => {
-      const notificationList = await getNotifications();
-      if (!notificationList) {
+      const responseNotificationList = await getNotifications();
+      if (!responseNotificationList) {
         // 요청 실패가 서버 부하 문제일 수 있으므로 딜레이 1.2배 증가
         delay *= 1.2;
-      } else if (notificationList.length > 0) {
-        // response 길이가 0보다 크면 삭제되지 않은 알림이 있다는 것
-        setIsRestNotification(true);
+      } else {
+        setNotificationList(responseNotificationList);
+        if (responseNotificationList.length > 0) {
+          // response 길이가 0보다 크면 삭제되지 않은 알림이 있다는 것
+          setIsRestNotification(true);
+        }
       }
     };
 
@@ -60,6 +78,9 @@ export default function Alarm() {
       <button className={styles.bellButton} onClick={handleModalOpen}>
         <Image src={alarmIcon} alt={'알람 아이콘'} height={28} width={28} />
       </button>
+      <Portal isOpen={isModalOpen} onClose={onClose}>
+        <NotificationModal onClose={onClose} notificationList={notificationList} onDelete={handleNotificationDelete} />
+      </Portal>
     </div>
   );
 }

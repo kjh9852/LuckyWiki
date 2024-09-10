@@ -31,12 +31,14 @@ export default function MobileUserMenu() {
       <Link className={'link'} href={'/wikilist'}>
         <Image src={search} alt={'검색 아이콘'} />
       </Link>
-      <Alarm />
       <button>
         {isLoggedIn ? (
-          <LoggedInUserDropdown mobileDropdown>
-            <Image src={menu} alt={'메뉴 아이콘'} />
-          </LoggedInUserDropdown>
+          <section className={styles.loggedInUserSection}>
+            <Alarm />
+            <LoggedInUserDropdown mobileDropdown>
+              <Image src={menu} alt={'메뉴 아이콘'} />
+            </LoggedInUserDropdown>
+          </section>
         ) : (
           <Dropdown menu={{ items: notLogInItems }} trigger={['click']} placement="bottomRight">
             <Image src={menu} alt={'메뉴 아이콘'} />

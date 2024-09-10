@@ -12,6 +12,11 @@
   }
 
   button {
+    .loggedInUserSection {
+      display: flex;
+      gap: 15px;
+    }
+
     img {
       height: 32px;
       width: 32px;
