@@ -24,3 +24,9 @@ export interface UserProfile {
   image: string;
   securityQuestion: string;
 }
+
+export interface Notification {
+  content: string;
+  createdAt: Date;
+  id: number;
+}

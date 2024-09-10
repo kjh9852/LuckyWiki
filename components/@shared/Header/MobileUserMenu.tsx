@@ -5,6 +5,8 @@ import Link from 'next/link';
 import menu from '@/public/icon/icon-menu.png';
 import search from '@/public/icon/icon-search.png';
 import LoggedInUserDropdown from './LoggedInUserDropdown';
+import styles from './MobileUserMenu.module.scss';
+import Alarm from './Alarm';
 
 export default function MobileUserMenu() {
   const { isLoggedIn } = useAuth();
@@ -25,21 +27,24 @@ export default function MobileUserMenu() {
   ];
 
   return (
-    <>
+    <section className={styles.navMobile}>
       <Link className={'link'} href={'/wikilist'}>
         <Image src={search} alt={'검색 아이콘'} />
       </Link>
       <button>
         {isLoggedIn ? (
-          <LoggedInUserDropdown mobileDropdown>
-            <Image src={menu} alt={'메뉴 아이콘'} />
-          </LoggedInUserDropdown>
+          <section className={styles.loggedInUserSection}>
+            <Alarm />
+            <LoggedInUserDropdown mobileDropdown>
+              <Image src={menu} alt={'메뉴 아이콘'} />
+            </LoggedInUserDropdown>
+          </section>
         ) : (
           <Dropdown menu={{ items: notLogInItems }} trigger={['click']} placement="bottomRight">
             <Image src={menu} alt={'메뉴 아이콘'} />
           </Dropdown>
         )}
       </button>
-    </>
+    </section>
   );
 }

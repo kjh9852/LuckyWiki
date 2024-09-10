@@ -13,14 +13,8 @@ export default function Header() {
       <Link href={'/home'}>
         <Image src={logo} alt={'메인 로고 이미지'} height={30} width={107} priority />
       </Link>
-
-      <section className={styles.nav}>
-        <UserMenu />
-      </section>
-
-      <section className={styles.navMobile}>
-        <MobileUserMenu />
-      </section>
+      <UserMenu />
+      <MobileUserMenu />
     </header>
   );
 }
