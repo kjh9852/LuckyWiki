@@ -7,8 +7,8 @@ import { updateSecurityQuiz } from '@/apis/auth/updateSecurityQuiz';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';
 import { useAuth } from '@/contexts/AuthProvider';
-import { ChangeEvent, useState } from 'react';
 import { sendMail } from '@/utils/sendMail';
+import SendEmailInput from './SendEmailInput';
 interface UpdateSecurityQuizFormProps {
   code: string;
   currentSecurityQuestion: string;
@@ -42,11 +42,16 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
 
         if (response) {
           openSnackBar({ type: 'success', content: '인증 퀴즈가 변경되었습니다.' });
-          const emailInput = event.target['email'];
-          if (emailInput.value) {
-            sendMail({ answer: securityAnswer, question: securityQuestion, name: user.name, email: emailInput.value });
+          const toEmailInput = event.target['toEmail'];
+          if (toEmailInput.value) {
+            sendMail({
+              answer: securityAnswer,
+              question: securityQuestion,
+              name: user.name,
+              email: toEmailInput.value,
+            });
             // submit 시에만 필요한 input이기 때문에 불필요한 리렌더링 제거를 위해 따로 onChange 함수로 value를 관리하지 않기 때문
-            emailInput.value = '';
+            toEmailInput.value = '';
           }
 
           setValue('currentSecurityAnswer', '');
@@ -86,10 +91,7 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
         register={register.securityAnswer}
         placeholder={'새로운 답변을 입력해주세요'}
       />
-
-      <label className={'text-md'}>질문과 답변을 이메일로 받기</label>
-      <input className={'input'} type="email" name={'email'} placeholder={'비워두면 이메일은 가지 않아요..'} />
-
+      <SendEmailInput />
       <div className={styles.buttonWrapper}>
         <button className={'button'}>변경하기</button>
       </div>
