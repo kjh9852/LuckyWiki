@@ -13,6 +13,10 @@
   box-shadow: 0px 2px 8px 0px #78748640;
   z-index: 2;
 
+  @include mobile {
+    width: 328px;
+  }
+
   .modalTitle {
     display: flex;
     justify-content: space-between;

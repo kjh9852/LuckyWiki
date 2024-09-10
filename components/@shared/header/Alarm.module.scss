@@ -3,6 +3,7 @@
 
 .alarmContainer {
   position: relative;
+  display: flex;
 
   .notificationCircle {
     background-color: red;
@@ -12,8 +13,23 @@
     right: 0;
     border-radius: 50%;
 
+    @include mobile {
+      height: 8px;
+      width: 8px;
+      right: 2px;
+    }
+
     &.hidden {
       display: none;
+    }
+  }
+
+  .bellButton {
+    @include mobile {
+      img {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
 }
