@@ -75,9 +75,9 @@ export default function Alarm() {
   return (
     <div className={styles.alarmContainer}>
       <div className={classNames(styles.notificationCircle, { [styles.hidden]: !isRestNotification })} />
-      <button className={styles.bellButton} onClick={handleModalOpen}>
+      <div className={styles.bellButton} onClick={handleModalOpen}>
         <Image src={alarmIcon} alt={'알람 아이콘'} height={28} width={28} />
-      </button>
+      </div>
       <Portal isOpen={isModalOpen} onClose={onClose}>
         <NotificationModal onClose={onClose} notificationList={notificationList} onDelete={handleNotificationDelete} />
       </Portal>
