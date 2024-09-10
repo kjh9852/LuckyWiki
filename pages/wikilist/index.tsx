@@ -61,7 +61,7 @@ export default function WikiList() {
   }, [inView]);
 
   const hasSearchedProfile = profileCards.some(
-    profileCard => profileCard.name.toLowerCase() === searchTerm.toLowerCase(),
+    profileCard => profileCard.name.trim().toLowerCase() === searchTerm.trim().toLowerCase(),
   );
 
   return (

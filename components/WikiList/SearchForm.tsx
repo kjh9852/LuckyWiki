@@ -1,15 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useDebounce from '@/hooks/useDebounce';
+import { SearchType } from './types/SearchType';
 
-interface SearchFormProps {
-  searchTerm: string;
-  onSearch: (term: string) => void;
-  inputClassName?: string;
-  onAddKeyword?: (text: string) => void;
-}
-
-export default function SearchForm({ searchTerm, onSearch, inputClassName, onAddKeyword }: SearchFormProps) {
+export default function SearchForm({ searchTerm, onSearch, inputClassName, onAddKeyword }: SearchType) {
   const router = useRouter();
   const { name } = router.query;
   const [value, setValue] = useState<string>(searchTerm);

@@ -6,8 +6,9 @@
   margin: 80px auto 57px;
 
   p {
-    @include fontStyle400($font-size: 16px, $line-height: 26px, $color: $gray400);
-    margin-top: 25px;
+    @include fontStyle400($font-size: 20px, $line-height: 26px, $color: $gray400);
+    margin-top: 30px;
+    text-align: center;
 
     span {
       color: $primary-green200;
@@ -45,7 +46,7 @@
     margin: 60px auto;
 
     p {
-      margin-top: 20px;
+      margin-top: 30px;
       line-height: 19px;
     }
   }
@@ -66,8 +67,8 @@
     margin: 40px auto 40px;
 
     p {
-      margin-top: 15px;
-      font-size: 14px;
+      margin-top: 25px;
+      font-size: 16px;
       line-height: 14px;
     }
   }
