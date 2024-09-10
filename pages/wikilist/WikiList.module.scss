@@ -6,11 +6,9 @@
   margin: 80px auto 57px;
 
   p {
-    margin-top: 16px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 26px;
-    color: $gray400;
+    @include fontStyle400($font-size: 20px, $line-height: 26px, $color: $gray400);
+    margin-top: 30px;
+    text-align: center;
 
     span {
       color: $primary-green200;
@@ -27,18 +25,14 @@
 }
 
 .noProfileFound {
-  width: 303px;
-  margin: 204px auto;
+  margin: 160px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
 
   p {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 32px;
-    color: $gray400;
+    @include fontStyle500;
   }
 }
 
@@ -52,9 +46,8 @@
     margin: 60px auto;
 
     p {
-      margin-top: 20px;
+      margin-top: 30px;
       line-height: 19px;
-      color: $gray400;
     }
   }
 
@@ -64,11 +57,7 @@
   }
 
   .noProfileFound {
-    margin: 298px auto;
-  }
-
-  .listInputWidth {
-    width: 704px;
+    margin: 270px auto;
   }
 }
 
@@ -78,10 +67,9 @@
     margin: 40px auto 40px;
 
     p {
-      margin-top: 15px;
-      font-size: 14px;
+      margin-top: 25px;
+      font-size: 16px;
       line-height: 14px;
-      color: $gray400;
     }
   }
 
@@ -92,17 +80,13 @@
   }
 
   .noProfileFound {
-    margin: 177px auto;
-    width: 273px;
+    margin: 130px auto;
     gap: 35px;
+    width: 273px;
 
     p {
       font-size: 18px;
       line-height: 26px;
     }
-  }
-
-  .listInputWidth {
-    width: 335px;
   }
 }

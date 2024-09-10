@@ -1,14 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useDebounce from '@/hooks/useDebounce';
+import { SearchType } from './types/SearchType';
 
-interface SearchFormProps {
-  searchTerm: string;
-  onSearch: (term: string) => void;
-  inputClassName?: string;
-}
-
-export default function SearchForm({ searchTerm, onSearch, inputClassName }: SearchFormProps) {
+export default function SearchForm({ searchTerm, onSearch, inputClassName, onAddKeyword }: SearchType) {
   const router = useRouter();
   const { name } = router.query;
   const [value, setValue] = useState<string>(searchTerm);
@@ -26,6 +21,7 @@ export default function SearchForm({ searchTerm, onSearch, inputClassName }: Sea
   useEffect(() => {
     if (debouncedValue !== searchTerm) {
       onSearch(debouncedValue);
+      onAddKeyword?.(debouncedValue);
       router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
     }
   }, [debouncedValue]);

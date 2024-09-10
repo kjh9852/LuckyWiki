@@ -34,12 +34,14 @@ export default function WikiContent({ profile }: WikiContentProps) {
     return <EmptyContent />;
   }
   return (
-    <ReactQuillReadComponent
-      className="custom"
-      readOnly={true}
-      theme="snow"
-      value={profile.content}
-      modules={{ toolbar: false }}
-    />
+    <>
+      <ReactQuillReadComponent
+        className="custom"
+        readOnly={true}
+        theme="snow"
+        value={profile.content}
+        modules={{ toolbar: false }}
+      />
+    </>
   );
 }
