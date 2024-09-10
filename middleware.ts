@@ -8,12 +8,12 @@ export async function middleware(request: NextRequest) {
 
   if (loggedInUserPages.includes(pathname) && !accessToken) {
     // 로그인이 필요한 페이지에 왔지만 accessToken이 없다면
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/home', request.url));
   }
 
   if (notLoggedInUserPages.includes(pathname) && accessToken) {
     // 로그인 후에는 들어올 수 없는 페이지에 accessToken이 있다면
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/home', request.url));
   }
 
   return NextResponse.next();

@@ -14,7 +14,7 @@ interface User {
   id: number;
 }
 
-type signUpParams = Record<keyof Omit<FormInputValues, 'currentPassword'>, string>;
+type signUpParams = Record<keyof Pick<FormInputValues, 'email' | 'name' | 'password' | 'passwordConfirmation'>, string>;
 type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, string>;
 
 interface AuthContextValue {
@@ -37,8 +37,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const initAuthenticatedUser = ({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) => {
     setCookie('accessToken', accessToken);
     setCookie('refreshToken', refreshToken);
+    syncUserAuthState();
     setIsLoggedIn(true);
-    router.push('/');
+    router.push('/home');
   };
 
   const signUp = useCallback(async ({ email, name, password, passwordConfirmation }: signUpParams) => {
@@ -73,7 +74,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     deleteCookie('refreshToken');
     setIsLoggedIn(false);
     setUser(null);
-    router.push('/');
+    router.push('/landing');
   }, []);
 
   const syncUserAuthState = useCallback(async () => {
@@ -102,7 +103,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     syncUserAuthState();
-  }, [isLoggedIn]);
+  }, []);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }

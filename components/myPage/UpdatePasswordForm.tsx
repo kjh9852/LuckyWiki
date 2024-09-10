@@ -21,7 +21,7 @@ export default function UpdatePasswordForm() {
       if (!response) {
         openSnackBar({ type: 'error', content: '기존 비밀 번호를 다시 확인해주세요' });
       } else {
-        router.push('/');
+        router.push('/home');
       }
     }
   };
