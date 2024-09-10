@@ -37,6 +37,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const initAuthenticatedUser = ({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) => {
     setCookie('accessToken', accessToken);
     setCookie('refreshToken', refreshToken);
+    syncUserAuthState();
     setIsLoggedIn(true);
     router.push('/home');
   };
@@ -102,7 +103,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     syncUserAuthState();
-  }, [isLoggedIn]);
+  }, []);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }
