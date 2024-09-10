@@ -60,13 +60,12 @@
 @include tablet {
   .profileDetail {
     width: 624px;
-    height: 130px;
+    height: 100%;
     display: flex;
     align-items: flex-start;
     gap: 40px;
-    padding-top: 20px;
-    padding-left: 30px;
-    margin: 15px 0 50px;
+    padding: 20px 0 30px 30px;
+    margin: 15px 0 0;
     position: static;
   }
 
@@ -97,16 +96,20 @@
     @include info;
     gap: 4px;
   }
+
+  .profileButton {
+    position: relative;
+    bottom: 30px;
+    left: 300px;
+  }
 }
 
 @include mobile {
   .profileDetail {
     width: 335px;
-    height: 126px;
     gap: 20px;
-    padding-top: 15px;
-    padding-left: 20px;
-    margin: 12px 0 40px;
+    padding: 15px 0 40px 20px;
+    margin: 12px 0 0;
   }
 
   .image {
@@ -122,5 +125,11 @@
   .profileValue {
     @include info;
     gap: 3px;
+  }
+
+  .profileButton {
+    position: relative;
+    bottom: 30px;
+    left: 155px;
   }
 }
