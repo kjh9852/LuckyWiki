@@ -2,12 +2,12 @@ import WikiCard from '@/components/WikiList/WikiCard';
 import ProfileType from '@/types/types';
 import styles from './WikiList.module.scss';
 import { getProfileList } from '@/apis/auth/getProfileList';
-import SearchForm from '@/components/WikiList/SearchForm';
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Spinner from '@/components/WikiList/SPinner';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
+import TheLatestSearch from '@/components/WikiList/TheLatestSearch';
 
 export default function WikiList() {
   const router = useRouter();
@@ -67,10 +67,10 @@ export default function WikiList() {
   return (
     <>
       <section className={styles.searchForm}>
-        <SearchForm searchTerm={searchTerm} onSearch={onSearch} inputClassName={styles.listInputWidth} />
+        <TheLatestSearch searchTerm={searchTerm} onSearch={onSearch} />
         {hasSearchedProfile && (
           <p>
-            {searchTerm}님을 총 <span>{profileCards.length}</span>명 찾았습니다.
+            <span>{searchTerm}</span>님을 총 <span>{profileCards.length}</span>명 찾았습니다.
           </p>
         )}
       </section>

@@ -1,0 +1,57 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.listInputWidth {
+  width: 860px;
+}
+
+.theLatestSearch {
+  margin-top: 20px;
+  .title {
+    @include flexCenter;
+    justify-content: space-between;
+
+    h2 {
+      @include fontStyle400($font-size: 16px);
+    }
+
+    button {
+      @include fontStyle400($font-size: 14px, $color: $gray400);
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      @include flexCenter;
+      justify-content: space-between;
+    }
+  }
+}
+
+.keyword {
+  @include fontStyle400($font-size: 14px, $color: $gray400);
+  margin-top: 10px;
+}
+
+.removeButton {
+  @include fontStyle400($font-size: 14px, $color: $gray400);
+}
+
+.keywordNone {
+  @include fontStyle400($font-size: 14px, $color: $gray400);
+}
+
+@include tablet {
+  .listInputWidth {
+    width: 704px;
+  }
+}
+
+@include mobile {
+  .listInputWidth {
+    width: 335px;
+  }
+}

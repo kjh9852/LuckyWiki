@@ -6,9 +6,10 @@ interface SearchFormProps {
   searchTerm: string;
   onSearch: (term: string) => void;
   inputClassName?: string;
+  onAddKeyword?: (text: string) => void;
 }
 
-export default function SearchForm({ searchTerm, onSearch, inputClassName }: SearchFormProps) {
+export default function SearchForm({ searchTerm, onSearch, inputClassName, onAddKeyword }: SearchFormProps) {
   const router = useRouter();
   const { name } = router.query;
   const [value, setValue] = useState<string>(searchTerm);
@@ -26,6 +27,7 @@ export default function SearchForm({ searchTerm, onSearch, inputClassName }: Sea
   useEffect(() => {
     if (debouncedValue !== searchTerm) {
       onSearch(debouncedValue);
+      onAddKeyword?.(debouncedValue);
       router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
     }
   }, [debouncedValue]);

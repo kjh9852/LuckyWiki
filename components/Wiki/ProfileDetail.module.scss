@@ -32,24 +32,17 @@
   gap: 16px;
 }
 
-@mixin info-p($color: $gray400) {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  color: $color;
-}
-
 .profileKey {
   @include info;
   p {
-    @include info-p;
+    @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $gray400);
   }
 }
 
 .profileValue {
   @include info;
   p {
-    @include info-p($gray500);
+    @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $gray500);
     &:empty {
       height: 24px;
       margin: 0;
