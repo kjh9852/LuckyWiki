@@ -37,3 +37,9 @@
     }
   }
 }
+
+.noResultText {
+  text-align: center;
+  padding: 20px 0;
+  @include fontStyle600($font-size: 17px, $line-height: normal, $color: $gray400);
+}
