@@ -1,30 +1,48 @@
-import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import styles from './MyPageForm.module.scss';
 import classNames from 'classnames';
-import { SubmitHandler } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 import ValidInput from '../@shared/Input/ValidInput';
 import { updateSecurityQuiz } from '@/apis/auth/updateSecurityQuiz';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';
 import { useAuth } from '@/contexts/AuthProvider';
 import { sendMail } from '@/utils/sendMail';
-import SendEmailInput from './SendEmailInput';
+import { VALID_OPTIONS } from '@/constants/validOptions';
 interface UpdateSecurityQuizFormProps {
   code: string;
   currentSecurityQuestion: string;
 }
 
+const updateSecurityQuizFormConfig: ValidationConfig = {
+  currentSecurityAnswer: {
+    required: '기존 질문에 대한 답변을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  securityAnswer: {
+    required: '새로운 질문을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  securityQuestion: {
+    required: '새로운 답변을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  toEmail: {
+    required: false,
+    pattern: VALID_OPTIONS.emailPattern,
+  },
+};
+
 export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }: UpdateSecurityQuizFormProps) {
   const { syncUserAuthState, user } = useAuth();
   const { openSnackBar } = useSnackBar();
-  const { register, errors, handleSubmit, setValue } = useValidForm([
-    'currentSecurityAnswer',
-    'securityAnswer',
-    'securityQuestion',
-  ]);
+  const { register, errors, handleSubmit, setValue } = useValidForm({ validationConfig: updateSecurityQuizFormConfig });
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async (formData, event) => {
-    if (formData.securityAnswer && formData.securityQuestion && event && user) {
+  const handleFormSubmit: SubmitHandler<FieldValues> = async formData => {
+    if (formData.securityAnswer && formData.securityQuestion && user) {
       const { currentSecurityAnswer, securityAnswer, securityQuestion } = formData;
       // 수정할 수 있게 핑을 열어둠
       const ping = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
@@ -42,16 +60,14 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
 
         if (response) {
           openSnackBar({ type: 'success', content: '인증 퀴즈가 변경되었습니다.' });
-          const toEmailInput = event.target['toEmail'];
-          if (toEmailInput.value) {
+          if (formData.toEmail) {
             sendMail({
               answer: securityAnswer,
               question: securityQuestion,
               name: user.name,
-              email: toEmailInput.value,
+              email: formData.toEmail,
             });
-            // submit 시에만 필요한 input이기 때문에 불필요한 리렌더링 제거를 위해 따로 onChange 함수로 value를 관리하지 않기 때문
-            toEmailInput.value = '';
+            setValue('toEmail', '');
           }
 
           setValue('currentSecurityAnswer', '');
@@ -91,7 +107,14 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
         register={register.securityAnswer}
         placeholder={'새로운 답변을 입력해주세요'}
       />
-      <SendEmailInput />
+      <ValidInput
+        label={'이메일을 입력하면 인증 퀴즈 내용을 보내드려요'}
+        type="email"
+        placeholder={'비워두면 이메일은 가지 않아요..'}
+        error={errors.toEmail}
+        message={errors.toEmail?.message}
+        register={register.toEmail}
+      />
       <div className={styles.buttonWrapper}>
         <button className={'button'}>변경하기</button>
       </div>
