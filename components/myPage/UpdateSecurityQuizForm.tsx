@@ -7,14 +7,15 @@ import { updateSecurityQuiz } from '@/apis/auth/updateSecurityQuiz';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';
 import { useAuth } from '@/contexts/AuthProvider';
-
+import { sendMail } from '@/utils/sendMail';
+import SendEmailInput from './SendEmailInput';
 interface UpdateSecurityQuizFormProps {
   code: string;
   currentSecurityQuestion: string;
 }
 
 export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }: UpdateSecurityQuizFormProps) {
-  const { syncUserAuthState } = useAuth();
+  const { syncUserAuthState, user } = useAuth();
   const { openSnackBar } = useSnackBar();
   const { register, errors, handleSubmit, setValue } = useValidForm([
     'currentSecurityAnswer',
@@ -22,8 +23,8 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
     'securityQuestion',
   ]);
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
-    if (formData.securityAnswer && formData.securityQuestion) {
+  const handleFormSubmit: SubmitHandler<FormInputValues> = async (formData, event) => {
+    if (formData.securityAnswer && formData.securityQuestion && event && user) {
       const { currentSecurityAnswer, securityAnswer, securityQuestion } = formData;
       // 수정할 수 있게 핑을 열어둠
       const ping = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
@@ -41,6 +42,18 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
 
         if (response) {
           openSnackBar({ type: 'success', content: '인증 퀴즈가 변경되었습니다.' });
+          const toEmailInput = event.target['toEmail'];
+          if (toEmailInput.value) {
+            sendMail({
+              answer: securityAnswer,
+              question: securityQuestion,
+              name: user.name,
+              email: toEmailInput.value,
+            });
+            // submit 시에만 필요한 input이기 때문에 불필요한 리렌더링 제거를 위해 따로 onChange 함수로 value를 관리하지 않기 때문
+            toEmailInput.value = '';
+          }
+
           setValue('currentSecurityAnswer', '');
           setValue('securityAnswer', '');
           setValue('securityQuestion', '');
@@ -78,7 +91,7 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
         register={register.securityAnswer}
         placeholder={'새로운 답변을 입력해주세요'}
       />
-
+      <SendEmailInput />
       <div className={styles.buttonWrapper}>
         <button className={'button'}>변경하기</button>
       </div>

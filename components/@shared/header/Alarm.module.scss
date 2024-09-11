@@ -25,6 +25,7 @@
   }
 
   .bellButton {
+    cursor: pointer;
     @include mobile {
       img {
         height: 24px;
