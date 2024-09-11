@@ -1,16 +1,28 @@
 import Link from 'next/link';
-import { SubmitHandler } from 'react-hook-form';
 import React from 'react';
-import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/Input/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
+import { FieldValues } from 'react-hook-form';
+import { VALID_OPTIONS } from '@/constants/validOptions';
+
+const loginValidationConfig: ValidationConfig = {
+  email: {
+    required: 'e-mail을 입력해주세요',
+    pattern: VALID_OPTIONS.emailPattern,
+  },
+  password: {
+    required: '비밀번호를 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+  },
+};
 
 export default function LogInPage() {
   const { logIn } = useAuth();
 
-  const { register, errors, handleSubmit } = useValidForm(['email', 'password']);
+  const { register, errors, handleSubmit } = useValidForm({ validationConfig: loginValidationConfig });
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
+  const handleFormSubmit = async (formData: FieldValues) => {
     if (formData.email && formData.password) {
       const { email, password } = formData;
       await logIn({ email, password });
