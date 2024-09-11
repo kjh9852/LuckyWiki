@@ -8,10 +8,11 @@ import Spinner from '@/components/WikiList/SPinner';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import TheLatestSearch from '@/components/WikiList/TheLatestSearch';
+import { useSearch } from '@/contexts/SearchProvider';
 
 export default function WikiList() {
+  const { searchTerm } = useSearch();
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState('');
   const [profileCards, setProfileCards] = useState<ProfileType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
@@ -39,11 +40,6 @@ export default function WikiList() {
     }
   }, []);
 
-  //searchTerm을 input의 value값에 따라 변경
-  const onSearch = (term: string) => {
-    setSearchTerm(term);
-  };
-
   //searchTerm에 값이 할당되어 있고 router가 준비되었을 때 리스트 초기화
   useEffect(() => {
     if (searchTerm !== undefined && router.isReady) {
@@ -67,7 +63,7 @@ export default function WikiList() {
   return (
     <>
       <section className={styles.searchForm}>
-        <TheLatestSearch searchTerm={searchTerm} onSearch={onSearch} />
+        <TheLatestSearch />
         {hasSearchedProfile && (
           <p>
             <span>{searchTerm}</span>님을 총 <span>{profileCards.length}</span>명 찾았습니다.

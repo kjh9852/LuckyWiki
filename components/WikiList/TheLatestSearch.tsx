@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './TheLatestSearch.module.scss';
 import SearchForm from './SearchForm';
-import { SearchType } from './types/SearchType';
 
 interface KeywordsType {
   id: number;
   text: string;
 }
 
-export default function TheLatestSearch({ searchTerm, onSearch }: SearchType) {
+export default function TheLatestSearch() {
   //로컬스토리지에 저장한 검색어 관리
   const [keywords, setKeywords] = useState<KeywordsType[]>([]);
 
@@ -51,12 +50,7 @@ export default function TheLatestSearch({ searchTerm, onSearch }: SearchType) {
 
   return (
     <>
-      <SearchForm
-        onAddKeyword={handleAddKeyword}
-        searchTerm={searchTerm}
-        onSearch={onSearch}
-        inputClassName={styles.listInputWidth}
-      />
+      <SearchForm onAddKeyword={handleAddKeyword} inputClassName={styles.listInputWidth} />
       <section className={styles.theLatestSearch}>
         <div className={styles.title}>
           <h2>최근 검색어</h2>

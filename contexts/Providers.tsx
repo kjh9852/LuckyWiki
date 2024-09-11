@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import AuthProvider from './AuthProvider';
 import SnackBarProvider from './SnackbarProvider';
+import SearchProvider from './SearchProvider';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -8,8 +9,10 @@ interface ProvidersProps {
 
 export default function Providers({ children }: ProvidersProps) {
   return (
-    <SnackBarProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </SnackBarProvider>
+    <SearchProvider>
+      <SnackBarProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </SnackBarProvider>
+    </SearchProvider>
   );
 }
