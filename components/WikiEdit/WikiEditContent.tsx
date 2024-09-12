@@ -4,7 +4,6 @@ import ReactQuill from 'react-quill';
 import { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadImages } from '@/apis/auth/uploadImages';
-import CustomToolbar from './CustomToolbar';
 import styles from './WikiEditContent.module.scss';
 
 interface ForwardedQuillComponent extends ReactQuillProps {
