@@ -18,6 +18,13 @@
   max-width: 280px;
 }
 
+.introduceInput {
+  @include fontStyle400;
+  text-align: center;
+  max-width: 280px;
+  border: none;
+}
+
 @include tablet {
   .editInput {
     width: 100%;
