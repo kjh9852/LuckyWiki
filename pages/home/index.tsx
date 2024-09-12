@@ -21,8 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const result = await response.json();
 
     profileList = result.list;
-  } catch (error) {
-    console.error('Failed', error);
+  } catch {
     return {
       notFound: true,
     };
