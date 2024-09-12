@@ -23,7 +23,7 @@ export default function ModalComponent({
   children?: ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
-  userCode: string;
+  userCode?: string;
   isAnswer?: boolean;
   timelimit?: boolean;
 }) {
@@ -35,7 +35,7 @@ export default function ModalComponent({
 
   const fetchPostPing = async () => {
     try {
-      const res = await postPing(userCode, answer);
+      const res = await postPing(userCode as string, answer);
       if (res.ok) {
         router.push(`/wiki/${userCode}/edit`);
       }
