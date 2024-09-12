@@ -21,6 +21,9 @@
       border-radius: 10px;
       background-color: $primary-green200;
       text-align: center;
+      &:disabled {
+        background-color: $gray300;
+      }
     }
   }
 }

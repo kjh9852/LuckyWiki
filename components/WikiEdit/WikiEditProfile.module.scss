@@ -7,14 +7,15 @@
   position: sticky;
   max-width: 480px;
   height: 787px;
-  padding: 0 40px 36px 40px;
+  padding: 20px 40px 36px 40px;
   margin: 0 auto;
   border-radius: 10px;
   box-shadow: 0px 4px 20px 0px #00000014;
 }
 
 .profileImage {
-  padding: 60px;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .image {
@@ -64,21 +65,18 @@
     position: static;
     max-width: 100%;
     margin: 0;
-    height: 388px;
+    height: 423px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
     padding: 20px 16px 36px 16px;
-  }
-
-  .hide {
-    display: none;
   }
 
   .profileImage {
     padding: 0;
+    margin-top: 10px;
+    margin-bottom: 32px;
   }
 
   .image {
@@ -107,9 +105,8 @@
 
 @include mobile {
   .profileDetail {
-    gap: 24px;
-    height: 519px;
-    padding: 24px 16px 16px 16px;
+    height: 570px;
+    padding: 24px 16px 20px 16px;
   }
   .profileKey {
     display: flex;

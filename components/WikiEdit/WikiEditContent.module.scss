@@ -1,6 +1,7 @@
 @import '../../styles/mixins';
 
 .contentContainer {
+  flex: 1 0;
   max-width: 1120px;
   margin-left: 200px;
 }
@@ -9,6 +10,5 @@
   .contentContainer {
     max-width: 100%;
     margin-left: 0;
-    margin: 0 auto;
   }
 }

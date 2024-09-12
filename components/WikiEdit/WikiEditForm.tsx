@@ -1,13 +1,15 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { FormEvent } from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { patchUser } from '@/apis/auth/patchUser';
 import { useRouter } from 'next/router';
 import { getProfile } from '@/apis/auth/getProfile';
 import WikiEditProfile from './WikiEditProfile';
 import styles from './WIkiEditForm.module.scss';
 import { FormValue } from './types/EditTypes';
+import { useAuth } from '@/contexts/AuthProvider';
+import ModalComponent from '../@shared/modal/Modal';
 
 const QuillEditor = dynamic(() => import('./WikiEditContent'), { ssr: false });
 
@@ -30,23 +32,32 @@ const INITIAL_FORM_VALUE: FormValue = {
 };
 
 export default function WikiEditForm() {
-  const { query } = useRouter();
-  const { code } = query;
+  const router = useRouter();
+  const { code } = router.query;
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState<FormValue | undefined>(INITIAL_FORM_VALUE);
   const [wikiUserName, setWikiUserName] = useState<string | undefined>(undefined);
-  const hasFetchedRef = useRef(false);
+  const [userId, setUserId] = useState<number | undefined>(undefined);
   const [formValue, setFormValue] = useState(contentValue ?? INITIAL_FORM_VALUE);
+  const { user } = useAuth();
 
   const editUser: editUserType = async (code, data) => {
     const res = await patchUser(code, data);
   };
 
+  useEffect(() => {
+    if (userId !== undefined && user?.profile && user?.profile.id !== userId) {
+      setIsModalOpen(true);
+    }
+    if (user?.profile && user?.profile.id === userId) return;
+  }, [userId]);
+
   const getValue = async () => {
     try {
       const res = await getProfile(code as string);
       setContentValue(res);
+      setUserId(res?.id);
       setWikiUserName(res?.name);
-      hasFetchedRef.current = true;
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -55,15 +66,16 @@ export default function WikiEditForm() {
   };
 
   useEffect(() => {
+    if (router.isReady) {
+      getValue();
+    }
+  }, [code]);
+
+  useEffect(() => {
     if (contentValue !== undefined) {
       setFormValue(contentValue);
     }
   }, [contentValue]);
-
-  useEffect(() => {
-    if (!code || hasFetchedRef.current) return;
-    getValue();
-  }, [code]);
 
   const handleChange: handleChangeType = (name, value) => {
     setFormValue(prevForm => ({
@@ -79,6 +91,7 @@ export default function WikiEditForm() {
 
   return (
     <section className={styles.editContiner}>
+      {isModalOpen && <ModalComponent title="주의">본인이 아닌 프로필은 수정이 불가합니다</ModalComponent>}
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <QuillEditor
           userName={wikiUserName}
