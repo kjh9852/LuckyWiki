@@ -117,7 +117,6 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
           <ProfileDetails profile={profile} />
         </section>
       </div>
-      {/* {isModalVisible && <Modal onCloseModalButtonClick={handleCloseModalButtonClick}/>} */}
     </>
   );
 }
