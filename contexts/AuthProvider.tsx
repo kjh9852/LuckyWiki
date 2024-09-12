@@ -1,7 +1,6 @@
 import { authenticateLogIn } from '@/apis/auth/authenticateLogin';
 import { authenticateSignUp } from '@/apis/auth/authenticateSignUp';
 import { getUser } from '@/apis/auth/getUser';
-import { FormInputValues } from '@/hooks/useValidForm';
 import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -14,8 +13,8 @@ interface User {
   id: number;
 }
 
-type signUpParams = Record<keyof Pick<FormInputValues, 'email' | 'name' | 'password' | 'passwordConfirmation'>, string>;
-type logInParams = Record<keyof Pick<FormInputValues, 'email' | 'password'>, string>;
+type signUpParams = Record<'email' | 'name' | 'password' | 'passwordConfirmation', string>;
+type logInParams = Record<'email' | 'password', string>;
 
 interface AuthContextValue {
   isLoggedIn: boolean;
