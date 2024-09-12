@@ -23,17 +23,21 @@
   ul {
     list-style: none;
     padding: 0;
+    @include flexCenter;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
 
     li {
       @include flexCenter;
       justify-content: space-between;
+      gap: 5px;
     }
   }
 }
 
 .keyword {
   @include fontStyle400($font-size: 14px, $color: $gray400);
-  margin-top: 10px;
 }
 
 .removeButton {

@@ -2,17 +2,22 @@
 
 .pcProfile {
   display: flex;
-  gap: 80px;
-  margin: 78px auto;
+  justify-content: space-between;
   width: 1260px;
+  margin: 78px auto;
   position: relative;
   left: 140px;
   height: auto;
+
+  .profileContent {
+    width: 860px;
+  }
 
   .profileDetails {
     position: sticky;
     top: 80px;
     height: 0px;
+    width: 320px;
   }
 }
 

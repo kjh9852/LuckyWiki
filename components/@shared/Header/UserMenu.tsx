@@ -5,13 +5,16 @@ import Image from 'next/image';
 import LoggedInUserDropdown from './LoggedInUserDropdown';
 import styles from './UserMenu.module.scss';
 import Alarm from './Alarm';
+import SearchForm from '../../WikiList/SearchForm';
+import { useLatestSearch } from '@/hooks/WikiList/useLatestSearch';
 
 export default function UserMenu() {
   const { user, isLoggedIn } = useAuth();
+  const { handleAddKeyword } = useLatestSearch();
 
   return (
     <section className={styles.nav}>
-      <input className={'input input-search'} />
+      <SearchForm onAddKeyword={handleAddKeyword} />
       {/* TODO: 모든 위키 페이지 완성되면 해당 페이지로 연결 */}
       <Link className={'link'} href={'/home'}>
         모든 위키

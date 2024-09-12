@@ -1,12 +1,16 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import useDebounce from '@/hooks/useDebounce';
 import { SearchType } from './types/SearchType';
+import useDebounce from '@/hooks/useDebounce';
+import { useNavigate } from '@/hooks/WikiList/useNavigate';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useSearch } from '@/contexts/SearchProvider';
+import { useRouter } from 'next/router';
 
-export default function SearchForm({ searchTerm, onSearch, inputClassName, onAddKeyword }: SearchType) {
+export default function SearchForm({ inputClassName, onAddKeyword }: SearchType) {
+  const { searchTerm, onSearch } = useSearch();
+  const [value, setValue] = useState<string>(searchTerm);
+  const { navigateTo } = useNavigate();
   const router = useRouter();
   const { name } = router.query;
-  const [value, setValue] = useState<string>(searchTerm);
 
   const debouncedValue = useDebounce(value, 1000);
 
@@ -21,8 +25,8 @@ export default function SearchForm({ searchTerm, onSearch, inputClassName, onAdd
   useEffect(() => {
     if (debouncedValue !== searchTerm) {
       onSearch(debouncedValue);
-      onAddKeyword?.(debouncedValue);
-      router.push(`/wikilist?name=${debouncedValue}`, undefined, { shallow: true });
+      onAddKeyword(debouncedValue);
+      navigateTo(`/wikilist?name=${debouncedValue}`);
     }
   }, [debouncedValue]);
 

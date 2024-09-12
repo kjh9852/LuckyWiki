@@ -1,34 +1,32 @@
 import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiCard.module.scss';
-import { useRouter } from 'next/router';
+import { useCopyLink } from '@/hooks/useCopyLink';
+import { useNavigate } from '@/hooks/WikiList/useNavigate';
 
 interface WikiCardProps {
   profileCard: ProfileType;
 }
 
 export default function WikiCard({ profileCard }: WikiCardProps) {
-  const router = useRouter();
-  const linkURL = `https://www.wikied.kr/wiki/${profileCard.code}`;
+  const { copyLink } = useCopyLink();
+  const { navigateTo } = useNavigate();
 
-  const handleCopyButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const LINK_URL = `https://www.wikied.kr/wiki/${profileCard.code}`;
+  const PROFILE_IMAGE = profileCard.image || '/icon/icon-profile.png';
+
+  const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(linkURL);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
+    copyLink(LINK_URL);
   };
 
   const handleMoveCardClick = () => {
-    router.push(`/wiki/${profileCard.code}`, undefined, { shallow: true });
+    navigateTo(`/wiki/${profileCard.code}`);
   };
-
-  const profileImage = profileCard.image || '/icon/icon-profile.png';
 
   return (
     <div className={styles.profileCard} onClick={handleMoveCardClick}>
-      <Image className={styles.image} src={profileImage} alt="프로필 이미지" width={85} height={85} />
+      <Image className={styles.image} src={PROFILE_IMAGE} alt="프로필 이미지" width={85} height={85} />
       <section className={styles.detail}>
         <h1>{profileCard.name}</h1>
         <p>
@@ -38,7 +36,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
       </section>
       <button className={styles.linkButton} onClick={handleCopyButtonClick}>
         <Image src="/icon/icon-link.png" alt="링크 아이콘" width={20} height={20} />
-        <p>{linkURL}</p>
+        <p>{LINK_URL}</p>
       </button>
     </div>
   );
