@@ -1,5 +1,6 @@
 import styles from './EditInput.module.scss';
 import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import classNames from 'classnames';
 
 interface EditInputProps {
   label?: string;
@@ -8,9 +9,17 @@ interface EditInputProps {
   value?: string;
   name?: string;
   onValueChange: (name: string, value: string | undefined) => void;
+  placeholder?: string;
 }
 
-export default function EditInput({ label, htmlFor, type = 'text', onValueChange, value }: EditInputProps) {
+export default function EditInput({
+  label,
+  htmlFor,
+  type = 'text',
+  onValueChange,
+  value,
+  placeholder,
+}: EditInputProps) {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onValueChange(name, value);
@@ -26,9 +35,14 @@ export default function EditInput({ label, htmlFor, type = 'text', onValueChange
         id={htmlFor}
         name={htmlFor}
         type={type}
-        className={`${styles.editInput} input`}
+        className={classNames({
+          input: !placeholder?.length,
+          [styles.editInput]: !placeholder?.length,
+          [styles.introduceInput]: placeholder?.length,
+        })}
         onChange={handleInputChange}
         value={value}
+        placeholder={placeholder}
       />
     </div>
   );

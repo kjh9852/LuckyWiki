@@ -9,9 +9,14 @@ interface WidiEditProfileProps {
 }
 
 export default function WikiEditProfile({ onWikiValueChange, value }: WidiEditProfileProps) {
-  console.log(value);
   return (
     <div className={styles.profileDetail}>
+      <EditInput
+        htmlFor="family"
+        onValueChange={onWikiValueChange}
+        placeholder="한 줄 소개"
+        value={value?.family ?? ''}
+      />
       <section className={styles.profileImage}>
         <EditImageInput id="image" type="file" onValueChange={onWikiValueChange} previewImg={value?.image ?? null} />
       </section>
