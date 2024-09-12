@@ -52,7 +52,7 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
         <WikiContent profile={profile} />
       </div>
       <div className={styles.pcProfile}>
-        <section>
+        <section className={styles.profileContent}>
           <WikiTitle profile={profile} onOpenModalButtonClick={handleOpenModalButtonClick} />
           <WikiContent profile={profile} />
         </section>

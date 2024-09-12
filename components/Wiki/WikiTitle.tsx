@@ -1,6 +1,7 @@
 import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiTitle.module.scss';
+import { useCopyLink } from '@/hooks/useCopyLink';
 
 interface WikiTitleProps {
   profile: ProfileType;
@@ -8,14 +9,11 @@ interface WikiTitleProps {
 }
 
 export default function WikiTitle({ profile, onOpenModalButtonClick }: WikiTitleProps) {
+  const { copyLink } = useCopyLink();
   const linkURL = `https://www.wikied.kr/wiki/${profile.code}`;
 
-  const handleCopyButtonClick = async () => {
-    try {
-      await navigator.clipboard.writeText(linkURL);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
+  const handleCopyButtonClick = () => {
+    copyLink(linkURL);
   };
 
   return (

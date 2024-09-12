@@ -1,27 +1,26 @@
 import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiCard.module.scss';
-import { useRouter } from 'next/router';
+import { useCopyLink } from '@/hooks/useCopyLink';
+import { useNavigate } from '@/hooks/WikiList/useNavigate';
 
 interface WikiCardProps {
   profileCard: ProfileType;
 }
 
 export default function WikiCard({ profileCard }: WikiCardProps) {
-  const router = useRouter();
+  const { copyLink } = useCopyLink();
+  const { navigateTo } = useNavigate();
+
   const linkURL = `https://www.wikied.kr/wiki/${profileCard.code}`;
 
-  const handleCopyButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(linkURL);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
+    copyLink(linkURL);
   };
 
   const handleMoveCardClick = () => {
-    router.push(`/wiki/${profileCard.code}`, undefined, { shallow: true });
+    navigateTo(`/wiki/${profileCard.code}`);
   };
 
   const profileImage = profileCard.image || '/icon/icon-profile.png';
