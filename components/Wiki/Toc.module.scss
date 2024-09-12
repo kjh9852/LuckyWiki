@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.nav {
+  position: fixed;
+  left: 20px;
+  width: 120px;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    margin: 5px 0;
+  }
+
+  .active {
+    font-weight: bold;
+    color: $primary-green200;
+  }
+}
+
+@include tablet {
+  .nav {
+    display: none;
+  }
+}
