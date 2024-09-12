@@ -5,26 +5,25 @@ import { useCopyLink } from '@/hooks/useCopyLink';
 
 interface WikiTitleProps {
   profile: ProfileType;
-  onOpenModalButtonClick: () => void;
 }
 
-export default function WikiTitle({ profile, onOpenModalButtonClick }: WikiTitleProps) {
+export default function WikiTitle({ profile }: WikiTitleProps) {
   const { copyLink } = useCopyLink();
-  const linkURL = `https://www.wikied.kr/wiki/${profile.code}`;
+  const LINK_URL = `https://www.wikied.kr/wiki/${profile.code}`;
 
   const handleCopyButtonClick = () => {
-    copyLink(linkURL);
+    copyLink(LINK_URL);
   };
 
   return (
     <div className={styles.wikiTitle}>
       <header>
         <h1>{profile.name}</h1>
-        <button onClick={onOpenModalButtonClick}>위키 참여하기</button>
+        <button>위키 참여하기</button>
       </header>
       <button className={styles.linkButton} onClick={handleCopyButtonClick}>
         <Image src="/icon/icon-link.png" alt="링크 아이콘" width={20} height={20} />
-        <p>{linkURL}</p>
+        <p>{LINK_URL}</p>
       </button>
     </div>
   );

@@ -1,8 +1,7 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 interface SearchContextType {
   searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   onSearch: (term: string) => void;
 }
 
@@ -12,11 +11,19 @@ export default function SearchProvider({ children }: { children: ReactNode }) {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   //searchTerm을 input의 value값에 따라 변경
-  const onSearch = (term: string) => {
+  const onSearch = useCallback((term: string) => {
     setSearchTerm(term);
-  };
+  }, []);
 
-  return <SearchContext.Provider value={{ searchTerm, setSearchTerm, onSearch }}>{children}</SearchContext.Provider>;
+  const contextValue = useMemo(
+    () => ({
+      searchTerm,
+      onSearch,
+    }),
+    [searchTerm, onSearch],
+  );
+
+  return <SearchContext.Provider value={contextValue}>{children}</SearchContext.Provider>;
 }
 
 export const useSearch = () => {

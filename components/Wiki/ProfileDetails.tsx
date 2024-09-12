@@ -15,7 +15,7 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
     setIsMoreView(prev => !prev);
   };
 
-  const hideOrView = isMoreView ? '' : styles.hide;
+  const HIDE_OR_VIEW = isMoreView ? '' : styles.hide;
 
   return (
     <>
@@ -28,23 +28,23 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
             <p>거주 도시</p>
             <p>MBTI</p>
             <p>직업</p>
-            <p className={hideOrView}>SNS 계정</p>
-            <p className={hideOrView}>생일</p>
-            <p className={hideOrView}>별명</p>
-            <p className={hideOrView}>혈액형</p>
-            <p className={hideOrView}>국적</p>
+            <p className={HIDE_OR_VIEW}>SNS 계정</p>
+            <p className={HIDE_OR_VIEW}>생일</p>
+            <p className={HIDE_OR_VIEW}>별명</p>
+            <p className={HIDE_OR_VIEW}>혈액형</p>
+            <p className={HIDE_OR_VIEW}>국적</p>
           </section>
           <section className={styles.profileValue}>
             <p>{profile.city}</p>
             <p>{profile.mbti}</p>
             <p>{profile.job}</p>
-            <a className={hideOrView} href={profile.sns} target="_blank" rel="noopener noreferrer">
+            <a className={HIDE_OR_VIEW} href={profile.sns} target="_blank" rel="noopener noreferrer">
               <Image src="/icon/icon-instagram.png" alt="sns 아이콘" width={24} height={24} />
             </a>
-            <p className={hideOrView}>{profile.birthday}</p>
-            <p className={hideOrView}>{profile.nickname}</p>
-            <p className={hideOrView}>{profile.bloodType}</p>
-            <p className={hideOrView}>{profile.nationality}</p>
+            <p className={HIDE_OR_VIEW}>{profile.birthday}</p>
+            <p className={HIDE_OR_VIEW}>{profile.nickname}</p>
+            <p className={HIDE_OR_VIEW}>{profile.bloodType}</p>
+            <p className={HIDE_OR_VIEW}>{profile.nationality}</p>
           </section>
         </div>
       </div>

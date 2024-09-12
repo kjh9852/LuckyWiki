@@ -12,22 +12,21 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   const { copyLink } = useCopyLink();
   const { navigateTo } = useNavigate();
 
-  const linkURL = `https://www.wikied.kr/wiki/${profileCard.code}`;
+  const LINK_URL = `https://www.wikied.kr/wiki/${profileCard.code}`;
+  const PROFILE_IMAGE = profileCard.image || '/icon/icon-profile.png';
 
   const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    copyLink(linkURL);
+    copyLink(LINK_URL);
   };
 
   const handleMoveCardClick = () => {
     navigateTo(`/wiki/${profileCard.code}`);
   };
 
-  const profileImage = profileCard.image || '/icon/icon-profile.png';
-
   return (
     <div className={styles.profileCard} onClick={handleMoveCardClick}>
-      <Image className={styles.image} src={profileImage} alt="프로필 이미지" width={85} height={85} />
+      <Image className={styles.image} src={PROFILE_IMAGE} alt="프로필 이미지" width={85} height={85} />
       <section className={styles.detail}>
         <h1>{profileCard.name}</h1>
         <p>
@@ -37,7 +36,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
       </section>
       <button className={styles.linkButton} onClick={handleCopyButtonClick}>
         <Image src="/icon/icon-link.png" alt="링크 아이콘" width={20} height={20} />
-        <p>{linkURL}</p>
+        <p>{LINK_URL}</p>
       </button>
     </div>
   );
