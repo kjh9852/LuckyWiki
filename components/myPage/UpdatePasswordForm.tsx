@@ -1,19 +1,38 @@
-import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
-import { SubmitHandler } from 'react-hook-form';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 import ValidInput from '../@shared/Input/ValidInput';
 import { useRouter } from 'next/router';
 import { updatePassword } from '@/apis/auth/updatePassword';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import styles from './MyPageForm.module.scss';
 import classNames from 'classnames';
+import { VALID_OPTIONS } from '@/constants/validOptions';
+
+const updatePasswordFormConfig: ValidationConfig = {
+  currentPassword: {
+    required: '현재 비밀번호를 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+  },
+  password: {
+    required: '새로운 비밀번호를 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+  },
+  passwordConfirmation: {
+    required: '비밀번호를 한 번 더 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+    validate: {
+      matched: (value, formValues) => value === formValues.password || '비밀번호가 일치하지 않습니다.',
+    },
+  },
+};
 
 export default function UpdatePasswordForm() {
   const { openSnackBar } = useSnackBar();
   const router = useRouter();
 
-  const { register, errors, handleSubmit } = useValidForm(['currentPassword', 'password', 'passwordConfirmation']);
+  const { register, errors, handleSubmit } = useValidForm({ validationConfig: updatePasswordFormConfig });
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
+  const handleFormSubmit: SubmitHandler<FieldValues> = async formData => {
     if (formData.currentPassword && formData.password && formData.passwordConfirmation) {
       const { currentPassword, password, passwordConfirmation } = formData;
       const response = await updatePassword({ currentPassword, password, passwordConfirmation });

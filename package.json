@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "antd": "^5.20.3",
     "classnames": "^2.5.1",

@@ -1,18 +1,42 @@
 import Link from 'next/link';
-import { SubmitHandler } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 import React from 'react';
-import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
 import ValidInput from '@/components/@shared/Input/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
 import { useRouter } from 'next/router';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
+import { VALID_OPTIONS } from '@/constants/validOptions';
+
+const signUpValidationConfig: ValidationConfig = {
+  name: {
+    required: '이름을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  email: {
+    required: 'e-mail을 입력해주세요',
+    pattern: VALID_OPTIONS.emailPattern,
+  },
+  password: {
+    required: '비밀번호를 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+  },
+  passwordConfirmation: {
+    required: '비밀번호를 한 번 더 입력해주세요',
+    pattern: VALID_OPTIONS.passwordPattern,
+    validate: {
+      matched: (value, formValues) => value === formValues.password || '비밀번호가 일치하지 않습니다.',
+    },
+  },
+};
 
 export default function SignUpPage() {
   const { signUp } = useAuth();
   const router = useRouter();
 
-  const { register, errors, handleSubmit } = useValidForm(['email', 'name', 'password', 'passwordConfirmation']);
+  const { register, errors, handleSubmit } = useValidForm({ validationConfig: signUpValidationConfig });
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
+  const handleFormSubmit: SubmitHandler<FieldValues> = async formData => {
     if (formData.email && formData.name && formData.password && formData.passwordConfirmation) {
       const { email, name, password, passwordConfirmation } = formData;
       await signUp({ email, name, password, passwordConfirmation });

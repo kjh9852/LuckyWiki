@@ -1,26 +1,54 @@
-import { FormInputValues, useValidForm } from '@/hooks/useValidForm';
+import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import styles from './MyPageForm.module.scss';
 import classNames from 'classnames';
-import { SubmitHandler } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 import ValidInput from '../@shared/Input/ValidInput';
 import { createProfile } from '@/apis/auth/createProfile';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { useAuth } from '@/contexts/AuthProvider';
+import { sendMail } from '@/utils/sendMail';
+import { VALID_OPTIONS } from '@/constants/validOptions';
 
-// TODO: 위키 생성 폼이랑 위키 질문 변경 폼을 따로 만들어야 함
+const createWikiFormConfig: ValidationConfig = {
+  securityAnswer: {
+    required: '질문을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  securityQuestion: {
+    required: '답변을 입력해주세요',
+    minLength: VALID_OPTIONS.minLength2,
+    maxLength: VALID_OPTIONS.maxLength10,
+  },
+  toEmail: {
+    required: false,
+    pattern: VALID_OPTIONS.emailPattern,
+  },
+};
 
 export default function CreateWikiForm() {
-  const { syncUserAuthState } = useAuth();
+  const { syncUserAuthState, user } = useAuth();
   const { openSnackBar } = useSnackBar();
-  const { register, errors, handleSubmit } = useValidForm(['securityAnswer', 'securityQuestion']);
+  const { register, errors, handleSubmit, setValue } = useValidForm({ validationConfig: createWikiFormConfig });
 
-  const handleFormSubmit: SubmitHandler<FormInputValues> = async formData => {
-    if (formData.securityAnswer && formData.securityQuestion) {
+  const handleFormSubmit: SubmitHandler<FieldValues> = async formData => {
+    if (formData.securityAnswer && formData.securityQuestion && user) {
       const { securityAnswer, securityQuestion } = formData;
       const response = await createProfile({ securityAnswer, securityQuestion });
 
       if (response) {
         openSnackBar({ type: 'success', content: '위키 생성이 완료되었습니다.' });
+        if (formData.toEmail) {
+          sendMail({
+            answer: securityAnswer,
+            question: securityQuestion,
+            name: user.name,
+            email: formData.toEmail,
+          });
+          setValue('toEmail', '');
+        }
+        setValue('securityAnswer', '');
+        setValue('securityQuestion', '');
         syncUserAuthState();
       } else {
         openSnackBar({ type: 'error', content: '위키 생성에 실패하였습니다.' });
@@ -43,6 +71,14 @@ export default function CreateWikiForm() {
         message={errors.securityAnswer?.message}
         register={register.securityAnswer}
         placeholder={'답변을 입력해주세요'}
+      />
+      <ValidInput
+        type="email"
+        label={'이메일을 입력하면 인증 퀴즈 내용을 보내드려요'}
+        placeholder={'비워두면 이메일은 가지 않아요..'}
+        error={errors.toEmail}
+        message={errors.toEmail?.message}
+        register={register.toEmail}
       />
 
       <div className={styles.buttonWrapper}>
