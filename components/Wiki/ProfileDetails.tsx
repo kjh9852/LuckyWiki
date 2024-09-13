@@ -28,7 +28,7 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
             <p>거주 도시</p>
             <p>MBTI</p>
             <p>직업</p>
-            <p>SNS 계정</p>
+            <p>인스타그램</p>
             <p>생일</p>
             <p>별명</p>
             <p>혈액형</p>
@@ -38,9 +38,13 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
             <p>{profile.city}</p>
             <p>{profile.mbti}</p>
             <p>{profile.job}</p>
-            <a href={`${INSTAGRAM_URL}${profile.sns}`} target="_blank" rel="noopener noreferrer">
-              <Image src="/icon/icon-instagram.png" alt="sns 아이콘" width={24} height={24} />
-            </a>
+            {profile.sns ? (
+              <a href={`${INSTAGRAM_URL}${profile.sns}`} target="_blank" rel="noopener noreferrer">
+                <Image src="/icon/icon-instagram.png" alt="sns 아이콘" width={24} height={24} />
+              </a>
+            ) : (
+              <p></p>
+            )}
             <p>{profile.birthday}</p>
             <p>{profile.nickname}</p>
             <p>{profile.bloodType}</p>

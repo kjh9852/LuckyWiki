@@ -5,8 +5,9 @@
   width: 860px;
 }
 
-.theLatestSearch {
+.recentSearch {
   margin-top: 20px;
+
   .title {
     @include flexCenter;
     justify-content: space-between;
@@ -26,18 +27,21 @@
     @include flexCenter;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 15px;
 
     li {
       @include flexCenter;
       justify-content: space-between;
       gap: 5px;
+      background-color: $gray100;
+      padding: 5px 8px;
+      border-radius: 15px;
     }
   }
 }
 
 .keyword {
-  @include fontStyle400($font-size: 14px, $color: $gray400);
+  @include fontStyle400($font-size: 14px, $color: $gray500);
 }
 
 .removeButton {
@@ -57,5 +61,31 @@
 @include mobile {
   .listInputWidth {
     width: 335px;
+  }
+
+  .recentSearch {
+    margin-top: 18px;
+
+    .title {
+      h2 {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .keyword {
+    font-size: 12px;
+  }
+
+  .removeButton {
+    font-size: 12px;
+  }
+
+  .keywordNone {
+    font-size: 12px;
   }
 }
