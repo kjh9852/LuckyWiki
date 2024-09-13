@@ -19,7 +19,9 @@ export default function ProfileDetails({ profile }: ProfileDetailProps) {
 
   return (
     <div className={`${styles.profileContainer} ${isMoreView === 'active' ? styles.active : ''}`}>
+      <section className={styles.introduce}>{profile.family}</section>
       <div className={styles.profileDetail}>
+        <section className={styles.pcIntroduce}>{profile.family}</section>
         <section className={styles.profileImage}>
           <Image src={profileImage} className={styles.image} alt="프로필 이미지" width={200} height={200} />
         </section>
