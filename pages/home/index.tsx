@@ -2,7 +2,7 @@ import ProfileCard from '@/components/home/ProfileCard';
 import ProfileType, { ProfileCardData } from '@/types/types';
 import styles from './Home.module.scss';
 import classNames from 'classnames';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { Bounce, Fade, JackInTheBox } from 'react-awesome-reveal';
 import { getProfile } from '@/apis/auth/getProfile';
 
@@ -10,15 +10,13 @@ interface HomeProps {
   profileList: ProfileCardData[];
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   let profileList = null;
   try {
     const query = new URLSearchParams({
       pageSize: '8',
     });
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`, {
-      next: { revalidate: 60 * 60 * 24 },
-    });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`);
     const ProfileCodeList = await response
       .json()
       .then(res => res.list.map((profile: Record<string, string>) => profile.code));
