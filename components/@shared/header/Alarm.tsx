@@ -35,16 +35,16 @@ export default function Alarm() {
   };
 
   useEffect(() => {
-    // 기본 delay값 60초
-    let delay = 60000;
+    // 기본 delay값 3초
+    let delay = 3000;
     let timer: NodeJS.Timeout;
 
     // 남은 Notification 유무 확인을 위한 함수
     const fetchNotification = async () => {
       const responseNotificationList = await getNotifications();
       if (!responseNotificationList) {
-        // 요청 실패가 서버 부하 문제일 수 있으므로 딜레이 1.2배 증가
-        delay *= 1.2;
+        // 요청 실패가 서버 부하 문제일 수 있으므로 딜레이 2배 증가
+        delay *= 2;
       } else {
         setNotificationList(responseNotificationList);
         if (responseNotificationList.length > 0) {
