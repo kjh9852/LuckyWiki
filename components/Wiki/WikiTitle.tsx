@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiTitle.module.scss';

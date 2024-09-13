@@ -1,10 +1,13 @@
-import { SearchType } from './types/SearchType';
 import useDebounce from '@/hooks/useDebounce';
 import { useNavigate } from '@/hooks/WikiList/useNavigate';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSearch } from '@/contexts/SearchProvider';
 import { useRouter } from 'next/router';
 import { useRecentSearch } from '@/hooks/WikiList/useRecentSearch';
+
+interface SearchType {
+  inputClassName?: string;
+}
 
 export default function SearchForm({ inputClassName }: SearchType) {
   const { searchTerm, onSearch } = useSearch();

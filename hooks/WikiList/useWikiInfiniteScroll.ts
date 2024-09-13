@@ -52,11 +52,6 @@ export const useWikiInfiniteScroll = (searchTerm: string) => {
   return {
     profileCards,
     loading,
-    hasMore,
-    handleLoadProfileCards,
-    setProfileCards,
-    setHasMore,
-    setPage,
     ref,
   };
 };
