@@ -4,11 +4,13 @@ import { useNavigate } from '@/hooks/WikiList/useNavigate';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSearch } from '@/contexts/SearchProvider';
 import { useRouter } from 'next/router';
+import { useRecentSearch } from '@/hooks/WikiList/useRecentSearch';
 
-export default function SearchForm({ inputClassName, onAddKeyword }: SearchType) {
+export default function SearchForm({ inputClassName }: SearchType) {
   const { searchTerm, onSearch } = useSearch();
-  const [value, setValue] = useState<string>(searchTerm);
+  const { handleAddKeyword } = useRecentSearch();
   const { navigateTo } = useNavigate();
+  const [value, setValue] = useState<string>(searchTerm);
   const router = useRouter();
   const { name } = router.query;
 
@@ -25,7 +27,7 @@ export default function SearchForm({ inputClassName, onAddKeyword }: SearchType)
   useEffect(() => {
     if (debouncedValue !== searchTerm) {
       onSearch(debouncedValue);
-      onAddKeyword(debouncedValue);
+      handleAddKeyword(debouncedValue);
       navigateTo(`/wikilist?name=${debouncedValue}`);
     }
   }, [debouncedValue]);

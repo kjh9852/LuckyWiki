@@ -1,14 +1,25 @@
-import styles from './TheLatestSearch.module.scss';
+import styles from './RecentSearch.module.scss';
 import SearchForm from './SearchForm';
-import { useLatestSearch } from '@/hooks/WikiList/useLatestSearch';
+import { useSearch } from '@/contexts/SearchProvider';
 
-export default function TheLatestSearch() {
-  const { keywords, handleAddKeyword, handleRemoveKeyword, handleRemoveAllKeywords } = useLatestSearch();
+export default function RecentSearch() {
+  const { keywords, setKeywords } = useSearch();
+
+  //검색어 삭제
+  const handleRemoveKeyword = (id: number) => {
+    const nextKeyword = keywords.filter(keyword => keyword.id !== id);
+    setKeywords(nextKeyword);
+  };
+
+  //검색어 전체 삭제
+  const handleRemoveAllKeywords = () => {
+    setKeywords([]);
+  };
 
   return (
     <>
-      <SearchForm onAddKeyword={handleAddKeyword} inputClassName={styles.listInputWidth} />
-      <section className={styles.theLatestSearch}>
+      <SearchForm inputClassName={styles.listInputWidth} />
+      <section className={styles.recentSearch}>
         <div className={styles.title}>
           <h2>최근 검색어</h2>
           {keywords.length ? (
