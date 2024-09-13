@@ -1,0 +1,39 @@
+{
+  "name": "wikid",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "antd": "^5.20.3",
+    "classnames": "^2.5.1",
+    "cookies-next": "^4.2.1",
+    "next": "14.2.7",
+    "react": "^18",
+    "react-awesome-reveal": "^4.2.14",
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
+    "react-quill": "^2.0.0",
+    "react-responsive": "^10.0.0",
+    "sass": "^1.77.8"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.7",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/parser": "^8.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.7",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "typescript": "^5"
+  }
+}

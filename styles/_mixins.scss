@@ -1,0 +1,67 @@
+@import './variables';
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+//text style
+@mixin fontStyle300($font-family: Pretendard, $font-size: 12px, $line-height: 115%, $color: $gray500) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 300;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin fontStyle400($font-family: Pretendard, $font-size: 18px, $line-height: 115%, $color: $gray500) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 400;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin fontStyle500($font-family: Pretendard, $font-size: 20px, $line-height: 115%, $color: $gray400) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 400;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin fontStyle600($font-family: Pretendard, $font-size: 20px, $line-height: 115%, $color: $gray500) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 600;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin fontStyle700($font-family: Pretendard, $font-size: 24px, $line-height: 115%, $color: $gray500) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 700;
+  line-height: $line-height;
+  color: $color;
+}
+
+// Media Query
+@mixin tablet {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}

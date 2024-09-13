@@ -1,0 +1,54 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.emptyContent {
+  width: 859px;
+  height: 192px;
+  padding: 40px 345px;
+  border-radius: 10px;
+  background-color: $gray100;
+  margin-top: 56px;
+
+  p {
+    @include fontStyle400($font-size: 16px, $line-height: 26px, $color: $gray400);
+    text-align: center;
+  }
+
+  button {
+    width: 89px;
+    height: 40px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    background-color: $primary-green200;
+    @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $gray50);
+    margin: 20px 40px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@include tablet {
+  .emptyContent {
+    width: 624px;
+    padding: 40px 227px;
+    margin-top: 36px;
+  }
+}
+
+@include mobile {
+  .emptyContent {
+    width: 334px;
+    height: 184px;
+    padding: 40px 93px;
+    margin-top: 16px;
+
+    p {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    button {
+      margin: 16px 29px;
+    }
+  }
+}

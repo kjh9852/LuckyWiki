@@ -1,0 +1,73 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.wikiTitle {
+  width: 860px;
+
+  header {
+    @include flexCenter;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    h1 {
+      @include fontStyle600($font-size: 48px, $line-height: 46px);
+    }
+
+    button {
+      @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $gray50);
+      width: 160px;
+      height: 45px;
+      padding: 11px 40px;
+      border-radius: 10px;
+      background-color: $primary-green200;
+      text-align: center;
+      &:disabled {
+        background-color: $gray300;
+      }
+    }
+  }
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: $primary-green100;
+
+  p {
+    @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $primary-green200);
+    margin: 0;
+  }
+}
+
+@include tablet {
+  .wikiTitle {
+    width: 640px;
+  }
+}
+
+@include mobile {
+  .wikiTitle {
+    width: 335px;
+
+    header {
+      margin-bottom: 24px;
+
+      h1 {
+        @include fontStyle600($font-size: 32px, $line-height: 42px);
+      }
+
+      button {
+        width: 120px;
+        height: 43px;
+        padding: 10px 22px;
+      }
+    }
+  }
+
+  .p {
+    @include fontStyle400($font-size: 14px, $line-height: 24px);
+  }
+}
