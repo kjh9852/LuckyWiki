@@ -58,9 +58,8 @@ export default function Alarm() {
     const startPolling = () => {
       timer = setTimeout(async function polling() {
         await fetchNotification();
-        // 주기적으로 재요청
-        // setInterval과 달리 setTimeout 중첩은 api 요청 시간을 타이머 시간에 포함하지 않음 =>  지연 간격을 보장
-        timer = setTimeout(fetchNotification, delay);
+        // setInterval과 달리 중첩 setTimeout은 api 요청 시간을 타이머 시간에 포함하지 않음 => 지연 간격을 보장
+        timer = setTimeout(polling, delay);
       }, delay);
     };
 
