@@ -63,6 +63,13 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
   }, [loginUserId]);
 
   useEffect(() => {
+    const existingLastPingTime = localStorage.getItem('lastPingTime');
+    if (existingLastPingTime) {
+      localStorage.removeItem('lastPingTime');
+    }
+  }, []);
+
+  useEffect(() => {
     if (!profile) return;
     savePing();
   }, []);

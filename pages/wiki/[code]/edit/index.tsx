@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { getPing } from '@/apis/auth/updatePing';
 import { useRouter } from 'next/router';
 import ModalComponent from '@/components/@shared/modal/Modal';
+// import { useWarnPageUnLoad } from '@/hooks/useWarnPageUnLoad';
 
 export default function WikiEdit() {
   const router = useRouter();
@@ -12,6 +13,8 @@ export default function WikiEdit() {
     message: '',
     subMessage: '',
   });
+
+  // useWarnPageUnLoad();
 
   const savePing = async () => {
     try {
@@ -26,7 +29,6 @@ export default function WikiEdit() {
       if (res) {
         const registeredAt = new Date(res?.registeredAt);
         const dateIsoString = registeredAt.getTime().toString();
-        console.log(dateIsoString);
         localStorage.setItem('lastPingTime', dateIsoString);
       }
     } catch (error) {
@@ -36,30 +38,26 @@ export default function WikiEdit() {
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
+    const lastPingTime = localStorage.getItem('lastPingTime'); // api 호출 시 엔드포인트에서 받아온 시간
 
     if (router.isReady) {
-      const lastPingTime = localStorage.getItem('lastPingTime'); // api 호출 시 엔드포인트에서 받아온 시간
-
       if (lastPingTime) {
         const now = new Date().getTime();
         const elapsedTime = parseInt(lastPingTime) + 5 * 60 * 1000; // 엔드포인트에서 5분 후
         console.log(new Date(), new Date(elapsedTime));
         const remainingTime = elapsedTime - now;
 
-        let testTime = parseInt(lastPingTime) + 60 * 1000;
         console.log(remainingTime);
 
         if (remainingTime > 0) {
           console.log('확인');
-
           timer = setTimeout(() => {
             console.log('타이머 확인');
             savePing();
             // 5분마다 반복
-            timer = setInterval(savePing, 5 * 60 * 1000);
             localStorage.removeItem('lastPingTime');
           }, remainingTime);
-        } else if (isNaN(remainingTime) === true) {
+        } else {
           // remainingTime이 0보다 작으면 즉시 실행 후 lastPingTime제거
           savePing();
           localStorage.removeItem('lastPingTime');
