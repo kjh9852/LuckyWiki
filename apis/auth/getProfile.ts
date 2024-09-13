@@ -1,24 +1,6 @@
-interface getProfileReturn {
-  updatedAt: string;
-  securityQuestion: string;
-  teamId: string;
-  content: string;
-  nationality: string;
-  family: string;
-  bloodType: string;
-  nickname: string;
-  birthday: string;
-  sns: string;
-  job: string;
-  mbti: string;
-  city: string;
-  image: string;
-  code: string;
-  name: string;
-  id: number;
-}
+import ProfileType from '@/types/types';
 
-export const getProfile = async (code: string): Promise<getProfileReturn | undefined> => {
+export const getProfile = async (code: string): Promise<ProfileType | undefined> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}`);
   if (!response.ok) {
     return undefined;
