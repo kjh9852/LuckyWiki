@@ -51,6 +51,8 @@
       height: 24px;
       margin: 0;
     }
+    @include ellipsis;
+    max-width: 180px;
   }
 }
 
@@ -123,6 +125,10 @@
   .profileValue {
     @include info;
     gap: 4px;
+
+    p {
+      max-width: 380px;
+    }
   }
 }
 
@@ -152,5 +158,9 @@
   .profileValue {
     @include info;
     gap: 3px;
+
+    p {
+      max-width: 140px;
+    }
   }
 }
