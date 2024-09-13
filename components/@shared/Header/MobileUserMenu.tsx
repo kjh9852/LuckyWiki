@@ -14,7 +14,7 @@ export default function MobileUserMenu() {
   const notLogInItems: MenuProps['items'] = [
     {
       key: '1',
-      label: <Link href={`/`}>모든 위키</Link>,
+      label: <Link href={`/wikilist`}>모든 위키</Link>,
     },
     {
       key: '2',

@@ -13,11 +13,10 @@ export default function UserMenu() {
   return (
     <section className={styles.nav}>
       <SearchForm />
-      {/* TODO: 모든 위키 페이지 완성되면 해당 페이지로 연결 */}
-      <Link className={'link'} href={'/home'}>
+      <Link className={'link'} href={'/wikilist'}>
         모든 위키
       </Link>
-      {isLoggedIn ? (
+      {user && isLoggedIn ? (
         <section className={styles.userProfileSection}>
           <LoggedInUserDropdown>
             <Image
@@ -29,13 +28,21 @@ export default function UserMenu() {
             />
           </LoggedInUserDropdown>
           <Alarm />
+          {user.profile ? (
+            <Link href={`/wiki/${user.profile.code}`}>
+              <button className={'button'}>내 위키</button>
+            </Link>
+          ) : (
+            <Link href={'/mypage'}>
+              <button className={'button'}>내 위키 만들기</button>
+            </Link>
+          )}
         </section>
       ) : (
         <Link className={'link'} href={'/login'}>
           로그인
         </Link>
       )}
-      <button className={'button'}>내 위키 만들기</button>
     </section>
   );
 }
