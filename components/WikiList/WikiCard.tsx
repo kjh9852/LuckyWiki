@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from './WikiCard.module.scss';
 import { useCopyLink } from '@/hooks/useCopyLink';
 import { useNavigate } from '@/hooks/WikiList/useNavigate';
+import { useSnackBar } from '@/contexts/SnackbarProvider';
 
 interface WikiCardProps {
   profileCard: ProfileType;
@@ -11,6 +12,7 @@ interface WikiCardProps {
 export default function WikiCard({ profileCard }: WikiCardProps) {
   const { copyLink } = useCopyLink();
   const { navigateTo } = useNavigate();
+  const { openSnackBar } = useSnackBar();
 
   const LINK_URL = `https://www.wikied.kr/wiki/${profileCard.code}`;
   const PROFILE_IMAGE = profileCard.image || '/icon/icon-profile.png';
@@ -18,6 +20,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     copyLink(LINK_URL);
+    openSnackBar({ type: 'success', content: '링크가 복사되었습니다.' });
   };
 
   const handleMoveCardClick = () => {
