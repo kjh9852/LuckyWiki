@@ -1,11 +1,6 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-.wikiContent {
-  width: 860px;
-  margin-top: 56px;
-}
-
 .emptyContent {
   width: 859px;
   height: 192px;
@@ -33,10 +28,6 @@
 }
 
 @include tablet {
-  .wikiContent {
-    width: 624px;
-  }
-
   .emptyContent {
     width: 624px;
     padding: 40px 227px;
@@ -45,10 +36,6 @@
 }
 
 @include mobile {
-  .wikiContent {
-    width: 335px;
-  }
-
   .emptyContent {
     width: 334px;
     height: 184px;
