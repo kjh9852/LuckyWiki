@@ -6,7 +6,7 @@
   flex-direction: column;
   padding: 40px 0;
   span {
-    font-family: Pretendard !important;
+    font-family: 'Pretendard Variable' !important;
     font-size: 14px;
     line-height: 22.4px;
     color: $gray400;
@@ -60,12 +60,12 @@
 }
 
 .errorMessage {
-  font-family: Pretendard !important;
+  font-family: 'Pretendard Variable' !important;
   color: $secondary-red200;
 }
 
 .footerMessage {
-  font-family: Pretendard !important;
+  font-family: 'Pretendard Variable' !important;
   line-height: 14.32px;
   font-weight: 400;
   font-size: 12px;
@@ -75,7 +75,7 @@
 .message {
   padding-top: 30px;
   margin-bottom: 5px;
-  font-family: Pretendard !important;
+  font-family: 'Pretendard Variable' !important;
   font-size: 16px;
   font-weight: 600;
   line-height: 26px;
@@ -84,7 +84,7 @@
 
 .subMessage {
   padding-bottom: 10px;
-  font-family: Pretendard !important;
+  font-family: 'Pretendard Variable' !important;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;

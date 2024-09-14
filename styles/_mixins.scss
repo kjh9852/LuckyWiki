@@ -13,7 +13,7 @@
 }
 
 //text style
-@mixin fontStyle300($font-family: Pretendard, $font-size: 12px, $line-height: 115%, $color: $gray500) {
+@mixin fontStyle300($font-family: 'Pretendard Variable', $font-size: 12px, $line-height: 115%, $color: $gray500) {
   font-family: $font-family;
   font-size: $font-size;
   font-weight: 300;
@@ -21,7 +21,7 @@
   color: $color;
 }
 
-@mixin fontStyle400($font-family: Pretendard, $font-size: 18px, $line-height: 115%, $color: $gray500) {
+@mixin fontStyle400($font-family: 'Pretendard Variable', $font-size: 18px, $line-height: 115%, $color: $gray500) {
   font-family: $font-family;
   font-size: $font-size;
   font-weight: 400;
@@ -29,7 +29,7 @@
   color: $color;
 }
 
-@mixin fontStyle500($font-family: Pretendard, $font-size: 20px, $line-height: 115%, $color: $gray400) {
+@mixin fontStyle500($font-family: 'Pretendard Variable', $font-size: 20px, $line-height: 115%, $color: $gray400) {
   font-family: $font-family;
   font-size: $font-size;
   font-weight: 400;
@@ -37,7 +37,7 @@
   color: $color;
 }
 
-@mixin fontStyle600($font-family: Pretendard, $font-size: 20px, $line-height: 115%, $color: $gray500) {
+@mixin fontStyle600($font-family: 'Pretendard Variable', $font-size: 20px, $line-height: 115%, $color: $gray500) {
   font-family: $font-family;
   font-size: $font-size;
   font-weight: 600;
@@ -45,7 +45,7 @@
   color: $color;
 }
 
-@mixin fontStyle700($font-family: Pretendard, $font-size: 24px, $line-height: 115%, $color: $gray500) {
+@mixin fontStyle700($font-family: 'Pretendard Variable', $font-size: 24px, $line-height: 115%, $color: $gray500) {
   font-family: $font-family;
   font-size: $font-size;
   font-weight: 700;
