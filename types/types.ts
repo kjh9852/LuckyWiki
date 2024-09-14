@@ -30,3 +30,5 @@ export interface Notification {
   createdAt: Date;
   id: number;
 }
+
+export type ProfileCardData = Omit<ProfileType, 'content' | 'securityQuestion'>;

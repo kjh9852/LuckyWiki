@@ -1,26 +1,69 @@
 import ProfileCard from '@/components/home/ProfileCard';
-import ProfileType from '@/types/types';
+import ProfileType, { ProfileCardData } from '@/types/types';
 import styles from './Home.module.scss';
 import classNames from 'classnames';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { Bounce, Fade, JackInTheBox } from 'react-awesome-reveal';
+import { getProfile } from '@/apis/auth/getProfile';
 
 interface HomeProps {
-  profileList: ProfileType[];
+  profileList: ProfileCardData[];
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  let profileList;
+export const getServerSideProps: GetServerSideProps = async () => {
+  let profileList = null;
   try {
     const query = new URLSearchParams({
       pageSize: '8',
     });
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`, {
-      next: { revalidate: 60 * 60 * 24 },
-    });
-    const result = await response.json();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles?${query}`);
+    const ProfileCodeList = await response
+      .json()
+      .then(res => res.list.map((profile: Record<string, string>) => profile.code));
 
-    profileList = result.list;
+    const profileDetailList = await Promise.all(
+      ProfileCodeList.map((code: string) => getProfile(code).then(result => result)),
+    );
+
+    // 부트캠프에서 제공하는 API에서 Profile을 리스트로 조회하는 것과 하나를 조회 하는 것이 서로 다른 데이터를 주기 때문에
+    // 메인 페이지에서 상세 데이터를 가져와야 하고, 필요없는 데이터를 거르는 작업이 필요 했음
+    const result = profileDetailList.map((profileDetail: ProfileType) => {
+      // content, securityQuestion은 사용되지 않음
+      const {
+        id,
+        birthday,
+        bloodType,
+        city,
+        code,
+        family,
+        image,
+        job,
+        mbti,
+        name,
+        nationality,
+        nickname,
+        sns,
+        updatedAt,
+      } = profileDetail;
+      return {
+        id,
+        birthday,
+        bloodType,
+        city,
+        code,
+        family,
+        image,
+        job,
+        mbti,
+        name,
+        nationality,
+        nickname,
+        sns,
+        updatedAt,
+      };
+    });
+
+    profileList = result;
   } catch {
     return {
       notFound: true,
@@ -54,7 +97,11 @@ export default function Home({ profileList }: HomeProps) {
         </JackInTheBox>
       </section>
       <section className={styles.cardListContainer}>
-        {profileList?.map((profile, index) => <ProfileCard key={profile.id} profile={profile} index={index} />)}
+        {profileList?.map((profile, index) => {
+          // ProfileCard에서 id는 사용되지 않음
+          const { id, ...restProfile } = profile;
+          return <ProfileCard key={id} profile={restProfile} index={index} />;
+        })}
       </section>
     </div>
   );

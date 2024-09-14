@@ -1,4 +1,4 @@
-import ProfileType from '@/types/types';
+import { ProfileCardData } from '@/types/types';
 import noProfileImage from '@/public/icon/icon-no-profile.png';
 import quotesImage from '@/public/icon/icon-quotes.png';
 import Image from 'next/image';
@@ -6,15 +6,12 @@ import React, { useId } from 'react';
 import styles from './ProfileCard.module.scss';
 import Link from 'next/link';
 interface ProfileCardProps {
-  profile: ProfileType;
+  profile: Omit<ProfileCardData, 'id'>;
   index: number;
 }
 
 export default function ProfileCard({ profile }: ProfileCardProps) {
-  // 타입 안정성을 위해 delete가 아닌 구조분해할당을 사용
-  // id는 구조분해할당으로 profileTextValues 제외 후에 사용되지 않기에 lint 에러 제거
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, code, updatedAt, image, ...profileTextValues } = profile;
+  const { code, updatedAt, image, family, ...profileTextValues } = profile;
   const date = new Date(updatedAt);
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -25,25 +22,29 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
 
   return (
     <div className={styles.cardContainer}>
-      <Link href={`/wiki/${code}`} className={styles.imageCard} data-code={code}>
-        <Image src={profileImageSrc} alt={'프로필 이미지'} width={300} height={500} priority />
+      <Link href={`/wiki/${code}`}>
+        <div className={styles.imageCard}>
+          <Image src={profileImageSrc} alt={'프로필 이미지'} width={350} height={450} priority />
+        </div>
       </Link>
-      <Link href={`/wiki/${code}`} className={styles.textCard} data-code={code}>
-        <article className={styles.quote}>
-          <Image src={quotesImage} alt={'따옴표 이미지'} width={30} height={30} priority />
-          <p>한 줄 소개 프로필 작성할 때 추가 되나요?</p>
-        </article>
-        <div>
-          <article className={styles.summary}>
-            {Object.values(profileTextValues).map(v => v && <p key={useId()}>{v}</p>)}
+      <Link href={`/wiki/${code}`}>
+        <div className={styles.textCard}>
+          <article className={styles.quote}>
+            <Image src={quotesImage} alt={'따옴표 이미지'} width={30} height={30} priority />
+            <p>{family ? family : '아직 한 줄 소개가 작성되지 않았네요!'}</p>
           </article>
-          <article className={styles.cardFoot}>
-            <Image src={profileImageSrc} alt={'프로필 이미지'} width={40} height={40} priority />
-            <div>
-              <p className={styles.name}>{profileTextValues.name}</p>
-              <p className={styles.updateAt}>{updatedDate}</p>
-            </div>
-          </article>
+          <div>
+            <article className={styles.summary}>
+              {Object.values(profileTextValues).map(v => v && <span key={useId()}>{v}</span>)}
+            </article>
+            <article className={styles.cardFoot}>
+              <Image src={profileImageSrc} alt={'프로필 이미지'} width={40} height={40} priority />
+              <div>
+                <p className={styles.name}>{profileTextValues.name}</p>
+                <p className={styles.updateAt}>{updatedDate}</p>
+              </div>
+            </article>
+          </div>
         </div>
       </Link>
     </div>

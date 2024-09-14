@@ -8,6 +8,8 @@ body {
   position: relative;
   padding-top: $header-height;
   padding-bottom: $footer-height;
+  min-height: 100vh;
+  max-width: 100vw;
 }
 
 .button {
