@@ -1,19 +1,20 @@
-import { getTokens } from '@/utils/getTokens';
+import { fetchWithTokenRefresh } from './fetchWithTokenRefresh';
 
 export const postPing = async (code: string, answer: string) => {
-  const tokens = getTokens();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
+  const response = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${tokens.accessToken}`,
     },
     body: JSON.stringify({ securityAnswer: answer }),
   });
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || '에러가 발생했습니다.');
+
+  if (response) {
+    const registeredAt = new Date(response?.registeredAt);
+    const dateIsoString = registeredAt.getTime().toString();
+    localStorage.setItem('lastPingTime', dateIsoString);
   }
+
   return response;
 };
 

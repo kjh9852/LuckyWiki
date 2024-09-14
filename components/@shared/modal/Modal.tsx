@@ -13,6 +13,7 @@ export default function ModalComponent({
   children,
   isOpen = false,
   onClose,
+  isEdit = false,
   userCode,
   isAnswer = false,
   timelimit = false,
@@ -23,6 +24,7 @@ export default function ModalComponent({
   children?: ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
+  isEdit?: boolean;
   userCode?: string;
   isAnswer?: boolean;
   timelimit?: boolean;
@@ -34,20 +36,16 @@ export default function ModalComponent({
   const router = useRouter();
 
   const fetchPostPing = async () => {
-    try {
-      const res = await postPing(userCode as string, answer);
-      if (res.ok) {
-        router.push(`/wiki/${userCode}/edit`);
-      }
-    } catch (error) {
+    const res = await postPing(userCode as string, answer);
+    if (res) {
+      router.push(`/wiki/${userCode}/edit`);
+    } else if (res === undefined) {
       setIsError(true);
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      }
+      setErrorMessage('정답이 아닙니다. 다시 시도해 주세요.');
     }
   };
 
-  const handleOverTiemLimit = () => {
+  const handleOverTimeLimit = () => {
     setIsModalOpen(false);
     router.push(`/wiki/${userCode}`);
   };
@@ -60,6 +58,10 @@ export default function ModalComponent({
   const handleSubmitAnswer = async (e: FormEvent) => {
     e.preventDefault();
     await fetchPostPing();
+  };
+
+  const handleFinishEdit = async () => {
+    router.push(`/wiki/${userCode}`);
   };
 
   if (isAnswer) {
@@ -127,12 +129,12 @@ export default function ModalComponent({
         title={title}
         centered
         open={isModalOpen}
-        onCancel={handleOverTiemLimit}
+        onCancel={handleOverTimeLimit}
         destroyOnClose={true}
         getContainer={false}
         width={350}
         footer={[
-          <Button className={styles.buttonColor} key="ok" type="primary" onClick={handleOverTiemLimit}>
+          <Button className={styles.buttonColor} key="ok" type="primary" onClick={handleOverTimeLimit}>
             확인
           </Button>,
         ]}
@@ -145,18 +147,44 @@ export default function ModalComponent({
     );
   }
 
+  if (isEdit) {
+    return (
+      <Modal
+        title={title}
+        centered
+        open={isOpen}
+        onCancel={onClose}
+        destroyOnClose={true}
+        getContainer={false}
+        width={350}
+        footer={[
+          <div key="footer-container" className={styles.buttonContainer}>
+            <Button className={styles.buttonColor} key="ok" type="primary" onClick={onClose}>
+              이어서 수정
+            </Button>
+            <Button className={styles.buttonColor} key="ok" type="primary" onClick={handleFinishEdit}>
+              수정 완료
+            </Button>
+          </div>,
+        ]}
+      >
+        <p>{children}</p>
+      </Modal>
+    );
+  }
+
   return (
     <>
       <Modal
         title={title}
         centered
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        open={isOpen}
+        onCancel={onClose}
         destroyOnClose={true}
         getContainer={false}
         width={350}
         footer={[
-          <Button className={styles.buttonColor} key="ok" type="primary" onClick={() => setIsModalOpen(false)}>
+          <Button className={styles.buttonColor} key="ok" type="primary" onClick={onClose}>
             확인
           </Button>,
         ]}

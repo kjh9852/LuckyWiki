@@ -10,6 +10,7 @@ import { getProfile } from '@/apis/auth/getProfile';
 import { getPing } from '@/apis/auth/updatePing';
 import { useAuth } from '@/contexts/AuthProvider';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
+import { usePingTimer } from '@/hooks/usePingTimer';
 import ModalComponent from '@/components/@shared/modal/Modal';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -37,6 +38,7 @@ interface WikiProfileProps {
 
 export default function WikiProfile({ profile }: WikiProfileProps) {
   const router = useRouter();
+  const [register, setResiter] = useState<string | null>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
   const [loginUserId, setLoginUserId] = useState(undefined);
@@ -47,13 +49,22 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
     try {
       const res = await getPing(profile.code);
       setLoginUserId(res.userId);
-      console.log(res);
+      const registeredAt = new Date(res?.registeredAt);
+      const dateIsoString = registeredAt.getTime().toString();
+      localStorage.setItem('lastPingTime', dateIsoString);
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    const existingPing = localStorage.getItem('lastPingTime');
+    setResiter(existingPing);
+  }, []);
+
   const sameId = loginUserId !== undefined && loginUserId === user?.id;
+
+  usePingTimer(register, router.isReady, savePing, [profile.code, sameId]);
 
   useEffect(() => {
     setIsEditing(() => {
@@ -61,18 +72,6 @@ export default function WikiProfile({ profile }: WikiProfileProps) {
       return false;
     });
   }, [loginUserId]);
-
-  useEffect(() => {
-    const existingLastPingTime = localStorage.getItem('lastPingTime');
-    if (existingLastPingTime) {
-      localStorage.removeItem('lastPingTime');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!profile) return;
-    savePing();
-  }, []);
 
   const handleOpenModalButtonClick = () => {
     if (sameId) {

@@ -37,6 +37,12 @@
   border-radius: 32px;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .modalButton {
   width: 100%;
   height: auto;
@@ -51,6 +57,9 @@
   }
   &:active {
     background: $primary-green400 !important;
+  }
+  span {
+    font-family: Pretendard !important;
   }
 }
 
