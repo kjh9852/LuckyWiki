@@ -25,7 +25,7 @@ export default function WikiEditProfile({ onWikiValueChange, value }: WidiEditPr
           <EditInput label="거주 도시" htmlFor="city" onValueChange={onWikiValueChange} value={value?.city ?? ''} />
           <EditInput label="MBTI" htmlFor="mbti" onValueChange={onWikiValueChange} value={value?.mbti ?? ''} />
           <EditInput label="직업" htmlFor="job" onValueChange={onWikiValueChange} value={value?.job ?? ''} />
-          <EditInput label="SNS 계정" htmlFor="sns" onValueChange={onWikiValueChange} value={value?.sns ?? ''} />
+          <EditInput label="인스타그램" htmlFor="sns" onValueChange={onWikiValueChange} value={value?.sns ?? ''} />
           <EditInput label="생일" htmlFor="birthday" onValueChange={onWikiValueChange} value={value?.birthday ?? ''} />
           <EditInput label="별명" htmlFor="nickname" onValueChange={onWikiValueChange} value={value?.nickname ?? ''} />
           <EditInput
