@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import logo from '@/public/logo/logo_main.png';
 import Link from 'next/link';
-import styles from '@/components/@shared/Header/Header.module.scss';
+import styles from '@/components/@shared/header/Header.module.scss';
 import MobileUserMenu from './MobileUserMenu';
 import UserMenu from './UserMenu';
 

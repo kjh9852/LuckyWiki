@@ -1,4 +1,4 @@
-import useDebounce from '@/hooks/useDebounce';
+import { useDebounce } from '@/hooks/useDebounce';
 import { useNavigate } from '@/hooks/WikiList/useNavigate';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSearch } from '@/contexts/SearchProvider';
