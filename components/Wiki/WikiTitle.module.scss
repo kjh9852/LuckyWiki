@@ -35,6 +35,11 @@
   padding: 5px 10px;
   border-radius: 10px;
   background-color: $primary-green100;
+  border: none;
+
+  &:hover {
+    border: 2px solid $primary-green200 !important;
+  }
 
   p {
     @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $primary-green200);
