@@ -35,6 +35,7 @@ export default function WikiEditForm() {
   const router = useRouter();
   const { code } = router.query;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSumitModalOpen, setIsSumitModalOpen] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState<FormValue | undefined>(INITIAL_FORM_VALUE);
   const [wikiUserName, setWikiUserName] = useState<string | undefined>(undefined);
   const [userId, setUserId] = useState<number | undefined>(undefined);
@@ -84,14 +85,33 @@ export default function WikiEditForm() {
     }));
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmitCloseModal = () => {
+    setIsSumitModalOpen(false);
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setIsSumitModalOpen(true);
     editUser(code as string, formValue);
   };
 
   return (
     <section className={styles.editContiner}>
-      {isModalOpen && <ModalComponent title="주의">본인이 아닌 프로필은 수정이 불가합니다</ModalComponent>}
+      <ModalComponent isOpen={isModalOpen} onClose={handleCloseModal} title="주의">
+        본인이 아닌 프로필은 수정이 불가합니다
+      </ModalComponent>
+      <ModalComponent
+        userCode={code as string}
+        isEdit={true}
+        isOpen={isSumitModalOpen}
+        onClose={handleSubmitCloseModal}
+      >
+        수정이 완료 되었습니다.
+      </ModalComponent>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <QuillEditor
           userName={wikiUserName}
