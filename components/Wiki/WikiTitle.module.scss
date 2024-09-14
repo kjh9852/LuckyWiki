@@ -72,7 +72,12 @@
     }
   }
 
-  .p {
-    @include fontStyle400($font-size: 14px, $line-height: 24px);
+  .linkButton {
+    max-width: 335px;
+
+    p {
+      @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $primary-green200);
+      @include ellipsis;
+    }
   }
 }
