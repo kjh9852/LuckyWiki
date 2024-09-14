@@ -1,5 +1,5 @@
 import { getTokens } from '@/utils/getTokens';
-
+import { fetchWithTokenRefresh } from './fetchWithTokenRefresh';
 interface requestData {
   content?: string;
   nationality?: string;
@@ -29,15 +29,11 @@ export const patchUser = async (code: string, data: requestData) => {
     image: data.image,
   };
 
-  const tokens = getTokens();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}`, {
+  const response = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${tokens.accessToken}`,
     },
     body: JSON.stringify(postData),
   });
-  const result = await response.json();
-  return result;
 };
