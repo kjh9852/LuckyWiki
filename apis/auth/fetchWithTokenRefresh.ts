@@ -4,8 +4,8 @@ import { CookieValueTypes, deleteCookie, setCookie } from 'cookies-next';
 
 interface FetchOptions {
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
-  headers: Record<string, string>;
-  body?: string;
+  headers?: Record<string, string>;
+  body?: BodyInit;
 }
 
 const insertAuthorization = (options: FetchOptions, accessToken: string | CookieValueTypes) => {
