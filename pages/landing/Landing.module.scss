@@ -49,8 +49,8 @@
 .LandingContainer {
   background-color: #ecf0fa;
   img {
-    height: 100%; /* 이미지 높이를 부모 컨테이너의 100%로 설정 */
-    width: auto; /* 비율 유지 */
+    height: 100%;
+    width: 100%;
   }
 }
 
@@ -105,6 +105,8 @@
     min-width: 336px;
 
     img {
+      height: 100%; /* 이미지 높이를 부모 컨테이너의 100%로 설정 */
+      width: auto; /* 비율 유지 */
       position: relative;
       top: 0px;
       left: 50%;
