@@ -10,8 +10,19 @@
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.078);
 }
 
+.pcIntroduce {
+  @include fontStyle400;
+  @include ellipsis;
+  text-align: center;
+  padding: 20px 20px;
+}
+
+.introduce {
+  display: none;
+}
+
 .profileImage {
-  padding: 60px;
+  padding: 0 60px 60px;
 }
 
 .image {
@@ -51,6 +62,8 @@
       height: 24px;
       margin: 0;
     }
+    @include ellipsis;
+    max-width: 180px;
   }
 }
 
@@ -71,14 +84,14 @@
     position: relative;
     margin: 15px 0 0;
     overflow: hidden;
-    height: 128px;
+    height: 168px;
     transition: 0.3s ease;
     border-radius: 10px;
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.078);
   }
 
   .active {
-    height: 290px;
+    height: 310px;
     .buttonContainer {
       img {
         transform: rotate(180deg);
@@ -99,6 +112,18 @@
 
   .hide {
     display: none;
+  }
+
+  .pcIntroduce {
+    display: none;
+  }
+
+  .introduce {
+    display: block;
+    @include fontStyle400;
+    @include ellipsis;
+    text-align: center;
+    padding: 20px 20px 0;
   }
 
   .profileImage {
@@ -123,6 +148,10 @@
   .profileValue {
     @include info;
     gap: 4px;
+
+    p {
+      max-width: 380px;
+    }
   }
 }
 
@@ -132,11 +161,11 @@
     height: auto;
     gap: 20px;
     padding: 15px 0 0 20px;
-    margin: 12px 0 0;
+    margin: 10px 0 0;
   }
 
   .active {
-    height: 280px;
+    height: 310px;
   }
 
   .image {
@@ -152,5 +181,9 @@
   .profileValue {
     @include info;
     gap: 3px;
+
+    p {
+      max-width: 140px;
+    }
   }
 }

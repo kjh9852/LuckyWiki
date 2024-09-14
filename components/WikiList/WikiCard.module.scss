@@ -26,15 +26,18 @@
 
   h1 {
     @include fontStyle600($font-size: 24px, $line-height: 32px);
+    @include ellipsis;
     margin-bottom: 14px;
   }
 
   p {
     @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $gray400);
+    @include ellipsis;
+    max-width: 390px;
   }
 
   .linkButton {
-    max-width: 360px;
+    max-width: 270px;
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -42,6 +45,11 @@
     border-radius: 10px;
     background-color: $primary-green100;
     align-self: flex-end;
+    border: none;
+
+    &:hover {
+      border: 2px solid $primary-green200 !important;
+    }
 
     p {
       @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $primary-green200);
@@ -58,6 +66,10 @@
 @include tablet {
   .profileCard {
     width: 696px;
+
+    p {
+      max-width: 227px;
+    }
   }
 }
 
@@ -86,10 +98,11 @@
 
     p {
       @include fontStyle400($font-size: 12px, $line-height: 14px, $color: $gray400);
+      max-width: 204px;
     }
 
     .linkButton {
-      width: 204px;
+      max-width: 204px;
       padding: 4px 10px;
       position: absolute;
       bottom: 25px;

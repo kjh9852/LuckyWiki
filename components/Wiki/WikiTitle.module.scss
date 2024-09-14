@@ -15,7 +15,7 @@
 
     button {
       @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $gray50);
-      width: 160px;
+      width: 170px;
       height: 45px;
       padding: 11px 40px;
       border-radius: 10px;
@@ -35,6 +35,11 @@
   padding: 5px 10px;
   border-radius: 10px;
   background-color: $primary-green100;
+  border: none;
+
+  &:hover {
+    border: 2px solid $primary-green200 !important;
+  }
 
   p {
     @include fontStyle600($font-size: 14px, $line-height: 24px, $color: $primary-green200);
@@ -60,14 +65,19 @@
       }
 
       button {
-        width: 120px;
+        width: 140px;
         height: 43px;
         padding: 10px 22px;
       }
     }
   }
 
-  .p {
-    @include fontStyle400($font-size: 14px, $line-height: 24px);
+  .linkButton {
+    max-width: 335px;
+
+    p {
+      @include fontStyle400($font-size: 14px, $line-height: 24px, $color: $primary-green200);
+      @include ellipsis;
+    }
   }
 }
