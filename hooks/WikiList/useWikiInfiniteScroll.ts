@@ -1,4 +1,4 @@
-import { getProfileList } from '@/apis/auth/getProfileList';
+import { getProfileList } from '@/apis/getProfileList';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
