@@ -17,7 +17,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   const { openSnackBar } = useSnackBar();
   const { contextHolder, showMessage, hideMessage } = useMessage();
 
-  const LINK_URL = `https://www.wikied.kr/wiki/${profileCard.code}`;
+  const LINK_URL = `https://luckywiki.vercel.app/wiki/${profileCard.code}`;
   const PROFILE_IMAGE = profileCard.image || '/icon/icon-profile.png';
 
   const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {

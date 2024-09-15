@@ -17,7 +17,7 @@ export default function WikiTitle({ profile, isEditing, sameId, onOpenModalButto
   const { copyLink } = useCopyLink();
   const { openSnackBar } = useSnackBar();
   const { contextHolder, showMessage, hideMessage } = useMessage();
-  const LINK_URL = `https://www.wikied.kr/wiki/${profile.code}`;
+  const LINK_URL = `https://luckywiki.vercel.app/wiki/${profile.code}`;
 
   const handleCopyButtonClick = () => {
     copyLink(LINK_URL);
