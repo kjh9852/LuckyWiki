@@ -10,7 +10,7 @@ interface ProfileDetailProps {
 const INSTAGRAM_URL = 'https://www.instagram.com/';
 
 export default function ProfileDetails({ profile }: ProfileDetailProps) {
-  const profileImage = profile.image || '/icon/icon-profile.png';
+  const profileImage = profile.image || '/icon/icon-no-profile.png';
   const [isMoreView, setIsMoreView] = useState<string>('none');
 
   const handleButtonClick = () => {

@@ -18,7 +18,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   const { contextHolder, showMessage, hideMessage } = useMessage();
 
   const LINK_URL = `https://luckywiki.vercel.app/wiki/${profileCard.code}`;
-  const PROFILE_IMAGE = profileCard.image || '/icon/icon-profile.png';
+  const PROFILE_IMAGE = profileCard.image || '/icon/icon-no-profile.png';
 
   const handleCopyButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
