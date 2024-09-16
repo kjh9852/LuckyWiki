@@ -39,8 +39,10 @@ export default function SignUpPage() {
   const handleFormSubmit: SubmitHandler<FieldValues> = async formData => {
     if (formData.email && formData.name && formData.password && formData.passwordConfirmation) {
       const { email, name, password, passwordConfirmation } = formData;
-      await signUp({ email, name, password, passwordConfirmation });
-      router.push('/home');
+      const sucessSignUp = await signUp({ email, name, password, passwordConfirmation });
+      if (sucessSignUp) {
+        router.push('/home');
+      }
     }
   };
 

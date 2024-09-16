@@ -31,11 +31,11 @@ export const authenticateSignUp = async ({
     body: JSON.stringify({ email, name, password, passwordConfirmation }),
   });
 
-  if (!response.ok) {
-    return undefined;
-  }
-
   const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '예기치 않은 오류가 발생했습니다.');
+  }
 
   return result;
 };
