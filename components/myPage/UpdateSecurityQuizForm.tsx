@@ -2,7 +2,7 @@ import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import styles from './MyPageForm.module.scss';
 import classNames from 'classnames';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import ValidInput from '../@shared/Input/ValidInput';
+import ValidInput from '../@shared/inputHeader/ValidInput';
 import { updateSecurityQuiz } from '@/apis/auth/updateSecurityQuiz';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';

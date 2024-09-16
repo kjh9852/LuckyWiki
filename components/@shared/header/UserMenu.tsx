@@ -5,7 +5,7 @@ import Image from 'next/image';
 import LoggedInUserDropdown from './LoggedInUserDropdown';
 import styles from './UserMenu.module.scss';
 import Alarm from './Alarm';
-import SearchForm from '../../wikiList/SearchForm';
+import SearchForm from '../../listWiki/SearchForm';
 
 export default function UserMenu() {
   const { user, isLoggedIn } = useAuth();

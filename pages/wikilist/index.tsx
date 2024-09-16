@@ -1,10 +1,10 @@
-import WikiCard from '@/components/wikiList/WikiCard';
+import WikiCard from '@/components/listWiki/WikiCard';
 import styles from './WikiList.module.scss';
 import Image from 'next/image';
-import Spinner from '@/components/wikiList/SPinner';
-import RecentSearch from '@/components/wikiList/RecentSearch';
+import Spinner from '@/components/listWiki/SPinner';
+import RecentSearch from '@/components/listWiki/RecentSearch';
 import { useSearch } from '@/contexts/SearchProvider';
-import { useWikiInfiniteScroll } from '@/hooks/wikiList/useWikiInfiniteScroll';
+import { useWikiInfiniteScroll } from '@/hooks/list/useWikiInfiniteScroll';
 
 export default function WikiList() {
   const { searchTerm } = useSearch();

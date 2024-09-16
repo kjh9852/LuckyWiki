@@ -1,6 +1,6 @@
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import ValidInput from '../@shared/Input/ValidInput';
+import ValidInput from '../@shared/inputHeader/ValidInput';
 import { useRouter } from 'next/router';
 import { updatePassword } from '@/apis/auth/updatePassword';
 import { useSnackBar } from '@/contexts/SnackbarProvider';

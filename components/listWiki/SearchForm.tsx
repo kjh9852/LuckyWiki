@@ -1,9 +1,9 @@
 import { useDebounce } from '@/hooks/useDebounce';
-import { useNavigate } from '@/hooks/wikiList/useNavigate';
+import { useNavigate } from '@/hooks/list/useNavigate';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSearch } from '@/contexts/SearchProvider';
 import { useRouter } from 'next/router';
-import { useRecentSearch } from '@/hooks/wikiList/useRecentSearch';
+import { useRecentSearch } from '@/hooks/list/useRecentSearch';
 
 interface SearchType {
   inputClassName?: string;

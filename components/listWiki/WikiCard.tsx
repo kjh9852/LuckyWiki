@@ -2,7 +2,7 @@ import ProfileType from '@/types/types';
 import Image from 'next/image';
 import styles from './WikiCard.module.scss';
 import { useCopyLink } from '@/hooks/useCopyLink';
-import { useNavigate } from '@/hooks/wikiList/useNavigate';
+import { useNavigate } from '@/hooks/list/useNavigate';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { Button } from 'antd';
 import { useMessage } from '@/hooks/useMessage';
