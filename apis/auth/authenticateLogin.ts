@@ -31,7 +31,8 @@ export const authenticateLogIn = async ({
   });
 
   if (!response.ok) {
-    return undefined;
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || '예기치 않은 오류가 발생했습니다.');
   }
 
   const result = await response.json();
