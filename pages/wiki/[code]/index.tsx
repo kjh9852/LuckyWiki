@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import ProfileType from '@/types/types';
-import WikiTitle from '../../components/Wiki/WikiTitle';
-import WikiContent from '@/components/Wiki/WikiContent';
-import ProfileDetails from '@/components/Wiki/ProfileDetails';
+import WikiTitle from '@/components/wiki/WikiTitle';
+import WikiContent from '@/components/wiki/WikiContent';
+import ProfileDetails from '@/components/wiki/ProfileDetails';
 import styles from './[code].module.scss';
 import { useState, useEffect } from 'react';
 import { getProfile } from '@/apis/auth/getProfile';

@@ -1,7 +1,7 @@
 import { MouseEvent, ChangeEvent, useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import styles from './EditImageInput.module.scss';
-import defaultProfile from '@/public/icon/icon-profile.png';
+import defaultProfile from '@/public/icon/icon-no-profile.png';
 import { uploadImages } from '@/apis/auth/uploadImages';
 
 interface EditImageInputProps {

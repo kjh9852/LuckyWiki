@@ -5,6 +5,7 @@ import { useCopyLink } from '@/hooks/useCopyLink';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { Button } from 'antd';
 import { useMessage } from '@/hooks/useMessage';
+import { useRef } from 'react';
 
 interface WikiTitleProps {
   profile: ProfileType;
@@ -17,7 +18,8 @@ export default function WikiTitle({ profile, isEditing, sameId, onOpenModalButto
   const { copyLink } = useCopyLink();
   const { openSnackBar } = useSnackBar();
   const { contextHolder, showMessage, hideMessage } = useMessage();
-  const LINK_URL = `https://www.wikied.kr/wiki/${profile.code}`;
+  const lastMessageTimeRef = useRef<number>(0);
+  const LINK_URL = `https://luckywiki.vercel.app/wiki/${profile.code}`;
 
   const handleCopyButtonClick = () => {
     copyLink(LINK_URL);
@@ -25,7 +27,11 @@ export default function WikiTitle({ profile, isEditing, sameId, onOpenModalButto
   };
 
   const handleMouseEnter = () => {
-    showMessage('클릭하면 위키에 참여할 수 있는 링크가 복사됩니다.');
+    const now = Date.now();
+    if (now - lastMessageTimeRef.current >= 500) {
+      lastMessageTimeRef.current = now;
+      showMessage('클릭하면 위키에 참여할 수 있는 링크가 복사됩니다.');
+    }
   };
 
   return (
