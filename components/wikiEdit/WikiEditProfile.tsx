@@ -1,6 +1,6 @@
 import styles from './WikiEditProfile.module.scss';
-import EditInput from './input/EditInput';
-import EditImageInput from './input/EditImageInput';
+import EditInput from './editInput/EditInput';
+import EditImageInput from './editInput/EditImageInput';
 import { FormValue } from './types/EditTypes';
 
 interface WidiEditProfileProps {

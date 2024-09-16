@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import ProfileType from '@/types/types';
-import WikiTitle from '@/components/myWiki/WikiTitle';
-import WikiContent from '@/components/myWiki/WikiContent';
-import ProfileDetails from '@/components/myWiki/ProfileDetails';
+import WikiTitle from '@/components/wiki/WikiTitle';
+import WikiContent from '@/components/wiki/WikiContent';
+import ProfileDetails from '@/components/wiki/ProfileDetails';
 import styles from './[code].module.scss';
 import { useState, useEffect } from 'react';
 import { getProfile } from '@/apis/auth/getProfile';
@@ -19,7 +19,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let profile = null;
   try {
     profile = await getProfile(code);
-    console.log('API Response:', profile);
   } catch (error) {
     console.error('Failed to fetch profile', error);
     return {

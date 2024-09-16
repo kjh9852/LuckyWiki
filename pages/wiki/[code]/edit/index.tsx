@@ -1,4 +1,4 @@
-import WikiEditForm from '@/components/editWiki/WikiEditForm';
+import WikiEditForm from '@/components/wikiEdit/WikiEditForm';
 import { useState, useEffect } from 'react';
 import { getPing } from '@/apis/auth/updatePing';
 import { useRouter } from 'next/router';
