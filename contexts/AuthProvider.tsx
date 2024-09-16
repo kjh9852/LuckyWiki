@@ -20,7 +20,7 @@ interface AuthContextValue {
   isLoggedIn: boolean;
   user: User | null;
   syncUserAuthState: () => Promise<void>;
-  signUp: (formData: signUpParams) => Promise<void>;
+  signUp: (formData: signUpParams) => Promise<boolean>;
   logIn: (formData: logInParams) => Promise<void>;
   logOut: () => void;
 }
@@ -41,30 +41,42 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     router.push('/home');
   };
 
-  const signUp = useCallback(async ({ email, name, password, passwordConfirmation }: signUpParams) => {
-    const response = await authenticateSignUp({
-      email,
-      name,
-      password,
-      passwordConfirmation,
-    });
-
-    if (response) {
-      const { accessToken, refreshToken } = response;
-      initAuthenticatedUser({ accessToken, refreshToken });
-    } else {
-      openSnackBar({ type: 'error', content: '회원가입에 실패했습니다.' });
-    }
-  }, []);
+  const signUp = useCallback(
+    async ({ email, name, password, passwordConfirmation }: signUpParams): Promise<boolean> => {
+      try {
+        const response = await authenticateSignUp({
+          email,
+          name,
+          password,
+          passwordConfirmation,
+        });
+        if (response) {
+          const { accessToken, refreshToken } = response;
+          initAuthenticatedUser({ accessToken, refreshToken });
+          return true;
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          openSnackBar({ type: 'error', content: error.message });
+          return false;
+        }
+      }
+      return false;
+    },
+    [],
+  );
 
   const logIn = useCallback(async ({ email, password }: logInParams) => {
-    const response = await authenticateLogIn({ email, password });
-
-    if (response) {
-      const { accessToken, refreshToken } = response;
-      initAuthenticatedUser({ accessToken, refreshToken });
-    } else {
-      openSnackBar({ type: 'error', content: '일치하는 회원 정보가 없습니다.' });
+    try {
+      const response = await authenticateLogIn({ email, password });
+      if (response) {
+        const { accessToken, refreshToken } = response;
+        initAuthenticatedUser({ accessToken, refreshToken });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        openSnackBar({ type: 'error', content: error.message });
+      }
     }
   }, []);
 
