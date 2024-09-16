@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
 export const usePingTimer = (
@@ -14,17 +15,13 @@ export const usePingTimer = (
       const lastPingTime = register; // api 호출 시 엔드포인트에서 받아온 시간
 
       if (lastPingTime) {
-        const now = new Date().getTime();
-        const elapsedTime = parseInt(lastPingTime) + 5 * 60 * 1000 - 36646; // 엔드포인트에서 5분 후
-        console.log(new Date(), new Date(elapsedTime));
+        const now = dayjs().unix() * 1000;
+        const elapsedTime = parseInt(lastPingTime) + 5 * 60 * 1000; // 엔드포인트에서 5분 후
         const remainingTime = elapsedTime - now;
-        console.log(remainingTime);
         if (remainingTime > 0) {
-          console.log('확인');
           timer = setTimeout(() => {
-            console.log('타이머 확인');
             savePing();
-            // 5분마다 반복
+            // 5분뒤 실행
             localStorage.removeItem('lastPingTime');
           }, remainingTime);
         } else {
