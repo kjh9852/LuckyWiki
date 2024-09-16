@@ -67,12 +67,12 @@ export default function ModalComponent({
   if (isAnswer) {
     return (
       <Modal
-        centered
+        centered={true}
         open={isOpen}
         onCancel={onClose}
         destroyOnClose={true}
-        getContainer={false}
         width={395}
+        mask={true}
         footer={[
           <div key="footer-container" style={{ textAlign: 'center' }}>
             <Button
@@ -92,6 +92,7 @@ export default function ModalComponent({
             </div>
           </div>,
         ]}
+        transitionName=""
       >
         <div>
           <div className={styles.modalImageContainer}>
@@ -157,15 +158,11 @@ export default function ModalComponent({
         destroyOnClose={true}
         getContainer={false}
         width={350}
+        transitionName=""
         footer={[
-          <div key="footer-container" className={styles.buttonContainer}>
-            <Button className={styles.buttonColor} key="ok" type="primary" onClick={onClose}>
-              이어서 수정
-            </Button>
-            <Button className={styles.buttonColor} key="ok" type="primary" onClick={handleFinishEdit}>
-              수정 완료
-            </Button>
-          </div>,
+          <Button className={styles.buttonColor} key="ok" type="primary" onClick={handleFinishEdit}>
+            수정 완료
+          </Button>,
         ]}
       >
         <p>{children}</p>
@@ -183,6 +180,7 @@ export default function ModalComponent({
         destroyOnClose={true}
         getContainer={false}
         width={350}
+        transitionName=""
         footer={[
           <Button className={styles.buttonColor} key="ok" type="primary" onClick={onClose}>
             확인
