@@ -12,7 +12,7 @@ export const usePingTimer = (
     let timer: NodeJS.Timeout;
     const setTime = () => {
       if (!isReady) return;
-      getServerTime();
+
       const lastPingTime = register; // api 호출 시 엔드포인트에서 받아온 시간
       const nowTime = localStorage.getItem('nowTime');
       const newTime = Number(nowTime);
