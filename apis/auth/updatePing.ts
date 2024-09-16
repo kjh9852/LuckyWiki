@@ -11,7 +11,7 @@ export const postPing = async (code: string, answer: string) => {
   });
 
   if (response) {
-    getServerTime();
+    await getServerTime();
     const registeredAt = new Date(response?.registeredAt);
     const dateIsoString = registeredAt.getTime().toString();
     localStorage.setItem('lastPingTime', dateIsoString);
@@ -28,7 +28,7 @@ export const getPing = async (code: string) => {
       subMessage: '위키 참여하기를 통해 다시 위키를 수정해 주세요.',
     };
   }
-  getServerTime();
+  await getServerTime();
   const data = await response.json();
   return data;
 };
