@@ -14,6 +14,7 @@
     "antd": "^5.20.6",
     "classnames": "^2.5.1",
     "cookies-next": "^4.2.1",
+    "dayjs": "^1.11.13",
     "next": "14.2.7",
     "react": "^18",
     "react-awesome-reveal": "^4.2.14",
