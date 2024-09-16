@@ -30,12 +30,11 @@ export const authenticateLogIn = async ({
     body: JSON.stringify({ email, password }),
   });
 
-  if (!response.ok) {
-    const errorMessage = await response.json();
-    throw new Error(errorMessage.message || '예기치 않은 오류가 발생했습니다.');
-  }
-
   const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || '예기치 않은 오류가 발생했습니다.');
+  }
 
   return result;
 };
