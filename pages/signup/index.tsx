@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import React from 'react';
-import ValidInput from '@/components/@shared/Input/ValidInput';
+import ValidInput from '@/components/@shared/input/ValidInput';
 import { useAuth } from '@/contexts/AuthProvider';
 import { useRouter } from 'next/router';
 import { useValidForm, ValidationConfig } from '@/hooks/useValidForm';

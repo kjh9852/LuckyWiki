@@ -19,7 +19,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let profile = null;
   try {
     profile = await getProfile(code);
-    console.log('API Response:', profile);
   } catch (error) {
     console.error('Failed to fetch profile', error);
     return {
