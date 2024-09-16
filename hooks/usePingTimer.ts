@@ -13,7 +13,7 @@ export const usePingTimer = (
     const setTime = async () => {
       if (!isReady) return;
 
-      await getServerTime();
+      const serverTime = await getServerTime();
       const lastPingTime = register; // api 호출 시 엔드포인트에서 받아온 시간
       const nowTime = localStorage.getItem('nowTime');
       const newTime = Number(nowTime);
