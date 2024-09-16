@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import React, { useRef, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

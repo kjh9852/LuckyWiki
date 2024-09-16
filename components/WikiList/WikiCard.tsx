@@ -6,6 +6,7 @@ import { useNavigate } from '@/hooks/wikiList/useNavigate';
 import { useSnackBar } from '@/contexts/SnackbarProvider';
 import { Button } from 'antd';
 import { useMessage } from '@/hooks/useMessage';
+import { useRef } from 'react';
 
 interface WikiCardProps {
   profileCard: ProfileType;
@@ -16,6 +17,7 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   const { navigateTo } = useNavigate();
   const { openSnackBar } = useSnackBar();
   const { contextHolder, showMessage, hideMessage } = useMessage();
+  const lastMessageTimeRef = useRef<number>(0);
 
   const LINK_URL = `https://luckywiki.vercel.app/wiki/${profileCard.code}`;
   const PROFILE_IMAGE = profileCard.image || '/icon/icon-no-profile.png';
@@ -31,7 +33,11 @@ export default function WikiCard({ profileCard }: WikiCardProps) {
   };
 
   const handleMouseEnter = () => {
-    showMessage('클릭하면 위키에 참여할 수 있는 링크가 복사됩니다.');
+    const now = Date.now();
+    if (now - lastMessageTimeRef.current >= 500) {
+      lastMessageTimeRef.current = now;
+      showMessage('클릭하면 위키에 참여할 수 있는 링크가 복사됩니다.');
+    }
   };
 
   return (
