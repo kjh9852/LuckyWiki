@@ -10,13 +10,13 @@ export const usePingTimer = (
 ) => {
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    const setTime = () => {
+    const setTime = async () => {
       if (!isReady) return;
 
       const lastPingTime = register; // api 호출 시 엔드포인트에서 받아온 시간
       const nowTime = localStorage.getItem('nowTime');
       const newTime = Number(nowTime);
-
+      await getServerTime();
       if (lastPingTime) {
         const now = dayjs().valueOf();
         const elapsedTime = parseInt(lastPingTime) + 5 * 60 * 1000; // 엔드포인트에서 5분 후
