@@ -15,7 +15,7 @@ export const usePingTimer = (
       const lastPingTime = register; // api 호출 시 엔드포인트에서 받아온 시간
 
       if (lastPingTime) {
-        const now = dayjs().unix() * 1000;
+        const now = dayjs().valueOf();
         const elapsedTime = parseInt(lastPingTime) + 5 * 60 * 1000; // 엔드포인트에서 5분 후
         const remainingTime = elapsedTime - now;
         if (remainingTime > 0) {
