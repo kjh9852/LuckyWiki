@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { useState } from 'react';
+import { act, createContext, ReactNode, useContext } from 'react';
 import { message, Space } from 'antd';
 import iconSuccess from '@/public/icon/icon-success.png';
 import iconError from '@/public/icon/icon-error.png';
@@ -18,7 +19,7 @@ interface SnackBarContextValue {
 const SnackbarContext = createContext<SnackBarContextValue | undefined>(undefined);
 
 export default function SnackBarProvider({ children }: { children: ReactNode }) {
-  const [messageApi, contextHolder] = message.useMessage({ top: 120 });
+  const [messageApi, contextHolder] = message.useMessage({ top: 120, maxCount: 3 });
 
   const iconSrc: Record<SnackBarType, ReactNode> = {
     success: <Image src={iconSuccess} alt={'성공 메시지 아이콘'} height={20} width={20} />,
