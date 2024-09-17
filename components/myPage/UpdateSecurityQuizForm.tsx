@@ -9,6 +9,7 @@ import { fetchWithTokenRefresh } from '@/apis/auth/fetchWithTokenRefresh';
 import { useAuth } from '@/contexts/AuthProvider';
 import { sendMail } from '@/utils/sendMail';
 import { VALID_OPTIONS } from '@/constants/validOptions';
+import { postPing } from '@/apis/auth/updatePing';
 interface UpdateSecurityQuizFormProps {
   code: string;
   currentSecurityQuestion: string;
@@ -45,11 +46,12 @@ export default function UpdateSecurityQuizForm({ code, currentSecurityQuestion }
     if (formData.securityAnswer && formData.securityQuestion && user) {
       const { currentSecurityAnswer, securityAnswer, securityQuestion } = formData;
       // 수정할 수 있게 핑을 열어둠
-      const ping = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ securityAnswer: currentSecurityAnswer }),
-      });
+      const ping = await postPing(code, currentSecurityAnswer);
+      // const ping = await fetchWithTokenRefresh(`${process.env.NEXT_PUBLIC_BASE_URL}/profiles/${code}/ping`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ securityAnswer: currentSecurityAnswer }),
+      // });
 
       if (ping) {
         const response = await updateSecurityQuiz({
